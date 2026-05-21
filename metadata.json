@@ -1,0 +1,6 @@
+{
+  "name": "Sejarah Juara Liga Indonesia",
+  "description": "Aplikasi statistik sepak bola Indonesia dari masa ke masa (1930 hingga sekarang) dengan pencarian cerdas berbasis AI gaya Statmuse dan visualisasi data interaktif.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
