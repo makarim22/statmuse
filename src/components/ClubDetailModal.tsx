@@ -13,6 +13,8 @@ interface ClubDetailModalProps {
     runnerUps: number;
     seasonsWon: string[];
     historicalNames: string[];
+    amatirTitles?: number;
+    amatirSeasonsWon?: string[];
   } | null;
   metadata: ClubMetadata | null;
   onAskAI: (query: string) => void;
@@ -136,20 +138,26 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
             {/* Titles Statistics visual row */}
             <div className="grid grid-cols-2 gap-4">
               
-              {/* Total champion counting */}
-              <div className="p-4 bg-emerald-50 border-2 border-emerald-650 flex flex-col justify-between relative overflow-hidden" style={{ borderColor: '#1A1A1A' }}>
+              {/* Professional era champion counting */}
+              <div className="p-4 bg-emerald-50 border-2 flex flex-col justify-between relative overflow-hidden" style={{ borderColor: '#1A1A1A' }}>
                 <div className="space-y-1">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-emerald-800">JUARA NASIONAL</span>
-                  <p className="text-xs font-bold text-slate-500">Kasta Tertinggi Resmi</p>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-emerald-800">GELAR ERA PROFESIONAL</span>
+                  <p className="text-[9px] font-bold text-slate-500">Liga Indonesia 1994/95 + ISL + Liga 1</p>
                 </div>
                 <div className="text-4xl font-mono font-black italic mt-4 flex items-baseline gap-1" style={{ color: metadata?.colors.primary || '#10B981' }}>
                   {club.titles}
                   <span className="text-xs font-bold font-sans uppercase">Trofi</span>
                 </div>
+                {(club.amatirTitles ?? 0) > 0 && (
+                  <div className="mt-2 pt-2 border-t border-dashed border-black/20">
+                    <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 block">+ Amatir Perserikatan (Info Tambahan)</span>
+                    <span className="text-sm font-mono font-black text-slate-600">{club.amatirTitles} Trofi</span>
+                  </div>
+                )}
               </div>
 
               {/* Tally of runner up finishes */}
-              <div className="p-4 bg-amber-50 border-2 border-amber-650 flex flex-col justify-between relative overflow-hidden" style={{ borderColor: '#1A1A1A' }}>
+              <div className="p-4 bg-amber-50 border-2 flex flex-col justify-between relative overflow-hidden" style={{ borderColor: '#1A1A1A' }}>
                 <div className="space-y-1">
                   <span className="text-[9px] font-black uppercase tracking-widest text-amber-800 font-sans">RUNNER-UP (2ND)</span>
                   <p className="text-xs font-bold text-slate-500">Peringkat Dua Terakhir</p>
@@ -164,24 +172,43 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
 
             {/* List of concrete Seasons won with visual badges */}
             <div className="space-y-3">
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 block">DAFTAR TAHUN MERAIH TROFI CHANGER JUARA:</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 block">GELAR ERA PROFESIONAL:</span>
               <div className="flex flex-wrap gap-2">
                 {club.seasonsWon.length > 0 ? (
                   club.seasonsWon.map((yr, idx) => (
                     <span 
                       key={idx} 
-                      className="px-3 py-1.5 text-xs font-mono font-bold border-2 border-black bg-white uppercase tracking-tight text-black flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                      className="px-3 py-1.5 text-xs font-mono font-bold border-2 border-black bg-[#00FF85] uppercase tracking-tight text-black flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                     >
-                      <Award className="h-3 w-3 shrink-0 text-[#00FF85]" />
+                      <Award className="h-3 w-3 shrink-0 text-black" />
                       {yr}
                     </span>
                   ))
                 ) : (
-                  <span className="text-xs font-bold text-stone-500 italic">Belum mencatatkan kemenangan liga nasional utama</span>
+                  <span className="text-xs font-bold text-stone-500 italic">Belum mencatatkan kemenangan di era profesional</span>
                 )}
               </div>
             </div>
 
+            {/* Amateur Perserikatan titles - shown as supplementary info */}
+            {(club.amatirTitles ?? 0) > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block">GELAR ERA AMATIR PERSERIKATAN (1930-1994) — INFO TAMBAHAN:</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {(club.amatirSeasonsWon ?? []).map((yr, idx) => (
+                    <span 
+                      key={idx} 
+                      className="px-3 py-1.5 text-xs font-mono font-bold border border-black/40 bg-slate-100 uppercase tracking-tight text-slate-600 flex items-center gap-1"
+                    >
+                      <Award className="h-3 w-3 shrink-0 text-slate-400" />
+                      {yr}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Action Row at bottom */}

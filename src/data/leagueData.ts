@@ -213,6 +213,7 @@ export const leagueData: SeasonRecord[] = [
 ];
 
 // Helper to consolidate name variations and compute all-time leaders for a specific set of records
+// proEra=true means these records are "professional" titles; proEra=false means "amatir"
 export const getEraClubsRanking = (data: SeasonRecord[]): ClubSummary[] => {
   const counts: Record<string, { wins: number; runnerUps: number; seasons: string[]; hNames: Set<string> }> = {};
 
@@ -257,17 +258,20 @@ export const getEraClubsRanking = (data: SeasonRecord[]): ClubSummary[] => {
       titles: data.wins,
       runnerUps: data.runnerUps,
       seasonsWon: data.seasons,
-      historicalNames: Array.from(data.hNames)
+      historicalNames: Array.from(data.hNames),
+      amatirTitles: 0,
+      amatirSeasonsWon: [],
     }))
     .sort((a, b) => b.titles !== a.titles ? b.titles - a.titles : b.runnerUps - a.runnerUps);
 };
 
-// All-time consolidated leaders (entire history)
-export const getClubsRanking = (): ClubSummary[] => {
-  return getEraClubsRanking(leagueData);
-};
+// ─────────────────────────────────────────────────────────────────
+// ERA BOUNDARIES
+// Amatir (Perserikatan): 1930 → musim 1993-94 (index before 1994-95)
+// Profesional: 1994-95 onwards (Liga Indonesia, ISL, Liga 1)
+// ─────────────────────────────────────────────────────────────────
 
-// Perserikatan: 1930 s.d. 1993-94
+// Perserikatan era data: 1930 s.d. 1993-94
 export const getPerserikatanData = (): SeasonRecord[] => {
   const idx = leagueData.findIndex(s => s.season === "1994–95");
   return leagueData.slice(0, idx);
@@ -296,4 +300,96 @@ export const getModernLeagueData = (): SeasonRecord[] => {
 
 export const getModernClubsRanking = (): ClubSummary[] => {
   return getEraClubsRanking(getModernLeagueData());
+};
+
+// Era Profesional: 1994-95 s.d. Sekarang (Ligina + ISL + Liga 1)
+export const getProfesionalData = (): SeasonRecord[] => {
+  const startIdx = leagueData.findIndex(s => s.season === "1994–95");
+  return leagueData.slice(startIdx);
+};
+
+/**
+ * All-time consolidated leaders with split amateur/professional tracking.
+ * - `titles` & `seasonsWon` = PROFESSIONAL ERA ONLY (1994-95+) → main ranking metric
+ * - `amatirTitles` & `amatirSeasonsWon` = AMATEUR ERA (Perserikatan 1930-1994) → supplementary info
+ * - Sorted by professional titles (desc), then professional runner-ups as tiebreaker
+ */
+export const getClubsRanking = (): ClubSummary[] => {
+  const normalize = (name: string): string => {
+    if (!name || name === "-" || name === "Kompetisi dibatalkan") return "";
+    const clean = name.trim();
+    if (clean === "VIJ Batavia") return "Persija Jakarta";
+    if (clean === "SIVB Surabaya" || clean === "Persebaya 1927") return "Persebaya Surabaya";
+    return clean;
+  };
+
+  // Build amatir counts (1930–1993-94)
+  const amatirData = getPerserikatanData();
+  const amatirCounts: Record<string, { wins: number; seasons: string[] }> = {};
+  amatirData.forEach(item => {
+    if (item.isCancelled) return;
+    const winNorm = normalize(item.winner);
+    if (winNorm) {
+      if (!amatirCounts[winNorm]) amatirCounts[winNorm] = { wins: 0, seasons: [] };
+      amatirCounts[winNorm].wins += 1;
+      amatirCounts[winNorm].seasons.push(item.season);
+    }
+  });
+
+  // Build professional counts (1994-95+)
+  const proData = getProfesionalData();
+  const proCounts: Record<string, { wins: number; runnerUps: number; seasons: string[]; hNames: Set<string> }> = {};
+  proData.forEach(item => {
+    if (item.isCancelled) return;
+    const winNorm = normalize(item.winner);
+    if (winNorm) {
+      if (!proCounts[winNorm]) proCounts[winNorm] = { wins: 0, runnerUps: 0, seasons: [], hNames: new Set() };
+      proCounts[winNorm].wins += 1;
+      proCounts[winNorm].seasons.push(item.season);
+      if (item.winner !== winNorm) proCounts[winNorm].hNames.add(item.winner);
+    }
+    const ruNorm = normalize(item.runnerUp);
+    if (ruNorm) {
+      if (!proCounts[ruNorm]) proCounts[ruNorm] = { wins: 0, runnerUps: 0, seasons: [], hNames: new Set() };
+      proCounts[ruNorm].runnerUps += 1;
+      if (item.runnerUp !== ruNorm) proCounts[ruNorm].hNames.add(item.runnerUp);
+    }
+  });
+
+  // Merge: collect ALL club names that appear in either era
+  const allNames = new Set<string>([
+    ...Object.keys(proCounts),
+    ...Object.keys(amatirCounts),
+  ]);
+
+  const result: ClubSummary[] = [];
+  allNames.forEach(name => {
+    const pro = proCounts[name];
+    const amatir = amatirCounts[name];
+    // Only include clubs that have at least 1 title in either era
+    const proTitles = pro?.wins ?? 0;
+    const amatirTitles = amatir?.wins ?? 0;
+    if (proTitles === 0 && amatirTitles === 0) return;
+
+    // Collect historical names from pro-era (where name normalizations occurred)
+    const hNames = pro?.hNames ? Array.from(pro.hNames) : [];
+
+    result.push({
+      name,
+      titles: proTitles,
+      runnerUps: pro?.runnerUps ?? 0,
+      seasonsWon: pro?.seasons ?? [],
+      historicalNames: hNames,
+      amatirTitles,
+      amatirSeasonsWon: amatir?.seasons ?? [],
+    });
+  });
+
+  // Sort: professional titles desc → professional runner-ups desc → total titles desc
+  return result.sort((a, b) => {
+    if (b.titles !== a.titles) return b.titles - a.titles;
+    if (b.runnerUps !== a.runnerUps) return b.runnerUps - a.runnerUps;
+    // Tie-break with total combined titles
+    return (b.titles + b.amatirTitles) - (a.titles + a.amatirTitles);
+  });
 };

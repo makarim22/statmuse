@@ -115,28 +115,28 @@ export default function App() {
       let fallbackWidgetData: any = null;
 
       if (queryText.toLowerCase().includes("banyak") || queryText.toLowerCase().includes("tinggi") || queryText.toLowerCase().includes("ranking")) {
-        fallbackAnswer = "Berikut adalah daftar klub tersukses dengan gelar terbanyak yang tercatat secara resmi di arsip Liga Indonesia sejak era Perserikatan 1930:\n\n1. **Persija Jakarta / VIJ**: 11 Gelar Juara Nasional.\n2. **Persebaya Surabaya / SIVB**: 8 Gelar Juara Nasional.\n3. **Persib Bandung**: 8 Gelar Juara Nasional.\n4. **Persis Solo**: 7 Gelar Juara Nasional.\n5. **Persipura Jayapura**: 4 Gelar Juara Nasional (Merupakan penguasa mutlak era modern ISL).";
+        fallbackAnswer = "Berikut adalah daftar klub tersukses berdasarkan **era profesional** (Liga Indonesia 1994/95 s.d. sekarang) sebagai perhitungan utama. Gelar era amatir Perserikatan (1930–1994) dicantumkan sebagai informasi tambahan:\n\n1. **Persib Bandung**: 5 Gelar Era Profesional (+ 5 Era Amatir Perserikatan = 10 total).\n2. **Persipura Jayapura**: 4 Gelar Era Profesional.\n3. **Persija Jakarta**: 2 Gelar Era Profesional (+ 9 Era Amatir = 11 total).\n4. **Persebaya Surabaya**: 2 Gelar Era Profesional (+ 6 Era Amatir = 8 total).\n5. **PSM Makassar**: 2 Gelar Era Profesional (+ 4 Era Amatir = 6 total).";
         fallbackWidgetData = {
           type: 'champions-ranking',
-          title: "DISTRIBUSI MAHKOTA JUARA TERTINGGI (HISTORIS)",
+          title: "DISTRIBUSI MAHKOTA ERA PROFESIONAL (UTAMA)",
           data: [
-            { label: "Persija Jakarta", value: 11, subtext: "VJ Batavia / Jakarta Raya" },
-            { label: "Persebaya Surabaya", value: 8, subtext: "SIVB Surabaya / Kota Pahlawan" },
-            { label: "Persib Bandung", value: 8, subtext: "Maung Bandung / Pangeran Biru" },
-            { label: "Persis Solo", value: 7, subtext: "Laskar Sambernyawa" },
-            { label: "Persipura Jayapura", value: 4, subtext: "Mutiara Hitam" }
+            { label: "Persib Bandung", value: 5, subtext: "+5 Amatir Perserikatan = 10 total" },
+            { label: "Persipura Jayapura", value: 4, subtext: "Penguasa mutlak era ISL modern" },
+            { label: "Persija Jakarta", value: 2, subtext: "+9 Amatir Perserikatan = 11 total" },
+            { label: "Persebaya Surabaya", value: 2, subtext: "+6 Amatir Perserikatan = 8 total" },
+            { label: "Bali United", value: 2, subtext: "Kekuatan dominan Liga 1 modern" }
           ]
         };
       } else if (queryText.toLowerCase().includes("persib") && queryText.toLowerCase().includes("persija")) {
-        fallbackAnswer = "Rivalitas **El Clasico Indonesia** antara **Persija Jakarta** dan **Persib Bandung** adalah perseteruan paling ikonis di tanah air.\n\n- **Persija Jakarta** (11 Gelar): Mendominasi era amatir perserikatan awal kemerdekaan.\n- **Persib Bandung** (8 Gelar): Memiliki sejarah konsistensi tinggi di era Perserikatan akhir serta menjadi juara edisi perdana Liga Indonesia Terpadu (1994/95) serta menyabet gelar Liga 1 terbaru.\n\nKedua tim memiliki basis massa sepak bola terbesar dan paling fanatik di Asia Tenggara.";
+        fallbackAnswer = "Rivalitas **El Clasico Indonesia** antara **Persija Jakarta** dan **Persib Bandung** adalah perseteruan paling ikonis di tanah air.\n\n- **Persija Jakarta** (Era Profesional: **2 Gelar** + Era Amatir: 9 Gelar Perserikatan): Mendominasi era amatir perserikatan awal kemerdekaan dengan 9 trofi, dan menambah 2 gelar profesional (2001 dan 2018).\n- **Persib Bandung** (Era Profesional: **5 Gelar** + Era Amatir: 5 Gelar Perserikatan): Raja era profesional dengan 5 trofi sejak 1994/95, plus 5 trofi Perserikatan. Juara Liga 1 terbaru 2023-24, 2024-25, 2025-26.\n\nDalam konteks **era profesional modern**, Persib jauh lebih dominan. Namun secara total historis, Persija unggul berkat dominasi era Perserikatan.";
         fallbackWidgetData = {
           type: 'club-comparison',
-          title: "PERBANDINGAN TROFI KLASIK",
+          title: "PERBANDINGAN TROFI KLASIK (ERA PROFESIONAL)",
           data: [
-            { label: "Persija Jakarta - Gelar Juara", value: 11, subtext: "9x Perserikatan, 1x Liga Indonesia, 1x Liga 1" },
-            { label: "Persib Bandung - Gelar Juara", value: 8, subtext: "5x Perserikatan, 1x Liga Indonesia, 2x Liga 1" },
-            { label: "Persija Jakarta - Runner Up", value: 5, subtext: "Tempat kedua terbanyak sepanjang sejarah" },
-            { label: "Persib Bandung - Runner Up", value: 8, subtext: "Sering finis sebagai peringkat kedua" }
+            { label: "Persija Jakarta - Profesional", value: 2, subtext: "2001 & 2018 (Liga Indonesia + Liga 1)" },
+            { label: "Persib Bandung - Profesional", value: 5, subtext: "1994/95, 2014, 2023/24, 2024/25, 2025/26" },
+            { label: "Persija Jakarta - Amatir (Perserikatan)", value: 9, subtext: "Era 1931–1979 (info tambahan)" },
+            { label: "Persib Bandung - Amatir (Perserikatan)", value: 5, subtext: "Era 1937–1993/94 (info tambahan)" }
           ]
         };
       } else {
@@ -423,7 +423,10 @@ export default function App() {
             <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Klub Paling Sukses</p>
             <div className="flex flex-col mt-2">
               <span className="text-3xl font-black italic tracking-tighter truncate uppercase">{allClubs[0]?.name}</span>
-              <span className="text-xs font-bold opacity-75 mt-1">{allClubs[0]?.titles} Kali Juara Nasional</span>
+              <span className="text-xs font-bold opacity-75 mt-1">{allClubs[0]?.titles} Gelar Era Profesional</span>
+              {(allClubs[0]?.amatirTitles ?? 0) > 0 && (
+                <span className="text-[9px] font-bold opacity-50 mt-0.5">+{allClubs[0]?.amatirTitles} Amatir Perserikatan</span>
+              )}
             </div>
           </div>
 
@@ -987,43 +990,16 @@ export default function App() {
                           <tr 
                             key={entry.clubName}
                             onClick={() => {
-                              // Build a custom ClubSummary structure to match the modal's expected API
-                              const mockClubSummary: ClubSummary = {
+                              // Find pre-computed club data (has pro/amatir split) or build a minimal fallback
+                              const existingClub = allClubs.find(c => c.name === entry.clubName);
+                              const mockClubSummary: ClubSummary = existingClub ?? {
                                 name: entry.clubName,
-                                titles: meta ? (leagueData.filter(item => {
-                                  if (item.isCancelled) return false;
-                                  const normalize = (name: string): string => {
-                                    if (!name) return "";
-                                    const clean = name.trim();
-                                    if (clean === "VIJ Batavia") return "Persija Jakarta";
-                                    if (clean === "SIVB Surabaya" || clean === "Persebaya 1927") return "Persebaya Surabaya";
-                                    return clean;
-                                  };
-                                  return normalize(item.winner) === entry.clubName;
-                                }).length) : 0,
-                                runnerUps: meta ? (leagueData.filter(item => {
-                                  if (item.isCancelled) return false;
-                                  const normalize = (name: string): string => {
-                                    if (!name) return "";
-                                    const clean = name.trim();
-                                    if (clean === "VIJ Batavia") return "Persija Jakarta";
-                                    if (clean === "SIVB Surabaya" || clean === "Persebaya 1927") return "Persebaya Surabaya";
-                                    return clean;
-                                  };
-                                  return normalize(item.runnerUp) === entry.clubName;
-                                }).length) : 0,
-                                seasonsWon: meta ? (leagueData.filter(item => {
-                                  if (item.isCancelled) return false;
-                                  const normalize = (name: string): string => {
-                                    if (!name) return "";
-                                    const clean = name.trim();
-                                    if (clean === "VIJ Batavia") return "Persija Jakarta";
-                                    if (clean === "SIVB Surabaya" || clean === "Persebaya 1927") return "Persebaya Surabaya";
-                                    return clean;
-                                  };
-                                  return normalize(item.winner) === entry.clubName;
-                                }).map(item => item.season)) : [],
-                                historicalNames: []
+                                titles: 0,
+                                runnerUps: 0,
+                                seasonsWon: [],
+                                historicalNames: [],
+                                amatirTitles: 0,
+                                amatirSeasonsWon: [],
                               };
                               setSelectedModalClub(mockClubSummary);
                               setIsModalOpen(true);
@@ -1234,10 +1210,16 @@ export default function App() {
 
                   <div className="w-full text-left bg-white border-2 border-black p-3 text-xs">
                     <div className="flex justify-between items-center opacity-60 text-[9px] font-black uppercase tracking-widest border-b border-black/10 pb-1 mb-1">
-                      <span>Tahun Juara</span>
-                      <span>{allClubs[1].titles} Trofi</span>
+                      <span>Gelar Era Profesional</span>
+                      <span className="bg-[#00FF85] text-black border border-black px-1">{allClubs[1].titles} Trofi Pro</span>
                     </div>
-                    <p className="font-mono font-bold mt-1 line-clamp-1">{allClubs[1].seasonsWon.join(", ")}</p>
+                    <p className="font-mono font-bold mt-1 line-clamp-1">{allClubs[1].seasonsWon.length > 0 ? allClubs[1].seasonsWon.join(", ") : "—"}</p>
+                    {(allClubs[1].amatirTitles ?? 0) > 0 && (
+                      <div className="mt-1.5 pt-1 border-t border-dashed border-black/20">
+                        <span className="text-[8px] font-black uppercase tracking-widest opacity-50">Amatir Perserikatan (Info Tambahan)</span>
+                        <p className="font-mono text-[10px] text-slate-500 mt-0.5 line-clamp-1">{allClubs[1].amatirTitles}x: {allClubs[1].amatirSeasonsWon.join(", ")}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -1283,10 +1265,16 @@ export default function App() {
 
                   <div className="w-full text-left bg-white border-2 border-black p-3 text-xs mt-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                     <div className="flex justify-between items-center opacity-60 text-[9px] font-black uppercase tracking-widest border-b border-black/10 pb-1 mb-1">
-                      <span>Tahun Juara</span>
-                      <span>{allClubs[0].titles} Trofi</span>
+                      <span>Gelar Era Profesional</span>
+                      <span className="bg-[#00FF85] text-black border border-black px-1">{allClubs[0].titles} Trofi Pro</span>
                     </div>
-                    <p className="font-mono font-bold mt-1 line-clamp-1">{allClubs[0].seasonsWon.join(", ")}</p>
+                    <p className="font-mono font-bold mt-1 line-clamp-1">{allClubs[0].seasonsWon.length > 0 ? allClubs[0].seasonsWon.join(", ") : "—"}</p>
+                    {(allClubs[0].amatirTitles ?? 0) > 0 && (
+                      <div className="mt-1.5 pt-1 border-t border-dashed border-black/20">
+                        <span className="text-[8px] font-black uppercase tracking-widest opacity-50">Amatir Perserikatan (Info Tambahan)</span>
+                        <p className="font-mono text-[10px] text-slate-500 mt-0.5 line-clamp-1">{allClubs[0].amatirTitles}x: {allClubs[0].amatirSeasonsWon.join(", ")}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -1329,10 +1317,16 @@ export default function App() {
 
                   <div className="w-full text-left bg-white border-2 border-black p-3">
                     <div className="flex justify-between items-center opacity-60 text-[9px] font-black uppercase tracking-widest border-b border-black/10 pb-1 mb-1">
-                      <span>Tahun Juara</span>
-                      <span>{allClubs[2].titles} Trofi</span>
+                      <span>Gelar Era Profesional</span>
+                      <span className="bg-[#00FF85] text-black border border-black px-1">{allClubs[2].titles} Trofi Pro</span>
                     </div>
-                    <p className="text-xs font-black mt-1 line-clamp-1">{allClubs[2].seasonsWon.join(", ")}</p>
+                    <p className="text-xs font-black mt-1 line-clamp-1">{allClubs[2].seasonsWon.length > 0 ? allClubs[2].seasonsWon.join(", ") : "—"}</p>
+                    {(allClubs[2].amatirTitles ?? 0) > 0 && (
+                      <div className="mt-1.5 pt-1 border-t border-dashed border-black/20">
+                        <span className="text-[8px] font-black uppercase tracking-widest opacity-50">Amatir Perserikatan (Info Tambahan)</span>
+                        <p className="font-mono text-[10px] text-slate-500 mt-0.5 line-clamp-1">{allClubs[2].amatirTitles}x: {allClubs[2].amatirSeasonsWon.join(", ")}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -1364,7 +1358,7 @@ export default function App() {
                     className="w-full text-sm font-black bg-white border-2 border-black rounded-none p-4 focus:outline-none focus:bg-[#00FF85]/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer appearance-none uppercase"
                   >
                     {allClubs.map((club, idx) => (
-                      <option key={idx} value={club.name}>{club.name} ({club.titles} Trofi)</option>
+                      <option key={idx} value={club.name}>{club.name} ({club.titles} Pro{club.amatirTitles > 0 ? ` +${club.amatirTitles} Amatir` : ''})</option>
                     ))}
                   </select>
                 </div>
@@ -1378,7 +1372,7 @@ export default function App() {
                     className="w-full text-sm font-black bg-white border-2 border-black rounded-none p-4 focus:outline-none focus:bg-[#00FF85]/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer appearance-none uppercase"
                   >
                     {allClubs.map((club, idx) => (
-                      <option key={idx} value={club.name}>{club.name} ({club.titles} Trofi)</option>
+                      <option key={idx} value={club.name}>{club.name} ({club.titles} Pro{club.amatirTitles > 0 ? ` +${club.amatirTitles} Amatir` : ''})</option>
                     ))}
                   </select>
                 </div>
@@ -1396,24 +1390,30 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                     
                     {/* National Titles metric container */}
-                    <div className="bg-white border-2 border-black p-4 flex flex-col justify-between">
-                      <span className="text-[9px] font-black uppercase tracking-widest opacity-60">MAHKOTA JUARA</span>
-                      <div className="flex justify-around items-center my-3">
-                        <div className="text-3xl font-mono font-black">{clubAData.titles}</div>
-                        <div className="text-xs font-black opacity-30">vs</div>
-                        <div className="text-3xl font-mono font-black">{clubBData.titles}</div>
-                      </div>
-                      <div className="w-full h-3 bg-red-100 border border-black overflow-hidden flex">
-                        <div 
-                          className="h-full bg-black" 
-                          style={{ width: `${(clubAData.titles / ((clubAData.titles + clubBData.titles) || 1)) * 100}%` }}
-                        />
-                        <div 
-                          className="h-full bg-[#00FF85]" 
-                          style={{ width: `${(clubBData.titles / ((clubAData.titles + clubBData.titles) || 1)) * 100}%` }}
-                        />
-                      </div>
-                    </div>
+                     <div className="bg-white border-2 border-black p-4 flex flex-col justify-between">
+                       <span className="text-[9px] font-black uppercase tracking-widest opacity-60">GELAR ERA PROFESIONAL (UTAMA)</span>
+                       <div className="flex justify-around items-center my-3">
+                         <div className="text-center">
+                           <div className="text-3xl font-mono font-black">{clubAData.titles}</div>
+                           {clubAData.amatirTitles > 0 && <div className="text-[9px] font-bold text-slate-400">+{clubAData.amatirTitles} Amatir</div>}
+                         </div>
+                         <div className="text-xs font-black opacity-30">vs</div>
+                         <div className="text-center">
+                           <div className="text-3xl font-mono font-black">{clubBData.titles}</div>
+                           {clubBData.amatirTitles > 0 && <div className="text-[9px] font-bold text-slate-400">+{clubBData.amatirTitles} Amatir</div>}
+                         </div>
+                       </div>
+                       <div className="w-full h-3 bg-red-100 border border-black overflow-hidden flex">
+                         <div 
+                           className="h-full bg-black" 
+                           style={{ width: `${(clubAData.titles / ((clubAData.titles + clubBData.titles) || 1)) * 100}%` }}
+                         />
+                         <div 
+                           className="h-full bg-[#00FF85]" 
+                           style={{ width: `${(clubBData.titles / ((clubAData.titles + clubBData.titles) || 1)) * 100}%` }}
+                         />
+                       </div>
+                     </div>
 
                     {/* Runner-ups count metric container */}
                     <div className="bg-white border-2 border-black p-4 flex flex-col justify-between">
@@ -1474,8 +1474,11 @@ export default function App() {
 
             {/* List of remaining Champions in Brutalist Table */}
             <div className="border-2 border-black overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] bg-white" id="leaderboard_table">
-              <div className="p-4 border-b-2 border-black bg-[#F2F2F2] flex items-center justify-between">
-                <span className="text-xs font-black uppercase tracking-wider">DAFTAR KESELURUHAN SEJARAH JUARA LIGA</span>
+              <div className="p-4 border-b-2 border-black bg-[#F2F2F2] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span className="text-xs font-black uppercase tracking-wider block">DAFTAR KESELURUHAN SEJARAH JUARA LIGA</span>
+                  <span className="text-[9px] font-bold text-slate-500 uppercase">Diurutkan: Gelar Era Profesional (Utama) · Gelar Perserikatan Amatir sebagai Info Tambahan</span>
+                </div>
                 <span className="text-xs font-mono font-bold bg-[#00FF85] border border-black px-2 py-0.5">{allClubs.length} TIM UNGGUL</span>
               </div>
               <div className="divide-y-2 divide-black">
@@ -1543,8 +1546,11 @@ export default function App() {
                           <p className="text-xs font-black uppercase">{club.runnerUps} KALI</p>
                         </div>
                         <div className="bg-white group-hover:bg-[#00FF85] border-2 border-black px-5 py-2 text-center min-w-[100px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-center transition-colors">
-                          <span className="text-[8px] font-black uppercase tracking-widest leading-none block text-black mb-1">TOTAL GELAR</span>
+                          <span className="text-[8px] font-black uppercase tracking-widest leading-none block text-black mb-0.5">GELAR PRO</span>
                           <span className="text-xl font-mono font-black text-black leading-none">{club.titles}</span>
+                          {club.amatirTitles > 0 && (
+                            <span className="text-[8px] font-bold text-slate-500 leading-none mt-0.5">+{club.amatirTitles} Amatir</span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1958,7 +1964,9 @@ export default function App() {
                                 titles: 1,
                                 runnerUps: 0,
                                 seasonsWon: [record.season],
-                                historicalNames: []
+                                historicalNames: [],
+                                amatirTitles: 0,
+                                amatirSeasonsWon: [],
                               };
                               setSelectedModalClub(c);
                               setIsModalOpen(true);
@@ -1983,7 +1991,9 @@ export default function App() {
                                 titles: 0,
                                 runnerUps: 1,
                                 seasonsWon: [],
-                                historicalNames: []
+                                historicalNames: [],
+                                amatirTitles: 0,
+                                amatirSeasonsWon: [],
                               };
                               setSelectedModalClub(c);
                               setIsModalOpen(true);

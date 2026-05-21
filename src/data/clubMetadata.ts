@@ -20,7 +20,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
     founded: 1928,
     nickname: "Macan Kemayoran",
     city: "DKI Jakarta",
-    description: "Klub kebanggaan Ibu Kota yang didirikan pada 28 November 1928 sebagai VIJ (Voetbalbond Indonesische Jacatra). Merupakan penguasa trofi nasional terbanyak dalam sejarah sepak bola Indonesia dengan total 11 gelar juara sejak era Perserikatan amatir hingga kancah Liga 1 profesional modern.",
+    description: "Klub kebanggaan Ibu Kota yang didirikan pada 28 November 1928 sebagai VIJ (Voetbalbond Indonesische Jacatra). Penguasa era amatir Perserikatan dengan 9 gelar bergengsi, ditambah 2 gelar di era profesional (Liga Indonesia 2001 & Liga 1 2018), menjadikan total 11 trofi nasional. Simbol kebanggaan Jakarta yang tak lekang oleh waktu.",
     colors: {
       primary: "#FF4500",
       secondary: "#E53935",
@@ -48,7 +48,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
     founded: 1933,
     nickname: "Maung Bandung / Pangeran Biru",
     city: "Bandung, Jawa Barat",
-    description: "Dibentuk pada 14 Maret 1933, Persib adalah maskot sepak bola tanah Pasundan yang didukung oleh jutaan Bobotoh secara setia dan meluas. Terkenal akan konsistensi prestasinya semenjak memenangkan trofi perserikatan pertamanya di tahun 1937, juara Liga Indonesia perdana (1994/95), hingga dominansi di Liga 1 terbaru.",
+    description: "Dibentuk pada 14 Maret 1933, Persib adalah maskot sepak bola tanah Pasundan yang didukung oleh jutaan Bobotoh secara setia dan meluas. Meraih 5 gelar Perserikatan (era amatir) dan 5 gelar era profesional: juara Liga Indonesia perdana (1994/95), ISL 2014, serta dominasi Liga 1 dengan trofi 2023/24, 2024/25, dan 2025/26, menjadikan Persib sebagai raja era profesional modern.",
     colors: {
       primary: "#0B3C9B",
       secondary: "#FFFFFF",
