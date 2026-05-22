@@ -40,6 +40,9 @@ import { SeasonRecord, ClubSummary, SearchQueryResponse } from "./types";
 import { clubMetadataList } from "./data/clubMetadata";
 import ClubShield from "./components/ClubShield";
 import ClubDetailModal from "./components/ClubDetailModal";
+import MultiClubComparison from "./components/MultiClubComparison";
+import TimelineVisualization from "./components/TimelineVisualization";
+import GeographicMapView from "./components/GeographicMapView";
 import { standingsSeasonList, StandingsEntry } from "./data/standingsData";
 import { exportToCSV, exportClubRankingsToCSV, exportToJSON, exportStandingsToCSV, copyStatCardToClipboard } from "./utils/exportUtils";
 
@@ -70,18 +73,23 @@ export default function App() {
   const allClubs = getClubsRanking();
   const [compareClubA, setCompareClubA] = useState<string>(allClubs[0]?.name || "Persija Jakarta");
   const [compareClubB, setCompareClubB] = useState<string>(allClubs[1]?.name || "Persib Bandung");
+  const [leaderboardViewMode, setLeaderboardViewMode] = useState<'podium' | 'map'>('podium');
 
   // Filter and sorting states for the complete database explorer
   const [explorerQuery, setExplorerQuery] = useState("");
   const [explorerSortOrder, setExplorerSortOrder] = useState<'desc' | 'asc'>('desc');
   const [selectedClubFilter, setSelectedClubFilter] = useState("Semua");
-  
+  const [explorerViewMode, setExplorerViewMode] = useState<'grid' | 'timeline'>('grid');
+
   // For expanding detailed view on a season card
   const [expandedSeason, setExpandedSeason] = useState<string | null>(null);
 
   // States for Club Detail Modal
   const [selectedModalClub, setSelectedModalClub] = useState<ClubSummary | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // State for Multi-Club Comparison Modal
+  const [isMultiCompareOpen, setIsMultiCompareOpen] = useState(false);
 
   // Load a default summary query on first load
   useEffect(() => {
@@ -1181,7 +1189,15 @@ export default function App() {
                   Klub dengan raihan mahkota kejuaraan liga kasta tertinggi nasional terbanyak sejak tahun 1930 hingga sekarang.
                 </p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
+                <button
+                  onClick={() => setLeaderboardViewMode(prev => prev === 'podium' ? 'map' : 'podium')}
+                  className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-[#00FF85] transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                  title="Toggle map view"
+                >
+                  <MapPin className="h-4 w-4" />
+                  {leaderboardViewMode === 'podium' ? 'PETA' : 'PODIUM'}
+                </button>
                 <button
                   onClick={() => exportClubRankingsToCSV(allClubs)}
                   className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
@@ -1201,6 +1217,17 @@ export default function App() {
               </div>
             </div>
 
+            {/* Conditional View: Podium or Map */}
+            {leaderboardViewMode === 'map' ? (
+              <GeographicMapView
+                clubs={allClubs}
+                onClubClick={(club) => {
+                  setSelectedModalClub(club);
+                  setIsModalOpen(true);
+                }}
+              />
+            ) : (
+              <>
             {/* Brutalist Podium Display */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-white" id="elite_podium">
               
@@ -1363,6 +1390,8 @@ export default function App() {
                 </div>
               )}
             </div>
+            </>
+            )}
 
             {/* BRAND NEW UPGRADE: DYNAMIC KLUB VS KLUB COMPARISON TOOL */}
             <div className="border-4 border-black bg-white p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] space-y-6" id="vs_mode_panel">
@@ -1374,9 +1403,13 @@ export default function App() {
                     <p className="text-[10px] font-bold text-slate-500 uppercase mt-1">Uji kekuatan historis head-to-head secara instan</p>
                   </div>
                 </div>
-                <div className="bg-[#00FF85] border border-black px-2.5 py-1 text-[9px] font-black uppercase">
-                  SIMULASI HEAD-TO-HEAD
-                </div>
+                <button
+                  onClick={() => setIsMultiCompareOpen(true)}
+                  className="bg-black text-[#00FF85] border-2 border-black px-4 py-2 text-xs font-black uppercase hover:bg-[#00FF85] hover:text-black transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none flex items-center gap-2"
+                >
+                  <ArrowRightLeft className="h-4 w-4" />
+                  BANDINGKAN 3+ KLUB
+                </button>
               </div>
 
               {/* Selector boxes */}
@@ -1633,6 +1666,14 @@ export default function App() {
               {/* Advanced Sorting and Filtering Buttons */}
               <div className="flex flex-wrap items-center gap-2 shrink-0">
                 <button
+                  onClick={() => setExplorerViewMode(prev => prev === 'grid' ? 'timeline' : 'grid')}
+                  className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-[#00FF85] transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                  title="Toggle view mode"
+                >
+                  <Calendar className="h-4 w-4" />
+                  {explorerViewMode === 'grid' ? 'TIMELINE' : 'GRID'}
+                </button>
+                <button
                   onClick={() => exportToCSV(sortedSeasons, 'liga-indonesia-history.csv')}
                   className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
                   title="Download sebagai CSV"
@@ -1734,8 +1775,17 @@ export default function App() {
             </div>
 
             {/* Render loop for chronology cards / grid list */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6" id="explorer_list">
-              {sortedSeasons.length > 0 ? (
+            {explorerViewMode === 'timeline' ? (
+              <TimelineVisualization
+                data={sortedSeasons}
+                onSeasonClick={(season) => {
+                  setActiveTab('ai-stats');
+                  handleExecuteSearch(`Siapa juara liga tahun ${season} dan bagaimana jalannya kompetisi waktu itu?`);
+                }}
+              />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6" id="explorer_list">
+                {sortedSeasons.length > 0 ? (
                 sortedSeasons.map((record, idx) => {
                   const isExpanded = expandedSeason === record.season;
                   const itemEra = getEraForSeason(record.season);
@@ -1847,7 +1897,8 @@ export default function App() {
                   ⚠️ Tidak ada kompetisi yang mencocokkan kata kunci "{explorerQuery}" dalam Era {selectedEra.toUpperCase()}.
                 </div>
               )}
-            </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -2848,6 +2899,14 @@ export default function App() {
           handleExecuteSearch(query);
         }}
       />
+
+      {/* Multi-Club Comparison Modal */}
+      {isMultiCompareOpen && (
+        <MultiClubComparison
+          allClubs={allClubs}
+          onClose={() => setIsMultiCompareOpen(false)}
+        />
+      )}
     </div>
   );
 }
