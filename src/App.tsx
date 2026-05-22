@@ -23,7 +23,8 @@ import {
   MapPin,
   Download,
   Share2,
-  Copy
+  Copy,
+  Gamepad2
 } from "lucide-react";
 import { 
   leagueData, 
@@ -46,11 +47,12 @@ import GeographicMapView from "./components/GeographicMapView";
 import { standingsSeasonList, StandingsEntry } from "./data/standingsData";
 import { exportToCSV, exportClubRankingsToCSV, exportToJSON, exportStandingsToCSV, copyStatCardToClipboard } from "./utils/exportUtils";
 import AllTimeStatsView from "./components/AllTimeStatsView";
+import QuizView from "./components/QuizView";
 import { leagueTrivia } from "./data/statisticsData";
 
 export default function App() {
-  // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'stats' (All-time stats), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern)
-  const [activeTab, setActiveTab] = useState<'ai-stats' | 'standings' | 'leaderboard' | 'map' | 'stats' | 'explorer' | 'galatama' | 'perserikatan' | 'liga-indonesia' | 'era-modern'>('standings');
+  // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'stats' (All-time stats), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern), 'kuis' (Trivia Quiz)
+  const [activeTab, setActiveTab] = useState<'ai-stats' | 'standings' | 'leaderboard' | 'map' | 'stats' | 'explorer' | 'galatama' | 'perserikatan' | 'liga-indonesia' | 'era-modern' | 'kuis'>('standings');
   
   // Standings view state
   const [selectedStandingsSeason, setSelectedStandingsSeason] = useState<string>("2024-2025");
@@ -381,6 +383,17 @@ export default function App() {
             id="tab_stats"
           >
             STATISTIK & REKOR
+          </button>
+          <button
+            onClick={() => setActiveTab('kuis')}
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+              activeTab === 'kuis' 
+                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
+                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+            }`}
+            id="tab_kuis"
+          >
+            KUIS SEJARAH
           </button>
           <button
             onClick={() => setActiveTab('explorer')}
@@ -2919,6 +2932,14 @@ export default function App() {
             </div>
           );
         })()}
+
+        {/* =========================================
+            QUIZ VIEW (GAMIFICATION)
+        ========================================= */}
+        {activeTab === 'kuis' && (
+          <QuizView />
+        )}
+
       </main>
 
       {/* Styled Brutalist Footer Frame */}
