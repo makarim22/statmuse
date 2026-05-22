@@ -45,10 +45,11 @@ import TimelineVisualization from "./components/TimelineVisualization";
 import GeographicMapView from "./components/GeographicMapView";
 import { standingsSeasonList, StandingsEntry } from "./data/standingsData";
 import { exportToCSV, exportClubRankingsToCSV, exportToJSON, exportStandingsToCSV, copyStatCardToClipboard } from "./utils/exportUtils";
+import AllTimeStatsView from "./components/AllTimeStatsView";
 
 export default function App() {
-  // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern)
-  const [activeTab, setActiveTab] = useState<'ai-stats' | 'standings' | 'leaderboard' | 'map' | 'explorer' | 'galatama' | 'perserikatan' | 'liga-indonesia' | 'era-modern'>('standings');
+  // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'stats' (All-time stats), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern)
+  const [activeTab, setActiveTab] = useState<'ai-stats' | 'standings' | 'leaderboard' | 'map' | 'stats' | 'explorer' | 'galatama' | 'perserikatan' | 'liga-indonesia' | 'era-modern'>('standings');
   
   // Standings view state
   const [selectedStandingsSeason, setSelectedStandingsSeason] = useState<string>("2024-2025");
@@ -368,6 +369,17 @@ export default function App() {
             id="tab_map"
           >
             PETA DISTRIBUSI
+          </button>
+          <button
+            onClick={() => setActiveTab('stats')}
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+              activeTab === 'stats' 
+                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
+                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+            }`}
+            id="tab_stats"
+          >
+            STATISTIK & REKOR
           </button>
           <button
             onClick={() => setActiveTab('explorer')}
@@ -1645,6 +1657,11 @@ export default function App() {
                 }}
               />
           </div>
+        )}
+
+        {/* VIEW: ALL TIME STATS & TRIVIA */}
+        {activeTab === 'stats' && (
+          <AllTimeStatsView />
         )}
 
         {/* VIEW 3: CHRONOLOGICAL SEASONS TIMELINE WITH BRAND NEW ERA FILTERS & DETAIL MODAL EXPANDERS */}
