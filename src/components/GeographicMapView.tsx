@@ -2,7 +2,7 @@ import { MapPin, Trophy, Award } from "lucide-react";
 import { ClubSummary } from "../types";
 import { clubMetadataList } from "../data/clubMetadata";
 import ClubShield from "./ClubShield";
-import indonesiaMapUrl from '../assets/indonesia.svg';
+import IndonesiaMap from "./IndonesiaMap";
 
 interface GeographicMapViewProps {
   clubs: ClubSummary[];
@@ -19,55 +19,71 @@ const regions = [
   { name: "Bali & Nusa Tenggara", x: 65, y: 62, color: "#EC4899" }
 ];
 
-// City coordinates (approximate positions on Indonesia map)
-const cityCoordinates: Record<string, { x: number; y: number; region: string }> = {
-  "DKI Jakarta": { x: 42, y: 52, region: "Jawa" },
-  "Bandung, Jawa Barat": { x: 43, y: 53, region: "Jawa" },
-  "Surabaya, Jawa Timur": { x: 50, y: 53, region: "Jawa" },
-  "Semarang, Jawa Tengah": { x: 46, y: 52, region: "Jawa" },
-  "DI Yogyakarta": { x: 46, y: 54, region: "Jawa" },
-  "Surakarta, Jawa Tengah": { x: 47, y: 53, region: "Jawa" },
-  "Malang, Jawa Timur": { x: 51, y: 54, region: "Jawa" },
-  "Medan, Sumatera Utara": { x: 18, y: 22, region: "Sumatera" },
-  "Palembang, Sumatera Selatan": { x: 25, y: 30, region: "Sumatera" },
-  "Banda Aceh, Aceh": { x: 15, y: 18, region: "Sumatera" },
-  "Pekanbaru, Riau": { x: 22, y: 25, region: "Sumatera" },
-  "Padang, Sumatera Barat": { x: 20, y: 28, region: "Sumatera" },
-  "Makassar, Sulawesi Selatan": { x: 72, y: 42, region: "Sulawesi" },
-  "Jayapura, Papua": { x: 88, y: 45, region: "Papua" },
-  "Samarinda, Kalimantan Timur": { x: 62, y: 35, region: "Kalimantan" },
-  "Balikpapan, Kalimantan Timur": { x: 63, y: 37, region: "Kalimantan" },
-  "Banjarmasin, Kalimantan Selatan": { x: 60, y: 40, region: "Kalimantan" },
-  "Bontang, Kalimantan Timur": { x: 64, y: 34, region: "Kalimantan" },
-  "Gianyar, Bali": { x: 58, y: 58, region: "Bali & Nusa Tenggara" },
-  "Tangerang, Banten": { x: 41, y: 52, region: "Jawa" },
-  "Bogor, Jawa Barat": { x: 42, y: 53, region: "Jawa" },
-  "Kediri, Jawa Timur": { x: 49, y: 54, region: "Jawa" },
-  "Gresik, Jawa Timur": { x: 51, y: 52, region: "Jawa" },
-  "Sidoarjo, Jawa Timur": { x: 50, y: 53, region: "Jawa" },
-  "Pamekasan, Madura": { x: 52, y: 52, region: "Jawa" },
-  "Tangerang Selatan, Banten": { x: 41, y: 52, region: "Jawa" },
-  "Sleman, DI Yogyakarta": { x: 46, y: 54, region: "Jawa" },
-  "Lamongan, Jawa Timur": { x: 49, y: 52, region: "Jawa" },
-  "Jepara, Jawa Tengah": { x: 47, y: 51, region: "Jawa" }
+// City coordinates and province mapping for the Heatmap
+const cityCoordinates: Record<string, { x: number; y: number; region: string; provinceId: string }> = {
+  "DKI Jakarta": { x: 42, y: 52, region: "Jawa", provinceId: "ID-JK" },
+  "Bandung, Jawa Barat": { x: 43, y: 53, region: "Jawa", provinceId: "ID-JB" },
+  "Surabaya, Jawa Timur": { x: 50, y: 53, region: "Jawa", provinceId: "ID-JI" },
+  "Semarang, Jawa Tengah": { x: 46, y: 52, region: "Jawa", provinceId: "ID-JT" },
+  "DI Yogyakarta": { x: 46, y: 54, region: "Jawa", provinceId: "ID-YO" },
+  "Surakarta, Jawa Tengah": { x: 47, y: 53, region: "Jawa", provinceId: "ID-JT" },
+  "Malang, Jawa Timur": { x: 51, y: 54, region: "Jawa", provinceId: "ID-JI" },
+  "Medan, Sumatera Utara": { x: 18, y: 22, region: "Sumatera", provinceId: "ID-SU" },
+  "Palembang, Sumatera Selatan": { x: 25, y: 30, region: "Sumatera", provinceId: "ID-SS" },
+  "Banda Aceh, Aceh": { x: 15, y: 18, region: "Sumatera", provinceId: "ID-AC" },
+  "Pekanbaru, Riau": { x: 22, y: 25, region: "Sumatera", provinceId: "ID-RI" },
+  "Padang, Sumatera Barat": { x: 20, y: 28, region: "Sumatera", provinceId: "ID-SB" },
+  "Makassar, Sulawesi Selatan": { x: 72, y: 42, region: "Sulawesi", provinceId: "ID-SN" },
+  "Jayapura, Papua": { x: 88, y: 45, region: "Papua", provinceId: "ID-PA" },
+  "Samarinda, Kalimantan Timur": { x: 62, y: 35, region: "Kalimantan", provinceId: "ID-KI" },
+  "Balikpapan, Kalimantan Timur": { x: 63, y: 37, region: "Kalimantan", provinceId: "ID-KI" },
+  "Banjarmasin, Kalimantan Selatan": { x: 60, y: 40, region: "Kalimantan", provinceId: "ID-KS" },
+  "Bontang, Kalimantan Timur": { x: 64, y: 34, region: "Kalimantan", provinceId: "ID-KI" },
+  "Gianyar, Bali": { x: 58, y: 58, region: "Bali & Nusa Tenggara", provinceId: "ID-BA" },
+  "Tangerang, Banten": { x: 41, y: 52, region: "Jawa", provinceId: "ID-BT" },
+  "Bogor, Jawa Barat": { x: 42, y: 53, region: "Jawa", provinceId: "ID-JB" },
+  "Kediri, Jawa Timur": { x: 49, y: 54, region: "Jawa", provinceId: "ID-JI" },
+  "Gresik, Jawa Timur": { x: 51, y: 52, region: "Jawa", provinceId: "ID-JI" },
+  "Sidoarjo, Jawa Timur": { x: 50, y: 53, region: "Jawa", provinceId: "ID-JI" },
+  "Pamekasan, Madura": { x: 52, y: 52, region: "Jawa", provinceId: "ID-JI" },
+  "Tangerang Selatan, Banten": { x: 41, y: 52, region: "Jawa", provinceId: "ID-BT" },
+  "Sleman, DI Yogyakarta": { x: 46, y: 54, region: "Jawa", provinceId: "ID-YO" },
+  "Lamongan, Jawa Timur": { x: 49, y: 52, region: "Jawa", provinceId: "ID-JI" },
+  "Jepara, Jawa Tengah": { x: 47, y: 51, region: "Jawa", provinceId: "ID-JT" }
 };
 
 export default function GeographicMapView({ clubs, onClubClick }: GeographicMapViewProps) {
-  // Group clubs by region
+  // Group clubs by region and aggregate titles per province
   const clubsByRegion: Record<string, ClubSummary[]> = {};
+  const provinceTitles: Record<string, number> = {};
 
   clubs.forEach(club => {
     const meta = clubMetadataList[club.name];
-    if (meta) {
-      const cityData = cityCoordinates[meta.city];
-      if (cityData) {
-        const region = cityData.region;
-        if (!clubsByRegion[region]) {
-          clubsByRegion[region] = [];
-        }
-        clubsByRegion[region].push(club);
+    if (meta && cityCoordinates[meta.city]) {
+      const region = cityCoordinates[meta.city].region;
+      const provinceId = cityCoordinates[meta.city].provinceId;
+
+      if (!clubsByRegion[region]) {
+        clubsByRegion[region] = [];
+      }
+      clubsByRegion[region].push(club);
+      
+      // Aggregate titles for the heatmap
+      const totalTitles = club.titles + (club.amatirTitles || 0);
+      if (totalTitles > 0) {
+        provinceTitles[provinceId] = (provinceTitles[provinceId] || 0) + totalTitles;
       }
     }
+  });
+
+  // Generate heatmap colors based on aggregated titles
+  const provinceColors: Record<string, string> = {};
+  Object.keys(provinceTitles).forEach(provinceId => {
+    const count = provinceTitles[provinceId];
+    if (count >= 10) provinceColors[provinceId] = '#EF4444'; // Red (Extreme dominance)
+    else if (count >= 5) provinceColors[provinceId] = '#F97316'; // Orange
+    else if (count >= 3) provinceColors[provinceId] = '#EAB308'; // Yellow
+    else if (count >= 1) provinceColors[provinceId] = '#00FF85'; // Green
   });
 
   // Calculate region statistics
@@ -107,12 +123,12 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
           style={{ backgroundImage: "radial-gradient(#000 2px, transparent 2px)", backgroundSize: "24px 24px" }}
         />
 
-        {/* Real SVG Map (Imported) */}
-        <div className="absolute inset-0 pointer-events-none p-4 opacity-70">
-          <img 
-            src={indonesiaMapUrl} 
-            alt="Peta Indonesia" 
-            className="w-full h-full object-contain drop-shadow-[8px_8px_0px_rgba(0,0,0,1)] grayscale" 
+        {/* Map Container - Dynamic Heatmap */}
+        <div className="relative aspect-[2.5/1] w-full min-h-[300px] sm:min-h-[400px]">
+          <IndonesiaMap 
+            provinceColors={provinceColors} 
+            defaultColor="#E2E8F0"
+            className="absolute inset-0 w-full h-full object-contain filter drop-shadow-[8px_8px_0px_rgba(0,0,0,1)]" 
           />
         </div>
 
@@ -175,17 +191,29 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
           </div>
         ))}
 
-        {/* Legend Box */}
+        {/* Legend Box - Neo-Brutalist */}
         <div className="absolute bottom-4 right-4 bg-white border-4 border-black p-3 sm:p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-10 hidden sm:block">
-          <p className="text-xs font-black uppercase tracking-widest border-b-2 border-black pb-1 mb-2">Legenda Peta</p>
+          <p className="text-xs font-black uppercase tracking-widest border-b-2 border-black pb-1 mb-2">Peta Dominasi (Legenda)</p>
           <div className="space-y-2 text-[10px] font-bold uppercase">
             <div className="flex items-center gap-2">
-              <div className="h-4 w-4 border-2 border-black bg-white flex items-center justify-center text-[8px] font-black">#</div>
-              <span>Jumlah Klub Juara di Region</span>
+              <div className="h-4 w-4 border-2 border-black bg-[#EF4444]"></div>
+              <span>10+ Gelar (Dominasi Ekstrem)</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="h-4 w-4 border-2 border-black bg-[#EF4444]"></div>
-              <span>Warna Identitas Region</span>
+              <div className="h-4 w-4 border-2 border-black bg-[#F97316]"></div>
+              <span>5-9 Gelar (Sangat Kuat)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-4 border-2 border-black bg-[#EAB308]"></div>
+              <span>3-4 Gelar (Kekuatan Utama)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-4 border-2 border-black bg-[#00FF85]"></div>
+              <span>1-2 Gelar (Pernah Juara)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-4 border-2 border-black bg-[#E2E8F0]"></div>
+              <span>Belum Pernah Juara</span>
             </div>
           </div>
         </div>
