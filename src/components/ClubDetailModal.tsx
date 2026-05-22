@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Calendar, MapPin, Award, ShieldAlert, Sparkles, BookOpen } from "lucide-react";
+import { X, Calendar, MapPin, Award, ShieldAlert, Sparkles, BookOpen, Copy, Check } from "lucide-react";
 import { ClubMetadata } from "../data/clubMetadata";
 import ClubShield from "./ClubShield";
+import { copyStatCardToClipboard } from "../utils/exportUtils";
 
 interface ClubDetailModalProps {
   isOpen: boolean;
@@ -21,6 +22,8 @@ interface ClubDetailModalProps {
 }
 
 export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAskAI }: ClubDetailModalProps) {
+  const [copySuccess, setCopySuccess] = useState(false);
+
   if (!isOpen || !club) return null;
 
   // Primary colors fallback fallback if not matched in metadata list
@@ -32,6 +35,14 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
   const handleAskHistoryAI = () => {
     onAskAI(`Bagaimana sejarah lengkap kejayaan klub ${club.name} (${metadata?.nickname || ""}) dan daftar pilar penting prestasinya?`);
     onClose();
+  };
+
+  const handleCopyStatCard = async () => {
+    const success = await copyStatCardToClipboard(club);
+    if (success) {
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    }
   };
 
   return (
@@ -212,12 +223,28 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
           </div>
 
           {/* Action Row at bottom */}
-          <div className="pt-6 border-t-2 border-black grid grid-cols-1 sm:grid-cols-2 gap-3" id="modal_footer_actions">
+          <div className="pt-6 border-t-2 border-black grid grid-cols-1 sm:grid-cols-3 gap-3" id="modal_footer_actions">
             <button
               onClick={onClose}
               className="w-full py-3 border-2 border-black font-black text-xs uppercase hover:bg-neutral-100 cursor-pointer text-center duration-150"
             >
               Kembali ke Menu
+            </button>
+            <button
+              onClick={handleCopyStatCard}
+              className="w-full py-3 border-2 border-black font-black text-xs uppercase hover:bg-[#00FF85] cursor-pointer text-center duration-150 flex items-center justify-center gap-2"
+            >
+              {copySuccess ? (
+                <>
+                  <Check className="h-4 w-4 shrink-0" />
+                  Tersalin!
+                </>
+              ) : (
+                <>
+                  <Copy className="h-4 w-4 shrink-0" />
+                  Salin Stat Card
+                </>
+              )}
             </button>
             <button
               onClick={handleAskHistoryAI}

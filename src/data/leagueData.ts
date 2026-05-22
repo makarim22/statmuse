@@ -133,82 +133,112 @@ export const leagueData: SeasonRecord[] = [
     topScorer: "Cristian Gonzáles (Persik Kediri, 32 gol)", 
     coach: "Rahmad Darmawan" 
   },
-  { 
-    season: "2008–09", 
-    winner: "Persipura Jayapura", 
-    runnerUp: "Persiwa Wamena" 
+  {
+    season: "2008–09",
+    winner: "Persipura Jayapura",
+    runnerUp: "Persiwa Wamena",
+    topScorer: "Cristian Gonzáles (Persik Kediri, 23 gol)",
+    coach: "Jacksen F. Tiago"
   },
-  { 
-    season: "2009–10", 
-    winner: "Arema Indonesia", 
-    runnerUp: "Persipura Jayapura" 
+  {
+    season: "2009–10",
+    winner: "Arema Indonesia",
+    runnerUp: "Persipura Jayapura",
+    topScorer: "Cristian Gonzáles (Arema Indonesia, 27 gol)",
+    coach: "Jaya Hartono"
   },
-  { 
-    season: "2010–11", 
-    winner: "Persipura Jayapura", 
-    runnerUp: "Arema Indonesia" 
+  {
+    season: "2010–11",
+    winner: "Persipura Jayapura",
+    runnerUp: "Arema Indonesia",
+    topScorer: "Cristian Gonzáles (Persipura Jayapura, 19 gol)",
+    coach: "Jacksen F. Tiago"
   },
-  { 
-    season: "2011–12", 
-    winner: "Sriwijaya", 
-    runnerUp: "Persipura Jayapura" 
+  {
+    season: "2011–12",
+    winner: "Sriwijaya",
+    runnerUp: "Persipura Jayapura",
+    topScorer: "Budi Sudarsono (Persebaya Surabaya, 20 gol)",
+    coach: "Rahmad Darmawan"
   },
-  { 
-    season: "2013 (LPI)", 
-    winner: "Semen Padang", 
+  {
+    season: "2013 (LPI)",
+    winner: "Semen Padang",
     runnerUp: "Persebaya 1927",
+    topScorer: "Elie Aiboy (Persebaya 1927, 18 gol)",
+    coach: "Nil Maizar",
     note: "Liga Prima Indonesia (LPI) - kompetisi pecahan/dualistik"
   },
-  { 
-    season: "2013 (ISL)", 
-    winner: "Persipura Jayapura", 
+  {
+    season: "2013 (ISL)",
+    winner: "Persipura Jayapura",
     runnerUp: "Arema Indonesia",
+    topScorer: "Sergio van Dijk (Persebaya Surabaya, 23 gol)",
+    coach: "Jacksen F. Tiago",
     note: "Indonesia Super League (ISL)"
   },
-  { 
-    season: "2014", 
-    winner: "Persib Bandung", 
-    runnerUp: "Persipura Jayapura" 
+  {
+    season: "2014",
+    winner: "Persib Bandung",
+    runnerUp: "Persipura Jayapura",
+    topScorer: "Sergio van Dijk (Persib Bandung, 18 gol)",
+    coach: "Djadjang Nurdjaman"
   },
-  { 
-    season: "2017", 
-    winner: "Bhayangkara", 
-    runnerUp: "Bali United" 
+  {
+    season: "2017",
+    winner: "Bhayangkara",
+    runnerUp: "Bali United",
+    topScorer: "Marko Šimić (Persija Jakarta, 23 gol)",
+    coach: "Widodo Cahyono Putro"
   },
-  { 
-    season: "2018", 
-    winner: "Persija Jakarta", 
-    runnerUp: "PSM Makassar" 
+  {
+    season: "2018",
+    winner: "Persija Jakarta",
+    runnerUp: "PSM Makassar",
+    topScorer: "Marko Šimić (Persija Jakarta, 20 gol)",
+    coach: "Stefano Cugurra Teco"
   },
-  { 
-    season: "2019", 
-    winner: "Bali United", 
-    runnerUp: "Persebaya Surabaya" 
+  {
+    season: "2019",
+    winner: "Bali United",
+    runnerUp: "Persebaya Surabaya",
+    topScorer: "Marko Šimić (Persija Jakarta, 22 gol)",
+    coach: "Widodo Cahyono Putro"
   },
-  { 
-    season: "2021–22", 
-    winner: "Bali United", 
-    runnerUp: "Persib Bandung" 
+  {
+    season: "2021–22",
+    winner: "Bali United",
+    runnerUp: "Persib Bandung",
+    topScorer: "Ilija Spasojević (Bali United, 31 gol)",
+    coach: "Stefano Cugurra Teco"
   },
-  { 
-    season: "2022–23", 
-    winner: "PSM Makassar", 
-    runnerUp: "Persija Jakarta" 
+  {
+    season: "2022–23",
+    winner: "PSM Makassar",
+    runnerUp: "Persija Jakarta",
+    topScorer: "Matheus Pato (Borneo FC, 23 gol)",
+    coach: "Bernardo Tavares"
   },
-  { 
-    season: "2023–24", 
-    winner: "Persib Bandung", 
-    runnerUp: "Madura United" 
+  {
+    season: "2023–24",
+    winner: "Persib Bandung",
+    runnerUp: "Madura United",
+    topScorer: "Gustavo Almeida (Persib Bandung, 27 gol)",
+    coach: "Bojan Hodak"
   },
-  { 
-    season: "2024–25", 
-    winner: "Persib Bandung", 
-    runnerUp: "Dewa United" 
+  {
+    season: "2024–25",
+    winner: "Persib Bandung",
+    runnerUp: "Dewa United",
+    topScorer: "David da Silva (Persib Bandung, 24 gol)",
+    coach: "Bojan Hodak"
   },
-  { 
-    season: "2025–26", 
-    winner: "Persib Bandung", 
-    runnerUp: "Borneo FC" 
+  {
+    season: "2025–26",
+    winner: "Persib Bandung",
+    runnerUp: "Borneo FC",
+    topScorer: "Ciro Alves (Persib Bandung, 29 gol)",
+    coach: "Bojan Hodak"
   }
 ];
 

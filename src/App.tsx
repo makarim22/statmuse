@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ReactMarkdown from "react-markdown";
-import { 
-  Search, 
-  Trophy, 
-  Calendar, 
-  HelpCircle, 
-  TrendingUp, 
-  Award, 
-  ChevronRight, 
-  Filter, 
-  ArrowUpDown, 
-  Sparkles, 
+import {
+  Search,
+  Trophy,
+  Calendar,
+  HelpCircle,
+  TrendingUp,
+  Award,
+  ChevronRight,
+  Filter,
+  ArrowUpDown,
+  Sparkles,
   RefreshCw,
   Clock,
   Shirt,
@@ -20,7 +20,10 @@ import {
   BookOpen,
   History,
   FileText,
-  MapPin
+  MapPin,
+  Download,
+  Share2,
+  Copy
 } from "lucide-react";
 import { 
   leagueData, 
@@ -38,6 +41,7 @@ import { clubMetadataList } from "./data/clubMetadata";
 import ClubShield from "./components/ClubShield";
 import ClubDetailModal from "./components/ClubDetailModal";
 import { standingsSeasonList, StandingsEntry } from "./data/standingsData";
+import { exportToCSV, exportClubRankingsToCSV, exportToJSON, exportStandingsToCSV, copyStatCardToClipboard } from "./utils/exportUtils";
 
 export default function App() {
   // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern)
@@ -409,20 +413,20 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-10 py-10" id="main_content">
         
         {/* Quick Highlights Row (Heavy Metric Cards) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 border-2 border-black mb-10 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" id="quick_highlights">
-          <div className="p-6 border-r-2 border-b-2 lg:border-b-0 border-black flex flex-col justify-between">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border-2 border-black mb-10 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" id="quick_highlights">
+          <div className="p-4 sm:p-6 border-b-2 sm:border-r-2 lg:border-b-0 border-black flex flex-col justify-between">
             <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Total Kompetisi</p>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-5xl font-black tracking-tighter">{totalSeasonsCount}</span>
+              <span className="text-4xl sm:text-5xl font-black tracking-tighter">{totalSeasonsCount}</span>
               <span className="text-xs font-bold uppercase opacity-55">Musim</span>
             </div>
             <span className="text-[10px] text-emerald-600 font-bold bg-[#00FF85]/20 border border-black px-1.5 py-0.5 mt-3 w-max">TUNTAS SEJAK 1930</span>
           </div>
-          
-          <div className="p-6 border-b-2 lg:border-b-0 md:border-r-2 border-black flex flex-col justify-between bg-[#F2F2F2]/50">
+
+          <div className="p-4 sm:p-6 border-b-2 lg:border-b-0 sm:border-r-2 lg:border-r-2 border-black flex flex-col justify-between bg-[#F2F2F2]/50">
             <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Klub Paling Sukses</p>
             <div className="flex flex-col mt-2">
-              <span className="text-3xl font-black italic tracking-tighter truncate uppercase">{allClubs[0]?.name}</span>
+              <span className="text-2xl sm:text-3xl font-black italic tracking-tighter truncate uppercase">{allClubs[0]?.name}</span>
               <span className="text-xs font-bold opacity-75 mt-1">{allClubs[0]?.titles} Gelar Era Profesional</span>
               {(allClubs[0]?.amatirTitles ?? 0) > 0 && (
                 <span className="text-[9px] font-bold opacity-50 mt-0.5">+{allClubs[0]?.amatirTitles} Amatir Perserikatan</span>
@@ -430,19 +434,19 @@ export default function App() {
             </div>
           </div>
 
-          <div className="p-6 border-r-2 border-black flex flex-col justify-between">
+          <div className="p-4 sm:p-6 border-b-2 sm:border-b-0 sm:border-r-2 lg:border-r-2 border-black flex flex-col justify-between">
             <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Trofi Pemegang Unik</p>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-5xl font-black tracking-tighter">{uniqueWinnersCount}</span>
+              <span className="text-4xl sm:text-5xl font-black tracking-tighter">{uniqueWinnersCount}</span>
               <span className="text-xs font-bold uppercase opacity-55">Klub Berbeda</span>
             </div>
             <span className="text-[10px] text-black font-bold bg-yellow-300 border border-black px-1.5 py-0.5 mt-3 w-max">LIGA DINAMIS</span>
           </div>
 
-          <div className="p-6 flex flex-col justify-between bg-[#F2F2F2]/80">
+          <div className="p-4 sm:p-6 flex flex-col justify-between bg-[#F2F2F2]/80">
             <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Rentang Waktu</p>
             <div className="flex flex-col mt-2">
-              <span className="text-4xl font-black italic tracking-tighter">96 TAHUN</span>
+              <span className="text-3xl sm:text-4xl font-black italic tracking-tighter">96 TAHUN</span>
               <span className="text-xs font-bold opacity-60 mt-1">Era Kolonial s.d Proyeksi 2026</span>
             </div>
           </div>
@@ -782,8 +786,16 @@ export default function App() {
                   </p>
                 </div>
 
-                {/* Season Switcher Dropdown */}
-                <div className="flex items-center gap-3 self-start sm:self-center">
+                {/* Season Switcher Dropdown and Export */}
+                <div className="flex items-center gap-3 self-start sm:self-center flex-wrap">
+                  <button
+                    onClick={() => exportStandingsToCSV(sortedStandings, selectedStandingsSeason)}
+                    className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                    title="Download klasemen sebagai CSV"
+                  >
+                    <Download className="h-4 w-4" />
+                    CSV
+                  </button>
                   <span className="text-xs font-black uppercase tracking-wider text-black select-none">
                     Saring Musim:
                   </span>
@@ -1157,16 +1169,36 @@ export default function App() {
         {activeTab === 'leaderboard' && (
           <div className="space-y-12 animate-fade-in" id="leaderboard_view">
             
-            <div className="border-b-4 border-black pb-5">
-              <span className="bg-[#00FF85] px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block mb-2">
-                Peringkat Terbaik Sepanjang Masa
-              </span>
-              <h2 className="text-4xl font-black italic tracking-tighter uppercase">
-                PAPAN JUARA ABADI LIGA INDONESIA
-              </h2>
-              <p className="text-sm font-bold text-slate-500 max-w-3xl mt-1">
-                Klub dengan raihan mahkota kejuaraan liga kasta tertinggi nasional terbanyak sejak tahun 1930 hingga sekarang.
-              </p>
+            <div className="border-b-4 border-black pb-5 flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <span className="bg-[#00FF85] px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block mb-2">
+                  Peringkat Terbaik Sepanjang Masa
+                </span>
+                <h2 className="text-4xl font-black italic tracking-tighter uppercase">
+                  PAPAN JUARA ABADI LIGA INDONESIA
+                </h2>
+                <p className="text-sm font-bold text-slate-500 max-w-3xl mt-1">
+                  Klub dengan raihan mahkota kejuaraan liga kasta tertinggi nasional terbanyak sejak tahun 1930 hingga sekarang.
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => exportClubRankingsToCSV(allClubs)}
+                  className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                  title="Download sebagai CSV"
+                >
+                  <Download className="h-4 w-4" />
+                  CSV
+                </button>
+                <button
+                  onClick={() => exportToJSON(allClubs, 'club-rankings.json')}
+                  className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-[#00FF85] transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                  title="Download sebagai JSON"
+                >
+                  <Download className="h-4 w-4" />
+                  JSON
+                </button>
+              </div>
             </div>
 
             {/* Brutalist Podium Display */}
@@ -1600,6 +1632,14 @@ export default function App() {
 
               {/* Advanced Sorting and Filtering Buttons */}
               <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <button
+                  onClick={() => exportToCSV(sortedSeasons, 'liga-indonesia-history.csv')}
+                  className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                  title="Download sebagai CSV"
+                >
+                  <Download className="h-4 w-4" />
+                  CSV
+                </button>
                 <button
                   onClick={() => setExplorerSortOrder(prev => prev === 'desc' ? 'asc' : 'desc')}
                   className="px-4 py-2.5 text-xs font-black uppercase tracking-widest bg-white border-2 border-black hover:bg-[#F2F2F2] text-black hover:translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex items-center gap-2"

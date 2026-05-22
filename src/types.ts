@@ -14,8 +14,8 @@ export interface ClubSummary {
   runnerUps: number;        // Profesional era runner-ups
   seasonsWon: string[];     // Profesional era seasons won
   historicalNames: string[];
-  amatirTitles: number;     // Perserikatan/amatir era (1930-1994) titles - supplementary info
-  amatirSeasonsWon: string[]; // Perserikatan/amatir era seasons won
+  amatirTitles?: number;     // Perserikatan/amatir era (1930-1994) titles - supplementary info
+  amatirSeasonsWon?: string[]; // Perserikatan/amatir era seasons won
 }
 
 export interface SearchQueryResponse {
