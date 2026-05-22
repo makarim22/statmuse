@@ -100,11 +100,12 @@ export const leagueRecords: RecordItem[] = [
 ];
 
 export const leagueTrivia: TriviaItem[] = [
-  { fact: "Era Liga Indonesia modern lahir pada tahun 1994 dengan nama Liga Dunhill, sebagai hasil peleburan kompetisi amatir (Perserikatan) dan semi-profesional (Galatama)." },
-  { fact: "Niac Mitra adalah klub pertama yang berhasil menjadi juara beruntun di kompetisi kasta tertinggi yakni pada Galatama (1982-1983)." },
-  { fact: "Persib Bandung memenangkan edisi perdana penggabungan liga (Liga Indonesia 1994-1995) dengan mengalahkan Petrokimia Putra di final." },
-  { fact: "Hanya ada dua klub dari luar pulau Jawa dan Sumatera yang pernah juara di Era Profesional: Persipura Jayapura (Papua) dan Bali United (Bali)." },
-  { fact: "Musim 1997-1998 dihentikan di tengah jalan karena krisis moneter dan kerusuhan politik di Indonesia, disusul pembatalan liga pada musim 2015 (sanksi FIFA) dan 2020 (Pandemi COVID-19)." },
-  { fact: "PSIS Semarang (1998-1999) dan Persik Kediri (2003) adalah sejarah anomali di mana tim berstatus 'Promosi' langsung berhasil menjadi Juara Nasional pada musim debut mereka di kasta tertinggi." },
-  { fact: "Boaz Solossa adalah satu-satunya pemain lokal yang memenangkan gelar Pemain Terbaik Liga terbanyak, yakni tiga kali (2008-09, 2010-11, 2013) bersama Persipura." }
+  { fact: "✨ TAHUKAH ANDA? Era Liga Indonesia modern lahir pada tahun 1994 dengan nama Liga Dunhill, hasil peleburan kompetisi amatir (Perserikatan) dan semi-profesional (Galatama). ✨" },
+  { fact: "🏆 REKOR: Niac Mitra adalah klub pertama yang berhasil menjadi juara beruntun di kompetisi kasta tertinggi (Galatama 1982-1983). 🏆" },
+  { fact: "👑 SEJARAH: Persib Bandung memenangkan edisi perdana penggabungan liga (Liga Indonesia 1994-1995) dengan mengalahkan Petrokimia Putra di final! 👑" },
+  { fact: "🏝️ FAKTA UNIK: Hanya ada dua klub dari luar pulau Jawa dan Sumatera yang pernah juara di Era Profesional: Persipura Jayapura (Papua) dan Bali United (Bali). 🏝️" },
+  { fact: "🛑 TRAGEDI LIGA: Musim 1997-1998 dihentikan karena krisis moneter, disusul pembatalan liga pada musim 2015 (sanksi FIFA) dan 2020 (Pandemi COVID-19). 🛑" },
+  { fact: "🚀 ANOMALI PROMOSI: PSIS Semarang (1998-1999) dan Persik Kediri (2003) berhasil menjadi Juara Nasional langsung pada musim debut promosi mereka di kasta tertinggi! 🚀" },
+  { fact: "⭐ LEGENDA: Boaz Solossa adalah satu-satunya pemain yang memenangkan gelar Pemain Terbaik Liga sebanyak 3 kali (2008-09, 2010-11, 2013). ⭐" },
+  { fact: "🔥 GOAL MACHINE: Sylvano Comvalius mencetak 37 Gol dalam satu musim (2017), memecahkan rekor abadi Peri Sandria (34 Gol) yang bertahan sejak 1995! 🔥" }
 ];

@@ -46,6 +46,7 @@ import GeographicMapView from "./components/GeographicMapView";
 import { standingsSeasonList, StandingsEntry } from "./data/standingsData";
 import { exportToCSV, exportClubRankingsToCSV, exportToJSON, exportStandingsToCSV, copyStatCardToClipboard } from "./utils/exportUtils";
 import AllTimeStatsView from "./components/AllTimeStatsView";
+import { leagueTrivia } from "./data/statisticsData";
 
 export default function App() {
   // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'stats' (All-time stats), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern)
@@ -438,6 +439,27 @@ export default function App() {
           </button>
         </div>
       </nav>
+
+      {/* Marquee Ticker (Neo-Brutalist) */}
+      <div className="w-full bg-black text-[#00FF85] border-b-4 border-black overflow-hidden py-3 whitespace-nowrap flex items-center relative z-10 shadow-[0px_8px_0px_0px_rgba(0,0,0,1)] mb-4">
+        <motion.div
+          animate={{ x: [0, -3000] }}
+          transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
+          className="flex gap-16 items-center"
+        >
+          {leagueTrivia.map((trivia, idx) => (
+            <span key={idx} className="font-black uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
+              {trivia.fact}
+            </span>
+          ))}
+          {/* Duplicate for seamless loop */}
+          {leagueTrivia.map((trivia, idx) => (
+            <span key={`dup-${idx}`} className="font-black uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
+              {trivia.fact}
+            </span>
+          ))}
+        </motion.div>
+      </div>
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-10 py-10" id="main_content">
@@ -852,68 +874,97 @@ export default function App() {
               </div>
 
               {/* Neo-Brutalist Standings Summary Bento Box */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="standings_bento">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="standings_bento">
                 
-                {/* 1. Leader */}
-                <div className="bg-white border-2 border-black p-5 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                {/* 1. Leader (Spans 2 columns and 2 rows on large screens) */}
+                <motion.div 
+                  drag 
+                  dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} 
+                  dragElastic={0.2} 
+                  whileDrag={{ scale: 1.02, zIndex: 50, rotate: -1 }}
+                  className="bg-white border-4 border-black p-6 sm:p-8 flex flex-col justify-between shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] lg:col-span-2 lg:row-span-2 cursor-grab active:cursor-grabbing bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMCwwLDAsMC4wNSkiLz48L3N2Zz4=')]"
+                >
                   <div>
-                    <span className="text-[9px] font-black tracking-widest bg-emerald-500 text-white px-2 py-0.5 uppercase">🏆 PEMIMPIN LIGA</span>
-                    <h4 className="text-2xl font-black uppercase tracking-tight italic mt-2 truncate">
+                    <span className="text-xs font-black tracking-widest bg-emerald-500 text-white px-3 py-1 uppercase border-2 border-black">🏆 PEMIMPIN LIGA</span>
+                    <h4 className="text-4xl sm:text-5xl font-black uppercase tracking-tight italic mt-6 truncate">
                       {currentLeader ? currentLeader.clubName : "-"}
                     </h4>
-                    <p className="text-xs font-bold text-slate-600 mt-0.5">Memimpin persaingan ketat mahkota juara.</p>
+                    <p className="text-sm font-bold text-slate-600 mt-2">Memimpin persaingan ketat mahkota juara.</p>
                   </div>
-                  <div className="flex items-center justify-between border-t border-black/10 pt-3 mt-4">
-                    <span className="text-xs font-bold text-slate-500">Poin:</span>
-                    <span className="text-sm font-mono font-black">{currentLeader ? `${currentLeader.points} PTS` : "-"}</span>
+                  <div className="flex items-center justify-between border-t-2 border-black/10 pt-4 mt-8">
+                    <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">Total Poin Dominan:</span>
+                    <span className="text-3xl font-mono font-black">{currentLeader ? `${currentLeader.points} PTS` : "-"}</span>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* 2. Top Attack */}
-                <div className="bg-white border-2 border-black p-5 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <motion.div 
+                  drag 
+                  dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} 
+                  dragElastic={0.2} 
+                  whileDrag={{ scale: 1.05, zIndex: 50, rotate: 2 }}
+                  className="bg-yellow-400 border-2 border-black p-5 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-grab active:cursor-grabbing"
+                >
                   <div>
-                    <span className="text-[9px] font-black tracking-widest bg-yellow-400 text-black px-2 py-0.5 uppercase">⚽ SERANGAN TERPRODUKTIF</span>
-                    <h4 className="text-2xl font-black uppercase tracking-tight italic mt-2 truncate">
+                    <span className="text-[9px] font-black tracking-widest bg-black text-yellow-400 px-2 py-0.5 uppercase border border-black">⚽ SERANGAN TERPRODUKTIF</span>
+                    <h4 className="text-2xl font-black uppercase tracking-tight italic mt-2 truncate text-black">
                       {topAttack ? topAttack.clubName : "-"}
                     </h4>
-                    <p className="text-xs font-bold text-slate-600 mt-0.5">Lini serang paling subur merobek jala lawan.</p>
+                    <p className="text-xs font-bold text-black/70 mt-0.5">Lini serang paling subur merobek jala lawan.</p>
                   </div>
-                  <div className="flex items-center justify-between border-t border-black/10 pt-3 mt-4">
-                    <span className="text-xs font-bold text-slate-500">Total Gol:</span>
-                    <span className="text-sm font-mono font-black">{topAttack ? `${topAttack.goalsFor} Gol` : "-"}</span>
+                  <div className="flex items-center justify-between border-t border-black/20 pt-3 mt-4">
+                    <span className="text-xs font-bold text-black/70 uppercase">Total Gol:</span>
+                    <span className="text-xl font-mono font-black text-black">{topAttack ? `${topAttack.goalsFor} Gol` : "-"}</span>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* 3. Best Defense */}
-                <div className="bg-white border-2 border-black p-5 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <motion.div 
+                  drag 
+                  dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} 
+                  dragElastic={0.2} 
+                  whileDrag={{ scale: 1.05, zIndex: 50, rotate: -2 }}
+                  className="bg-blue-600 border-2 border-black p-5 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-grab active:cursor-grabbing"
+                >
                   <div>
-                    <span className="text-[9px] font-black tracking-widest bg-blue-600 text-white px-2 py-0.5 uppercase">🛡️ PERTAHANAN KOKOH</span>
-                    <h4 className="text-2xl font-black uppercase tracking-tight italic mt-2 truncate">
+                    <span className="text-[9px] font-black tracking-widest bg-white text-blue-600 px-2 py-0.5 uppercase border border-black">🛡️ PERTAHANAN KOKOH</span>
+                    <h4 className="text-2xl font-black uppercase tracking-tight italic mt-2 truncate text-white">
                       {bestDefense ? bestDefense.clubName : "-"}
                     </h4>
-                    <p className="text-xs font-bold text-slate-600 mt-0.5">Gawang batu tersulit dijebol penyerang rival.</p>
+                    <p className="text-xs font-bold text-blue-100 mt-0.5">Gawang batu tersulit dijebol penyerang rival.</p>
                   </div>
-                  <div className="flex items-center justify-between border-t border-black/10 pt-3 mt-4">
-                    <span className="text-xs font-bold text-slate-500">Kebobolan:</span>
-                    <span className="text-sm font-mono font-black">{bestDefense ? `${bestDefense.goalsAgainst} Gol` : "-"}</span>
+                  <div className="flex items-center justify-between border-t border-white/20 pt-3 mt-4">
+                    <span className="text-xs font-bold text-blue-200 uppercase">Kebobolan:</span>
+                    <span className="text-xl font-mono font-black text-white">{bestDefense ? `${bestDefense.goalsAgainst} Gol` : "-"}</span>
                   </div>
-                </div>
+                </motion.div>
 
-                {/* 4. Format Info */}
-                <div className="bg-[#00FF85]/10 border-2 border-black p-5 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden">
-                  <div className="absolute right-[-10px] bottom-[-10px] opacity-10">
-                    <Trophy className="h-28 w-28 text-emerald-950 font-black transform rotate-12" />
+                {/* 4. Format Info (Spans 3 columns at the bottom) */}
+                <motion.div 
+                  drag 
+                  dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} 
+                  dragElastic={0.2} 
+                  whileDrag={{ scale: 1.01, zIndex: 50 }}
+                  className="bg-[#00FF85]/10 border-2 border-black p-5 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden lg:col-span-3 cursor-grab active:cursor-grabbing"
+                >
+                  <div className="absolute right-[-10px] bottom-[-40px] opacity-10">
+                    <Trophy className="h-40 w-40 text-emerald-950 font-black transform rotate-12" />
                   </div>
-                  <div>
-                    <span className="text-[9px] font-black tracking-widest bg-black text-[#00FF85] px-2 py-0.5 uppercase">📝 REGULASI LIGA</span>
-                    <h4 className="text-lg font-black uppercase tracking-tight italic mt-2 leading-none">
-                      CHAMPIONSHIP & PLAYOFFS
-                    </h4>
-                    <p className="text-[11px] font-semibold text-slate-700 mt-2.5 leading-relaxed">
-                      Peringkat 1-4 melaju memperebutkan mahkota nasional dalam Championship Series / Slot Asia. Sementara 3 peringkat terbawah (16-18) didegradasi langsung ke kompetisi kasta kedua.
-                    </p>
+                  <div className="relative z-10 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+                    <div>
+                      <span className="text-[9px] font-black tracking-widest bg-black text-[#00FF85] px-2 py-0.5 uppercase">📝 REGULASI LIGA</span>
+                      <h4 className="text-xl font-black uppercase tracking-tight italic mt-2 leading-none">
+                        CHAMPIONSHIP & PLAYOFFS
+                      </h4>
+                      <p className="text-xs font-semibold text-slate-700 mt-2 leading-relaxed max-w-2xl">
+                        Peringkat 1-4 melaju memperebutkan mahkota nasional dalam Championship Series / Slot Asia. Sementara 3 peringkat terbawah (16-18) didegradasi langsung ke kompetisi kasta kedua.
+                      </p>
+                    </div>
+                    <div className="bg-white border-2 border-black px-4 py-2 font-mono font-black text-sm uppercase flex-shrink-0 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] rotate-2">
+                      SISTEM GUGUR
+                    </div>
                   </div>
-                </div>
+                </motion.div>
 
               </div>
 
