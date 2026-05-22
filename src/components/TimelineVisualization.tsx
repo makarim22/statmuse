@@ -107,114 +107,130 @@ export default function TimelineVisualization({ data, onSeasonClick }: TimelineV
 
             {/* Decade Content */}
             {isExpanded && (
-              <div className="border-t-2 border-black p-4 bg-[#F2F2F2]/30">
-                <div className="space-y-3">
+              <div className="border-t-2 border-black p-4 bg-[#F2F2F2]/30 relative overflow-hidden">
+                {/* Central Timeline Line (Desktop) */}
+                <div className="hidden md:block absolute top-0 bottom-0 left-1/2 w-1 bg-black transform -translate-x-1/2 z-0" />
+                {/* Timeline Line (Mobile) */}
+                <div className="md:hidden absolute top-0 bottom-0 left-8 w-1 bg-black z-0" />
+
+                <div className="space-y-8 py-6 relative z-10">
                   {decadeSeasons.map((season, idx) => {
                     const winnerMeta = clubMetadataList[season.winner];
                     const runnerUpMeta = clubMetadataList[season.runnerUp];
                     const isHovered = hoveredSeason === season.season;
+                    const isEven = idx % 2 === 0;
 
                     return (
                       <div
                         key={idx}
-                        onMouseEnter={() => setHoveredSeason(season.season)}
-                        onMouseLeave={() => setHoveredSeason(null)}
-                        onClick={() => onSeasonClick?.(season.season)}
-                        className={`border-2 border-black bg-white p-4 transition-all cursor-pointer ${
-                          isHovered ? 'shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] translate-x-[-2px] translate-y-[-2px]' : ''
-                        } ${season.isCancelled ? 'opacity-50' : ''}`}
+                        className={`flex flex-col md:flex-row w-full ${isEven ? 'md:justify-start' : 'md:justify-end'} relative group`}
                       >
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                          {/* Season Info */}
-                          <div className="flex items-center gap-3">
-                            <div className="h-12 w-12 bg-black text-[#00FF85] border-2 border-black flex items-center justify-center font-mono font-black text-xs">
-                              {season.season.split('–')[0]}
-                            </div>
-                            <div>
-                              <p className="text-xs font-black uppercase text-slate-500">MUSIM</p>
-                              <p className="text-lg font-black uppercase">{season.season}</p>
-                            </div>
-                          </div>
-
-                          {/* Winner & Runner-up */}
-                          {!season.isCancelled ? (
-                            <div className="flex items-center gap-4">
-                              {/* Winner */}
-                              <div className="flex items-center gap-2">
-                                {winnerMeta && (
-                                  <div className="h-10 w-10 border-2 border-black bg-white p-0.5">
-                                    <ClubShield
-                                      symbol={winnerMeta.emblemSymbol}
-                                      primaryColor={winnerMeta.colors.primary}
-                                      secondaryColor={winnerMeta.colors.secondary}
-                                      className="h-full w-full"
-                                      clubName={season.winner}
-                                      logoUrl={winnerMeta.logoUrl}
-                                    />
-                                  </div>
-                                )}
-                                <div>
-                                  <p className="text-[9px] font-black uppercase text-emerald-600 flex items-center gap-1">
-                                    <Trophy className="h-3 w-3" />
-                                    JUARA
-                                  </p>
-                                  <p className="text-sm font-black uppercase">{season.winner}</p>
-                                </div>
-                              </div>
-
-                              {/* Runner-up */}
-                              <div className="flex items-center gap-2">
-                                {runnerUpMeta && (
-                                  <div className="h-8 w-8 border border-black bg-white p-0.5">
-                                    <ClubShield
-                                      symbol={runnerUpMeta.emblemSymbol}
-                                      primaryColor={runnerUpMeta.colors.primary}
-                                      secondaryColor={runnerUpMeta.colors.secondary}
-                                      className="h-full w-full"
-                                      clubName={season.runnerUp}
-                                      logoUrl={runnerUpMeta.logoUrl}
-                                    />
-                                  </div>
-                                )}
-                                <div>
-                                  <p className="text-[9px] font-black uppercase text-slate-500 flex items-center gap-1">
-                                    <Award className="h-3 w-3" />
-                                    RUNNER-UP
-                                  </p>
-                                  <p className="text-xs font-black uppercase">{season.runnerUp}</p>
-                                </div>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="text-sm font-black uppercase text-rose-600">
-                              ⚠️ KOMPETISI DIBATALKAN
-                            </div>
-                          )}
+                        {/* Center Node Badge (Desktop) */}
+                        <div className="hidden md:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#00FF85] border-2 border-black z-30 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] group-hover:scale-110 transition-transform px-3 py-1.5 font-black uppercase text-xs tracking-widest">
+                          {season.season}
+                        </div>
+                        {/* Node Badge (Mobile) */}
+                        <div className="md:hidden absolute top-8 left-8 transform -translate-x-1/2 bg-[#00FF85] border-2 border-black z-30 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-2 py-1 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">
+                          {season.season}
                         </div>
 
-                        {/* Additional Info */}
-                        {(season.topScorer || season.coach) && (
-                          <div className="mt-3 pt-3 border-t border-black/10 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                            {season.topScorer && (
-                              <div>
-                                <span className="font-black uppercase text-slate-500">⚽ Top Scorer:</span>
-                                <span className="ml-2 font-bold">{season.topScorer}</span>
-                              </div>
-                            )}
-                            {season.coach && (
-                              <div>
-                                <span className="font-black uppercase text-slate-500">👔 Pelatih:</span>
-                                <span className="ml-2 font-bold">{season.coach}</span>
-                              </div>
-                            )}
-                          </div>
-                        )}
+                        {/* Card Wrapper to handle spacing */}
+                        <div className={`w-full md:w-[47%] pl-20 md:pl-0 ${isEven ? 'md:pr-10' : 'md:pl-10'}`}>
+                          <div
+                            onMouseEnter={() => setHoveredSeason(season.season)}
+                            onMouseLeave={() => setHoveredSeason(null)}
+                            onClick={() => onSeasonClick?.(season.season)}
+                            className={`border-4 border-black bg-white p-5 transition-all cursor-pointer relative ${
+                              isHovered ? 'shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] -translate-y-1' : 'shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+                            } ${season.isCancelled ? 'opacity-50' : ''}`}
+                          >
+                            {/* Connecting Line from Card to Center (Desktop) */}
+                            <div className={`hidden md:block absolute top-1/2 transform -translate-y-1/2 h-1 bg-black w-10 ${isEven ? 'right-[-40px]' : 'left-[-40px]'}`} />
 
-                        {season.note && (
-                          <div className="mt-2 text-[10px] font-bold text-slate-600 italic">
-                            📝 {season.note}
+                            <div className="flex flex-col gap-4">
+                              {/* Season year badge is now on the timeline axis */}
+
+                              {/* Winner & Runner-up */}
+                              {!season.isCancelled ? (
+                                <div className="space-y-4">
+                                  {/* Winner */}
+                                  <div className="flex items-center gap-3">
+                                    {winnerMeta && (
+                                      <div className="h-12 w-12 border-2 border-black bg-[#F2F2F2] p-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                                        <ClubShield
+                                          symbol={winnerMeta.emblemSymbol}
+                                          primaryColor={winnerMeta.colors.primary}
+                                          secondaryColor={winnerMeta.colors.secondary}
+                                          className="h-full w-full"
+                                          clubName={season.winner}
+                                          logoUrl={winnerMeta.logoUrl}
+                                        />
+                                      </div>
+                                    )}
+                                    <div>
+                                      <p className="text-[10px] font-black uppercase text-emerald-600 flex items-center gap-1 bg-[#00FF85]/20 inline-flex px-1 border border-emerald-600/30">
+                                        <Trophy className="h-3 w-3" />
+                                        JUARA
+                                      </p>
+                                      <p className="text-base font-black uppercase leading-tight mt-1">{season.winner}</p>
+                                    </div>
+                                  </div>
+
+                                  {/* Runner-up */}
+                                  <div className="flex items-center gap-3 opacity-80">
+                                    {runnerUpMeta && (
+                                      <div className="h-8 w-8 border border-black bg-[#F2F2F2] p-0.5 grayscale">
+                                        <ClubShield
+                                          symbol={runnerUpMeta.emblemSymbol}
+                                          primaryColor={runnerUpMeta.colors.primary}
+                                          secondaryColor={runnerUpMeta.colors.secondary}
+                                          className="h-full w-full"
+                                          clubName={season.runnerUp}
+                                          logoUrl={runnerUpMeta.logoUrl}
+                                        />
+                                      </div>
+                                    )}
+                                    <div>
+                                      <p className="text-[9px] font-black uppercase text-slate-500 flex items-center gap-1">
+                                        <Award className="h-3 w-3" />
+                                        RUNNER-UP
+                                      </p>
+                                      <p className="text-xs font-bold uppercase">{season.runnerUp}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="text-sm font-black uppercase text-rose-600 border-2 border-rose-600 p-2 bg-rose-50 text-center">
+                                  ⚠️ KOMPETISI DIBATALKAN
+                                </div>
+                              )}
+
+                              {/* Additional Info */}
+                              {(season.topScorer || season.coach) && (
+                                <div className="mt-2 pt-3 border-t-2 border-black border-dashed flex flex-col gap-2 text-xs">
+                                  {season.topScorer && (
+                                    <div className="flex justify-between items-center bg-[#F2F2F2] p-1.5 border border-black/10">
+                                      <span className="font-black uppercase text-[9px] tracking-widest">⚽ Top Scorer:</span>
+                                      <span className="font-bold">{season.topScorer}</span>
+                                    </div>
+                                  )}
+                                  {season.coach && (
+                                    <div className="flex justify-between items-center bg-[#F2F2F2] p-1.5 border border-black/10">
+                                      <span className="font-black uppercase text-[9px] tracking-widest">👔 Pelatih:</span>
+                                      <span className="font-bold">{season.coach}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+
+                              {season.note && (
+                                <div className="mt-1 bg-amber-100 border border-black p-2 text-[10px] font-bold text-black italic">
+                                  📝 {season.note}
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        )}
+                        </div>
                       </div>
                     );
                   })}
