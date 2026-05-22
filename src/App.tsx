@@ -835,22 +835,10 @@ export default function App() {
                       onChange={(e) => setSelectedStandingsSeason(e.target.value)}
                       className="appearance-none w-full bg-white text-black text-xs font-black uppercase tracking-wider px-4 py-2.5 pr-10 border-2 border-black rounded-none shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer focus:outline-none focus:bg-[#00FF85]/10 focus:ring-0"
                     >
-                      {[
-                        { id: "2024-2025", label: "🚀 2024/25" },
-                        { id: "2023-2024", label: "📅 2023/24" },
-                        { id: "2022-2023", label: "📅 2022/23" },
-                        { id: "2021-2022", label: "📅 2021/22" },
-                        { id: "2019", label: "📅 2019" },
-                        { id: "2018", label: "📅 2018" },
-                        { id: "2017", label: "📅 2017" },
-                        { id: "2014-west", label: "📅 2014 (Barat)" },
-                        { id: "2014-east", label: "📅 2014 (Timur)" },
-                        { id: "2013", label: "📅 2013" },
-                        { id: "2011-2012", label: "📅 2011/12" },
-                        { id: "2010-2011", label: "📅 2010/11" },
-                      ].map((s) => (
-                        <option key={s.id} value={s.id} className="text-black font-black uppercase">
-                          {s.label}
+                      {Object.keys(standingsSeasonList).map((seasonId) => (
+                        <option key={seasonId} value={seasonId} className="text-black font-black uppercase">
+                          {seasonId === "2024-2025" ? "🚀 " : "📅 "}
+                          {seasonId.replace("-west", " (Barat)").replace("-east", " (Timur)")}
                         </option>
                       ))}
                     </select>
