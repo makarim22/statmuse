@@ -1,11 +1,22 @@
 import React, { useState } from "react";
-import { topScorers, allTimeTopScorers, leagueRecords, leagueTrivia, TopScorer } from "../data/statisticsData";
-import { Award, Target, Zap, BookOpen } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { topScorers, allTimeTopScorers, leagueRecords, leagueTrivia, TopScorer, legendaryPlayers } from "../data/statisticsData";
+import { Award, Target, Zap, BookOpen, Search, User, ChevronDown, ChevronUp } from "lucide-react";
 import PlayerDetailModal from "./PlayerDetailModal";
 
 const AllTimeStatsView: React.FC = () => {
   const [selectedPlayer, setSelectedPlayer] = useState<TopScorer | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Hall of Fame state
+  const [hofSearchQuery, setHofSearchQuery] = useState("");
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
+
+  const filteredLegends = legendaryPlayers.filter(p => 
+    p.name.toLowerCase().includes(hofSearchQuery.toLowerCase()) || 
+    p.club.toLowerCase().includes(hofSearchQuery.toLowerCase()) ||
+    p.position.toLowerCase().includes(hofSearchQuery.toLowerCase())
+  );
 
   const handlePlayerClick = (player: TopScorer) => {
     setSelectedPlayer(player);
@@ -174,6 +185,122 @@ const AllTimeStatsView: React.FC = () => {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Hall of Fame (Database Pemain Legendaris) */}
+        <div className="border-4 border-black bg-[#F2F2F2] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mt-12 p-6 md:p-8" id="hall_of_fame">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 border-b-4 border-black pb-4">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 bg-white flex items-center justify-center border-2 border-black transform -rotate-3 shadow-[2px_2px_0px_0px_#000]">
+                <User className="h-5 w-5 text-black" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-black uppercase italic leading-none text-black">Hall of Fame</h3>
+                <p className="text-[10px] font-bold text-slate-500 uppercase">Database Pemain Ikonik & Legendaris</p>
+              </div>
+            </div>
+            
+            {/* Search Input for Hall of Fame */}
+            <div className="relative w-full md:w-72">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-black opacity-50" />
+              <input
+                type="text"
+                value={hofSearchQuery}
+                onChange={(e) => setHofSearchQuery(e.target.value)}
+                placeholder="Cari nama, klub, atau posisi..."
+                className="w-full bg-white border-2 border-black py-2 pl-9 pr-3 text-sm font-bold uppercase tracking-wider text-black placeholder:text-black/30 focus:outline-none focus:ring-0 focus:border-emerald-500 transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              />
+            </div>
+          </div>
+
+          <div className="border-2 border-black bg-white overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[600px]">
+                <thead>
+                  <tr className="bg-black text-[#00FF85] border-b-2 border-black text-xs font-black uppercase tracking-wider">
+                    <th className="p-4 border-r border-white/20 w-10 text-center"></th>
+                    <th className="p-4 border-r border-white/20">Nama Pemain</th>
+                    <th className="p-4 border-r border-white/20">Klub Ikonik</th>
+                    <th className="p-4 border-r border-white/20 text-center">Posisi</th>
+                    <th className="p-4 text-center w-24">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredLegends.length > 0 ? (
+                    filteredLegends.map((player) => (
+                      <React.Fragment key={player.id}>
+                        {/* Main Row */}
+                        <tr 
+                          className={`border-b border-black/20 hover:bg-[#00FF85]/10 cursor-pointer transition-colors ${expandedRow === player.id ? 'bg-[#00FF85]/20' : ''}`}
+                          onClick={() => setExpandedRow(expandedRow === player.id ? null : player.id)}
+                        >
+                          <td className="p-4 border-r border-black/20 text-center text-xs font-bold text-slate-400">
+                            #{filteredLegends.indexOf(player) + 1}
+                          </td>
+                          <td className="p-4 border-r border-black/20">
+                            <span className="font-black uppercase text-sm">{player.name}</span>
+                          </td>
+                          <td className="p-4 border-r border-black/20 text-xs font-bold text-slate-600">
+                            {player.club}
+                          </td>
+                          <td className="p-4 border-r border-black/20 text-center text-xs font-bold">
+                            <span className="bg-black text-white px-2 py-1 uppercase">{player.position}</span>
+                          </td>
+                          <td className="p-4 text-center">
+                            <button className="h-6 w-6 bg-white border border-black flex items-center justify-center mx-auto shadow-[1px_1px_0px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
+                              {expandedRow === player.id ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                            </button>
+                          </td>
+                        </tr>
+
+                        {/* Expandable Biography Row using AnimatePresence */}
+                        <AnimatePresence>
+                          {expandedRow === player.id && (
+                            <motion.tr
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3, ease: "easeInOut" }}
+                              className="bg-[#F2F2F2] border-b-2 border-black"
+                            >
+                              <td colSpan={5} className="p-0 border-none">
+                                <div className="p-6 border-t border-black/10">
+                                  <div className="flex flex-col lg:flex-row gap-6">
+                                    <div className="flex-1">
+                                      <h4 className="text-sm font-black uppercase mb-2 border-b-2 border-black pb-1 inline-block">Biografi Singkat</h4>
+                                      <p className="text-sm font-medium text-slate-700 leading-relaxed mb-4">
+                                        {player.biography}
+                                      </p>
+                                    </div>
+                                    <div className="lg:w-1/3 space-y-4">
+                                      <div className="bg-white border-2 border-black p-3 shadow-[2px_2px_0px_0px_#000]">
+                                        <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1">Masa Aktif</p>
+                                        <p className="font-mono font-black text-sm">{player.activeYears}</p>
+                                      </div>
+                                      <div className="bg-[#00FF85]/20 border-2 border-black p-3 shadow-[2px_2px_0px_0px_#000]">
+                                        <p className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-1">Pencapaian Utama</p>
+                                        <p className="font-bold text-xs uppercase leading-snug">{player.achievements}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </motion.tr>
+                          )}
+                        </AnimatePresence>
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5} className="p-8 text-center text-slate-500 font-bold uppercase text-sm">
+                        Pemain legendaris tidak ditemukan.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
