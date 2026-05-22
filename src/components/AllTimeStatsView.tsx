@@ -1,5 +1,5 @@
 import React from "react";
-import { topScorers, leagueRecords, leagueTrivia } from "../data/statisticsData";
+import { topScorers, allTimeTopScorers, leagueRecords, leagueTrivia } from "../data/statisticsData";
 import { Award, Target, Zap, BookOpen } from "lucide-react";
 
 const AllTimeStatsView: React.FC = () => {
@@ -30,33 +30,73 @@ const AllTimeStatsView: React.FC = () => {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[600px]">
-            <thead>
-              <tr className="bg-[#F2F2F2] border-b-2 border-black text-xs font-black uppercase tracking-wider">
-                <th className="p-3 border-r border-black/20 w-12 text-center">#</th>
-                <th className="p-3 border-r border-black/20">Pemain</th>
-                <th className="p-3 border-r border-black/20">Klub</th>
-                <th className="p-3 border-r border-black/20">Musim</th>
-                <th className="p-3 text-right">Gol</th>
-              </tr>
-            </thead>
-            <tbody>
-              {topScorers.map((scorer, idx) => (
-                <tr key={idx} className="border-b border-black/10 hover:bg-[#00FF85]/10 transition-colors">
-                  <td className="p-3 border-r border-black/20 text-center font-bold text-slate-400">{idx + 1}</td>
-                  <td className="p-3 border-r border-black/20 font-black text-sm uppercase">{scorer.name}</td>
-                  <td className="p-3 border-r border-black/20 font-bold text-xs">{scorer.club}</td>
-                  <td className="p-3 border-r border-black/20 font-mono text-xs">{scorer.season}</td>
-                  <td className="p-3 text-right">
-                    <span className="bg-[#00FF85] border border-black px-2 py-0.5 font-black text-lg italic inline-block transform -skew-x-6">
-                      {scorer.goals}
-                    </span>
-                  </td>
+        <div className="flex flex-col xl:flex-row gap-8">
+          
+          {/* Data Per Musim */}
+          <div className="flex-1 overflow-x-auto border-2 border-black">
+            <div className="bg-black text-[#00FF85] p-3 border-b-2 border-black">
+              <h4 className="font-black uppercase text-sm">Pencetak Gol Terbanyak (Per Musim)</h4>
+            </div>
+            <table className="w-full text-left border-collapse min-w-[500px]">
+              <thead>
+                <tr className="bg-[#F2F2F2] border-b-2 border-black text-xs font-black uppercase tracking-wider">
+                  <th className="p-3 border-r border-black/20 w-12 text-center">#</th>
+                  <th className="p-3 border-r border-black/20">Pemain</th>
+                  <th className="p-3 border-r border-black/20">Musim</th>
+                  <th className="p-3 text-right">Gol</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {topScorers.map((scorer, idx) => (
+                  <tr key={idx} className="border-b border-black/10 hover:bg-[#00FF85]/10 transition-colors">
+                    <td className="p-3 border-r border-black/20 text-center font-bold text-slate-400">{idx + 1}</td>
+                    <td className="p-3 border-r border-black/20 font-black text-sm uppercase">
+                      {scorer.name}
+                      <span className="block text-[10px] font-bold text-slate-500 normal-case">{scorer.club}</span>
+                    </td>
+                    <td className="p-3 border-r border-black/20 font-mono text-xs">{scorer.season}</td>
+                    <td className="p-3 text-right">
+                      <span className="bg-[#00FF85] border border-black px-2 py-0.5 font-black text-lg italic inline-block transform -skew-x-6">
+                        {scorer.goals}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Data Kumulatif Sepanjang Masa */}
+          <div className="flex-1 overflow-x-auto border-2 border-black">
+            <div className="bg-[#00FF85] text-black p-3 border-b-2 border-black">
+              <h4 className="font-black uppercase text-sm">Top Skor Kumulatif (Sepanjang Karier)</h4>
+            </div>
+            <table className="w-full text-left border-collapse min-w-[500px]">
+              <thead>
+                <tr className="bg-[#F2F2F2] border-b-2 border-black text-xs font-black uppercase tracking-wider">
+                  <th className="p-3 border-r border-black/20 w-12 text-center">#</th>
+                  <th className="p-3 border-r border-black/20">Pemain</th>
+                  <th className="p-3 border-r border-black/20">Klub / Status</th>
+                  <th className="p-3 text-right">Gol</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allTimeTopScorers.map((scorer, idx) => (
+                  <tr key={idx} className="border-b border-black/10 hover:bg-black/5 transition-colors">
+                    <td className="p-3 border-r border-black/20 text-center font-bold text-slate-400">{idx + 1}</td>
+                    <td className="p-3 border-r border-black/20 font-black text-sm uppercase">{scorer.name}</td>
+                    <td className="p-3 border-r border-black/20 font-bold text-[10px] uppercase text-slate-500">{scorer.club}</td>
+                    <td className="p-3 text-right">
+                      <span className="bg-black text-[#00FF85] border border-black px-2 py-0.5 font-black text-lg italic inline-block transform -skew-x-6">
+                        {scorer.goals}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
         </div>
       </div>
 
