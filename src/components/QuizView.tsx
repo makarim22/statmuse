@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Gamepad2, CheckCircle2, XCircle, RotateCcw, Trophy, Award } from "lucide-react";
 import { quizQuestions } from "../data/quizData";
+import { soundEngine } from "../utils/soundEngine";
 
 export default function QuizView() {
   const [gameState, setGameState] = useState<'start' | 'playing' | 'results'>('start');
@@ -25,6 +26,9 @@ export default function QuizView() {
     setSelectedOption(index);
     if (index === currentQuestion.correctAnswer) {
       setScore(prev => prev + 1);
+      soundEngine.playSuccess();
+    } else {
+      soundEngine.playError();
     }
   };
 

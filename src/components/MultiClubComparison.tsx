@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Plus, Trash2, BarChart3, TrendingUp, Trophy } from "lucide-react";
 import { ClubSummary } from "../types";
 import { clubMetadataList } from "../data/clubMetadata";
 import ClubShield from "./ClubShield";
 import ClubRadarChart from "./ClubRadarChart";
+import { soundEngine } from "../utils/soundEngine";
 
 interface MultiClubComparisonProps {
   allClubs: ClubSummary[];
@@ -11,6 +12,10 @@ interface MultiClubComparisonProps {
 }
 
 export default function MultiClubComparison({ allClubs, onClose }: MultiClubComparisonProps) {
+  useEffect(() => {
+    soundEngine.playThud();
+  }, []);
+
   const [selectedClubs, setSelectedClubs] = useState<string[]>([
     allClubs[0]?.name || "",
     allClubs[1]?.name || ""

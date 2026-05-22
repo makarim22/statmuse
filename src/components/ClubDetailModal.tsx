@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Calendar, MapPin, Award, ShieldAlert, Sparkles, BookOpen, Copy, Check } from "lucide-react";
 import { ClubMetadata } from "../data/clubMetadata";
 import ClubShield from "./ClubShield";
 import { copyStatCardToClipboard } from "../utils/exportUtils";
+import { soundEngine } from "../utils/soundEngine";
 
 interface ClubDetailModalProps {
   isOpen: boolean;
@@ -23,6 +24,12 @@ interface ClubDetailModalProps {
 
 export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAskAI }: ClubDetailModalProps) {
   const [copySuccess, setCopySuccess] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      soundEngine.playThud();
+    }
+  }, [isOpen]);
 
   if (!isOpen || !club) return null;
 

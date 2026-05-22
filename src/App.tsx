@@ -49,6 +49,8 @@ import { exportToCSV, exportClubRankingsToCSV, exportToJSON, exportStandingsToCS
 import AllTimeStatsView from "./components/AllTimeStatsView";
 import QuizView from "./components/QuizView";
 import { leagueTrivia } from "./data/statisticsData";
+import { soundEngine } from "./utils/soundEngine";
+import AudioToggle from "./components/AudioToggle";
 
 export default function App() {
   // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'stats' (All-time stats), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern), 'kuis' (Trivia Quiz)
@@ -97,7 +99,22 @@ export default function App() {
   // Load a default summary query on first load
   useEffect(() => {
     handleExecuteSearch("Siapa klub juara terbanyak sepanjang sejarah Liga Indonesia?");
+    
+    // Initialize audio context on first mount (though it needs a user gesture to truly unlock)
+    // We bind a global listener to ensure it unlocks on first click anywhere
+    const unlockAudio = () => {
+      soundEngine.init();
+      document.removeEventListener('click', unlockAudio);
+    };
+    document.addEventListener('click', unlockAudio);
+    
+    return () => document.removeEventListener('click', unlockAudio);
   }, []);
+
+  // Play click sound on tab change
+  useEffect(() => {
+    soundEngine.playClick();
+  }, [activeTab]);
 
   const handleExecuteSearch = async (queryText: string) => {
     if (!queryText.trim()) return;
@@ -313,6 +330,9 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FFFFFF] text-[#1A1A1A] font-sans antialiased selection:bg-[#00FF85] selection:text-black" id="main_root">
       
+      {/* Audio Toggle */}
+      <AudioToggle />
+
       {/* Navigation Bar in Bold Neo-Brutalist Layout */}
       <nav className="sticky top-0 z-40 bg-white border-b-4 border-black px-4 sm:px-10 py-5 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">
         <div className="flex items-center gap-3">

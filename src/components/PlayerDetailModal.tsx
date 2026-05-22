@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { X, User, Flag, Trophy, Target } from "lucide-react";
 import { TopScorer } from "../data/statisticsData";
+import { soundEngine } from "../utils/soundEngine";
 
 interface PlayerDetailModalProps {
   player: TopScorer | null;
@@ -9,6 +10,12 @@ interface PlayerDetailModalProps {
 }
 
 const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, isOpen, onClose }) => {
+  useEffect(() => {
+    if (isOpen) {
+      soundEngine.playThud();
+    }
+  }, [isOpen]);
+
   if (!isOpen || !player) return null;
 
   return (
