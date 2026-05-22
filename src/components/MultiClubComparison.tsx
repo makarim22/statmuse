@@ -3,6 +3,7 @@ import { X, Plus, Trash2, BarChart3, TrendingUp, Trophy } from "lucide-react";
 import { ClubSummary } from "../types";
 import { clubMetadataList } from "../data/clubMetadata";
 import ClubShield from "./ClubShield";
+import ClubRadarChart from "./ClubRadarChart";
 
 interface MultiClubComparisonProps {
   allClubs: ClubSummary[];
@@ -115,6 +116,16 @@ export default function MultiClubComparison({ allClubs, onClose }: MultiClubComp
 
         {/* Comparison Grid */}
         <div className="space-y-6">
+
+          {/* Radar Chart Head-to-Head (Only when 2 clubs are selected) */}
+          {selectedClubs.length === 2 && (
+            <div className="h-[400px]">
+              <ClubRadarChart 
+                clubA={getClubData(selectedClubs[0])!} 
+                clubB={getClubData(selectedClubs[1])!} 
+              />
+            </div>
+          )}
 
           {/* Professional Titles Comparison */}
           <div className="border-2 border-black bg-white p-4">

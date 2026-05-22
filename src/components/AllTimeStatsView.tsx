@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { topScorers, allTimeTopScorers, leagueRecords, leagueTrivia, TopScorer, legendaryPlayers } from "../data/statisticsData";
 import { Award, Target, Zap, BookOpen, Search, User, ChevronDown, ChevronUp } from "lucide-react";
 import PlayerDetailModal from "./PlayerDetailModal";
+import GoalTrendChart from "./GoalTrendChart";
 
 const AllTimeStatsView: React.FC = () => {
   const [selectedPlayer, setSelectedPlayer] = useState<TopScorer | null>(null);
@@ -36,6 +37,9 @@ const AllTimeStatsView: React.FC = () => {
           Kumpulan rekor tertinggi, deretan pencetak gol terbanyak (top skor), serta trivia menarik di kancah Liga Indonesia.
         </p>
       </div>
+
+      {/* Goal Trend Chart (Advanced Analytics) */}
+      <GoalTrendChart className="mb-12" />
 
       {/* Top Scorers Grid */}
       <div className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 md:p-8">
