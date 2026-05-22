@@ -51,6 +51,7 @@ import QuizView from "./components/QuizView";
 import { leagueTrivia } from "./data/statisticsData";
 import { soundEngine } from "./utils/soundEngine";
 import AudioToggle from "./components/AudioToggle";
+import InstallPWA from "./components/InstallPWA";
 
 export default function App() {
   // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'stats' (All-time stats), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern), 'kuis' (Trivia Quiz)
@@ -332,6 +333,9 @@ export default function App() {
       
       {/* Audio Toggle */}
       <AudioToggle />
+      
+      {/* PWA Install/Update Prompt */}
+      <InstallPWA />
 
       {/* Navigation Bar in Bold Neo-Brutalist Layout */}
       <nav className="sticky top-0 z-40 bg-white border-b-4 border-black px-4 sm:px-10 py-5 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">
