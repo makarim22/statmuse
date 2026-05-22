@@ -1,8 +1,16 @@
-import React from "react";
-import { topScorers, allTimeTopScorers, leagueRecords, leagueTrivia } from "../data/statisticsData";
+import React, { useState } from "react";
+import { topScorers, allTimeTopScorers, leagueRecords, leagueTrivia, TopScorer } from "../data/statisticsData";
 import { Award, Target, Zap, BookOpen } from "lucide-react";
+import PlayerDetailModal from "./PlayerDetailModal";
 
 const AllTimeStatsView: React.FC = () => {
+  const [selectedPlayer, setSelectedPlayer] = useState<TopScorer | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handlePlayerClick = (player: TopScorer) => {
+    setSelectedPlayer(player);
+    setIsModalOpen(true);
+  };
   return (
     <div className="space-y-12 animate-fade-in" id="all_time_stats_view">
       {/* Header */}
@@ -48,7 +56,11 @@ const AllTimeStatsView: React.FC = () => {
               </thead>
               <tbody>
                 {topScorers.map((scorer, idx) => (
-                  <tr key={idx} className="border-b border-black/10 hover:bg-[#00FF85]/10 transition-colors">
+                  <tr 
+                    key={idx} 
+                    className="border-b border-black/10 hover:bg-[#00FF85]/10 transition-colors cursor-pointer"
+                    onClick={() => handlePlayerClick(scorer)}
+                  >
                     <td className="p-3 border-r border-black/20 text-center font-bold text-slate-400">{idx + 1}</td>
                     <td className="p-3 border-r border-black/20 font-black text-sm uppercase">
                       {scorer.name}
@@ -56,7 +68,7 @@ const AllTimeStatsView: React.FC = () => {
                     </td>
                     <td className="p-3 border-r border-black/20 font-mono text-xs">{scorer.season}</td>
                     <td className="p-3 text-right">
-                      <span className="bg-[#00FF85] border border-black px-2 py-0.5 font-black text-lg italic inline-block transform -skew-x-6">
+                      <span className="bg-[#00FF85] border border-black px-2 py-0.5 font-black text-lg italic inline-block transform -skew-x-6 group-hover:scale-110 transition-transform">
                         {scorer.goals}
                       </span>
                     </td>
@@ -82,7 +94,11 @@ const AllTimeStatsView: React.FC = () => {
               </thead>
               <tbody>
                 {allTimeTopScorers.map((scorer, idx) => (
-                  <tr key={idx} className="border-b border-black/10 hover:bg-black/5 transition-colors">
+                  <tr 
+                    key={idx} 
+                    className="border-b border-black/10 hover:bg-black/5 transition-colors cursor-pointer"
+                    onClick={() => handlePlayerClick(scorer)}
+                  >
                     <td className="p-3 border-r border-black/20 text-center font-bold text-slate-400">{idx + 1}</td>
                     <td className="p-3 border-r border-black/20 font-black text-sm uppercase">{scorer.name}</td>
                     <td className="p-3 border-r border-black/20 font-bold text-[10px] uppercase text-slate-500">{scorer.club}</td>
@@ -162,6 +178,13 @@ const AllTimeStatsView: React.FC = () => {
         </div>
 
       </div>
+      
+      {/* Player Detail Modal */}
+      <PlayerDetailModal 
+        player={selectedPlayer}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };

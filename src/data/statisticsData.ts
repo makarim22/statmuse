@@ -3,6 +3,9 @@ export interface TopScorer {
   club: string;
   goals: number | string;
   season: string;
+  nationality?: string;
+  position?: string;
+  description?: string;
 }
 
 export interface RecordItem {
