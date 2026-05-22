@@ -2,6 +2,7 @@ import { MapPin, Trophy, Award } from "lucide-react";
 import { ClubSummary } from "../types";
 import { clubMetadataList } from "../data/clubMetadata";
 import ClubShield from "./ClubShield";
+import indonesiaMapUrl from '../assets/indonesia.svg';
 
 interface GeographicMapViewProps {
   clubs: ClubSummary[];
@@ -10,12 +11,12 @@ interface GeographicMapViewProps {
 
 // Indonesian regions with approximate coordinates for visualization
 const regions = [
-  { name: "Sumatera", x: 15, y: 20, color: "#EF4444" },
-  { name: "Jawa", x: 45, y: 50, color: "#3B82F6" },
-  { name: "Kalimantan", x: 55, y: 35, color: "#10B981" },
-  { name: "Sulawesi", x: 70, y: 40, color: "#F59E0B" },
-  { name: "Papua", x: 85, y: 45, color: "#8B5CF6" },
-  { name: "Bali & Nusa Tenggara", x: 60, y: 60, color: "#EC4899" }
+  { name: "Sumatera", x: 18, y: 32, color: "#EF4444" },
+  { name: "Jawa", x: 42, y: 56, color: "#3B82F6" },
+  { name: "Kalimantan", x: 48, y: 32, color: "#10B981" },
+  { name: "Sulawesi", x: 70, y: 42, color: "#F59E0B" },
+  { name: "Papua", x: 88, y: 46, color: "#8B5CF6" },
+  { name: "Bali & Nusa Tenggara", x: 65, y: 62, color: "#EC4899" }
 ];
 
 // City coordinates (approximate positions on Indonesia map)
@@ -72,6 +73,9 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
   // Calculate region statistics
   const regionStats = regions.map(region => {
     const clubsInRegion = clubsByRegion[region.name] || [];
+    // Sort clubs inside region by titles
+    clubsInRegion.sort((a, b) => b.titles - a.titles);
+    
     const totalTitles = clubsInRegion.reduce((sum, club) => sum + club.titles, 0);
     const totalAmatirTitles = clubsInRegion.reduce((sum, club) => sum + (club.amatirTitles || 0), 0);
     return {
@@ -84,50 +88,86 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
   });
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center gap-2 mb-4">
-        <MapPin className="h-5 w-5" />
-        <h3 className="text-xl font-black uppercase italic">Peta Geografis Klub Indonesia</h3>
+    <div className="space-y-8 animate-fade-in">
+      <div className="flex items-center gap-3 mb-6 border-b-4 border-black pb-4">
+        <div className="h-12 w-12 bg-black flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_0px_#00FF85]">
+          <MapPin className="h-6 w-6 text-white" />
+        </div>
+        <div>
+          <h3 className="text-3xl font-black uppercase tracking-tighter italic">Peta Distribusi Juara</h3>
+          <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Pemetaan Geografis Klub Tersukses di Indonesia</p>
+        </div>
       </div>
 
-      {/* Simplified Indonesia Map Visualization */}
-      <div className="border-4 border-black bg-gradient-to-br from-blue-100 to-blue-50 p-8 relative" style={{ minHeight: "500px" }}>
-        <div className="absolute inset-0 opacity-10">
-          <svg viewBox="0 0 100 100" className="w-full h-full">
-            {/* Simplified Indonesia archipelago outline */}
-            <path
-              d="M 10 20 Q 20 18 30 22 L 40 25 Q 50 28 60 30 L 70 35 Q 80 38 90 45 L 85 50 Q 75 48 65 52 L 55 58 Q 45 60 35 58 L 25 55 Q 15 50 10 45 Z"
-              fill="#94A3B8"
-              stroke="#1E293B"
-              strokeWidth="0.5"
-            />
-          </svg>
+      {/* Brutalist Indonesia Map Visualization */}
+      <div className="border-4 border-black bg-white p-4 sm:p-8 relative overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]" style={{ minHeight: "500px" }}>
+        {/* Dot Pattern Background */}
+        <div 
+          className="absolute inset-0 opacity-10 pointer-events-none" 
+          style={{ backgroundImage: "radial-gradient(#000 2px, transparent 2px)", backgroundSize: "24px 24px" }}
+        />
+
+        {/* Real SVG Map (Imported) */}
+        <div className="absolute inset-0 pointer-events-none p-4 opacity-70">
+          <img 
+            src={indonesiaMapUrl} 
+            alt="Peta Indonesia" 
+            className="w-full h-full object-contain drop-shadow-[8px_8px_0px_rgba(0,0,0,1)] grayscale" 
+          />
         </div>
 
         {/* Region markers */}
         {regionStats.map((region, idx) => (
           <div
             key={idx}
-            className="absolute transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10"
             style={{ left: `${region.x}%`, top: `${region.y}%` }}
           >
             <div className="relative group">
-              {/* Region dot */}
+              {/* Brutalist Region Box */}
               <div
-                className="h-12 w-12 rounded-full border-4 border-black flex items-center justify-center font-black text-white shadow-lg cursor-pointer hover:scale-110 transition-transform"
-                style={{ backgroundColor: region.color }}
+                className={`h-10 w-10 sm:h-12 sm:w-12 border-4 border-black flex items-center justify-center font-black text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-pointer transition-all bg-white hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] ${region.clubCount === 0 ? 'opacity-50 grayscale' : ''}`}
               >
-                {region.clubCount}
+                <span className="text-lg sm:text-xl">{region.clubCount}</span>
+                <div className="absolute -top-2 -right-2 h-4 w-4 border-2 border-black" style={{ backgroundColor: region.color }} />
               </div>
 
-              {/* Tooltip on hover */}
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                <div className="bg-black text-white border-2 border-black px-3 py-2 text-xs font-bold whitespace-nowrap shadow-lg">
-                  <p className="font-black uppercase">{region.name}</p>
-                  <p className="text-[10px]">{region.clubCount} Klub</p>
-                  <p className="text-[10px]">{region.totalTitles} Gelar Pro</p>
-                  {region.totalAmatirTitles > 0 && (
-                    <p className="text-[10px]">+{region.totalAmatirTitles} Gelar Amatir</p>
+              {/* Enhanced Brutalist Tooltip */}
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-4 opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50 w-56 translate-y-2 group-hover:translate-y-0">
+                <div className="bg-white text-black border-4 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                  <p className="font-black uppercase text-base border-b-4 border-black pb-2 mb-3" style={{ color: region.color }}>{region.name}</p>
+                  
+                  <div className="space-y-1.5 mb-3">
+                    <div className="flex justify-between items-center bg-gray-100 px-2 py-1 border border-black">
+                      <span className="text-[10px] font-black uppercase">Klub Juara:</span>
+                      <span className="text-xs font-black">{region.clubCount}</span>
+                    </div>
+                    <div className="flex justify-between items-center bg-[#00FF85]/20 px-2 py-1 border border-black">
+                      <span className="text-[10px] font-black uppercase">Gelar Pro:</span>
+                      <span className="text-xs font-black">{region.totalTitles}</span>
+                    </div>
+                    {region.totalAmatirTitles > 0 && (
+                      <div className="flex justify-between items-center bg-gray-100 px-2 py-1 border border-black">
+                        <span className="text-[10px] font-black uppercase">Gelar Amatir:</span>
+                        <span className="text-xs font-black">{region.totalAmatirTitles}</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Top Clubs Preview */}
+                  {region.clubs.length > 0 && (
+                     <div className="mt-3 pt-3 border-t-4 border-black">
+                        <p className="text-[9px] font-black uppercase text-slate-500 mb-2 tracking-widest">Klub Tersukses:</p>
+                        <div className="space-y-1.5">
+                          {region.clubs.slice(0, 3).map((c, i) => (
+                             <div key={i} className="flex justify-between items-center text-[10px] font-bold uppercase truncate whitespace-nowrap bg-gray-50 border border-gray-200 px-1.5 py-1">
+                               <span className="truncate pr-2">• {c.name}</span>
+                               <span className="font-black bg-black text-white px-1 ml-auto">{c.titles}</span>
+                             </div>
+                          ))}
+                        </div>
+                        {region.clubs.length > 3 && <p className="text-[9px] font-bold italic mt-2 text-center">+{region.clubs.length - 3} klub lainnya</p>}
+                     </div>
                   )}
                 </div>
               </div>
@@ -135,81 +175,90 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
           </div>
         ))}
 
-        {/* Legend */}
-        <div className="absolute bottom-4 right-4 bg-white border-2 border-black p-3 shadow-lg">
-          <p className="text-xs font-black uppercase mb-2">Legenda</p>
-          <div className="space-y-1 text-[10px] font-bold">
+        {/* Legend Box */}
+        <div className="absolute bottom-4 right-4 bg-white border-4 border-black p-3 sm:p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-10 hidden sm:block">
+          <p className="text-xs font-black uppercase tracking-widest border-b-2 border-black pb-1 mb-2">Legenda Peta</p>
+          <div className="space-y-2 text-[10px] font-bold uppercase">
             <div className="flex items-center gap-2">
-              <div className="h-4 w-4 rounded-full border-2 border-black bg-blue-500"></div>
-              <span>Jumlah klub di region</span>
+              <div className="h-4 w-4 border-2 border-black bg-white flex items-center justify-center text-[8px] font-black">#</div>
+              <span>Jumlah Klub Juara di Region</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-4 w-4 border-2 border-black bg-[#EF4444]"></div>
+              <span>Warna Identitas Region</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Region Details Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {regionStats.map((region, idx) => (
-          <div key={idx} className="border-2 border-black bg-white p-4">
-            <div className="flex items-center gap-3 mb-3 pb-3 border-b-2 border-black">
-              <div
-                className="h-10 w-10 rounded-full border-2 border-black flex items-center justify-center font-black text-white"
-                style={{ backgroundColor: region.color }}
-              >
-                {region.clubCount}
+      {/* Region Details Grid (Brutalist style) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {regionStats.map((region, idx) => {
+          if (region.clubCount === 0) return null; // Hide empty regions in list
+          
+          return (
+            <div key={idx} className="border-4 border-black bg-white flex flex-col shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:translate-x-1 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+              <div className="flex items-center gap-4 p-4 border-b-4 border-black bg-gray-50">
+                <div
+                  className="h-12 w-12 border-2 border-black flex items-center justify-center font-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                  style={{ backgroundColor: region.color }}
+                >
+                  {region.clubCount}
+                </div>
+                <div>
+                  <h4 className="text-xl font-black uppercase italic tracking-tighter leading-none" style={{ color: region.color }}>{region.name}</h4>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-[10px] font-bold bg-[#00FF85]/30 px-1 border border-black uppercase tracking-wider">{region.totalTitles} Pro</span>
+                    {region.totalAmatirTitles > 0 && (
+                      <span className="text-[10px] font-bold bg-gray-200 px-1 border border-black uppercase tracking-wider">+{region.totalAmatirTitles} Amatir</span>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div>
-                <h4 className="text-lg font-black uppercase">{region.name}</h4>
-                <p className="text-[10px] font-bold text-slate-500">
-                  {region.totalTitles} Gelar Profesional
-                </p>
-              </div>
-            </div>
 
-            {/* Clubs in region */}
-            <div className="space-y-2">
-              {region.clubs.length > 0 ? (
-                region.clubs.map((club, clubIdx) => {
+              {/* Clubs in region */}
+              <div className="p-4 space-y-3 flex-1 bg-white">
+                {region.clubs.map((club, clubIdx) => {
                   const meta = clubMetadataList[club.name];
                   return (
                     <button
                       key={clubIdx}
                       onClick={() => onClubClick?.(club)}
-                      className="w-full flex items-center gap-2 p-2 bg-[#F2F2F2] border border-black hover:bg-[#00FF85] transition-colors text-left"
+                      className="w-full flex items-center gap-3 p-2 bg-white border-2 border-black hover:bg-[#00FF85] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all text-left group"
                     >
                       {meta && (
-                        <div className="h-6 w-6 border border-black bg-white p-0.5 shrink-0">
+                        <div className="h-8 w-8 border-2 border-black bg-white p-1 shrink-0 flex items-center justify-center">
                           <ClubShield
                             symbol={meta.emblemSymbol}
                             primaryColor={meta.colors.primary}
                             secondaryColor={meta.colors.secondary}
-                            className="h-full w-full"
+                            className="h-full w-full group-hover:scale-110 transition-transform"
                             clubName={club.name}
                             logoUrl={meta.logoUrl}
                           />
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-black uppercase truncate">{club.name}</p>
-                        <p className="text-[9px] font-bold text-slate-500">
+                        <p className="text-sm font-black uppercase truncate">{club.name}</p>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">
                           {club.titles} Pro {club.amatirTitles ? `+ ${club.amatirTitles} Amatir` : ''}
                         </p>
                       </div>
-                      <div className="flex items-center gap-1 shrink-0">
-                        {club.titles > 0 && <Trophy className="h-3 w-3 text-yellow-600" />}
-                        {club.runnerUps > 0 && <Award className="h-3 w-3 text-slate-400" />}
+                      <div className="flex flex-col items-end gap-1 shrink-0">
+                        {club.titles > 0 && (
+                          <div className="flex items-center gap-1 bg-black text-white px-1.5 py-0.5 border border-black">
+                            <Trophy className="h-3 w-3 text-yellow-400" />
+                            <span className="text-[10px] font-black">{club.titles}</span>
+                          </div>
+                        )}
                       </div>
                     </button>
                   );
-                })
-              ) : (
-                <p className="text-xs font-bold text-slate-400 italic text-center py-2">
-                  Belum ada klub juara dari region ini
-                </p>
-              )}
+                })}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

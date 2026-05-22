@@ -47,8 +47,8 @@ import { standingsSeasonList, StandingsEntry } from "./data/standingsData";
 import { exportToCSV, exportClubRankingsToCSV, exportToJSON, exportStandingsToCSV, copyStatCardToClipboard } from "./utils/exportUtils";
 
 export default function App() {
-  // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern)
-  const [activeTab, setActiveTab] = useState<'ai-stats' | 'standings' | 'leaderboard' | 'explorer' | 'galatama' | 'perserikatan' | 'liga-indonesia' | 'era-modern'>('standings');
+  // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern)
+  const [activeTab, setActiveTab] = useState<'ai-stats' | 'standings' | 'leaderboard' | 'map' | 'explorer' | 'galatama' | 'perserikatan' | 'liga-indonesia' | 'era-modern'>('standings');
   
   // Standings view state
   const [selectedStandingsSeason, setSelectedStandingsSeason] = useState<string>("2024-2025");
@@ -73,7 +73,6 @@ export default function App() {
   const allClubs = getClubsRanking();
   const [compareClubA, setCompareClubA] = useState<string>(allClubs[0]?.name || "Persija Jakarta");
   const [compareClubB, setCompareClubB] = useState<string>(allClubs[1]?.name || "Persib Bandung");
-  const [leaderboardViewMode, setLeaderboardViewMode] = useState<'podium' | 'map'>('podium');
 
   // Filter and sorting states for the complete database explorer
   const [explorerQuery, setExplorerQuery] = useState("");
@@ -358,6 +357,17 @@ export default function App() {
             id="tab_leaders"
           >
             PAPAN JUARA & VS MODE
+          </button>
+          <button
+            onClick={() => setActiveTab('map')}
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+              activeTab === 'map' 
+                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
+                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+            }`}
+            id="tab_map"
+          >
+            PETA DISTRIBUSI
           </button>
           <button
             onClick={() => setActiveTab('explorer')}
@@ -1191,14 +1201,6 @@ export default function App() {
               </div>
               <div className="flex gap-2 flex-wrap">
                 <button
-                  onClick={() => setLeaderboardViewMode(prev => prev === 'podium' ? 'map' : 'podium')}
-                  className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-[#00FF85] transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
-                  title="Toggle map view"
-                >
-                  <MapPin className="h-4 w-4" />
-                  {leaderboardViewMode === 'podium' ? 'PETA' : 'PODIUM'}
-                </button>
-                <button
                   onClick={() => exportClubRankingsToCSV(allClubs)}
                   className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
                   title="Download sebagai CSV"
@@ -1217,17 +1219,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Conditional View: Podium or Map */}
-            {leaderboardViewMode === 'map' ? (
-              <GeographicMapView
-                clubs={allClubs}
-                onClubClick={(club) => {
-                  setSelectedModalClub(club);
-                  setIsModalOpen(true);
-                }}
-              />
-            ) : (
-              <>
             {/* Brutalist Podium Display */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] bg-white" id="elite_podium">
               
@@ -1390,8 +1381,6 @@ export default function App() {
                 </div>
               )}
             </div>
-            </>
-            )}
 
             {/* BRAND NEW UPGRADE: DYNAMIC KLUB VS KLUB COMPARISON TOOL */}
             <div className="border-4 border-black bg-white p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] space-y-6" id="vs_mode_panel">
@@ -1642,6 +1631,19 @@ export default function App() {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* VIEW: GEOGRAPHIC MAP VIEW */}
+        {activeTab === 'map' && (
+          <div className="space-y-8 animate-fade-in" id="map_view">
+             <GeographicMapView
+                clubs={allClubs}
+                onClubClick={(club) => {
+                  setSelectedModalClub(club);
+                  setIsModalOpen(true);
+                }}
+              />
           </div>
         )}
 
