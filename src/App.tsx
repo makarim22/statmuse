@@ -321,44 +321,46 @@ export default function App() {
       <main className="max-w-7xl mx-auto px-4 sm:px-10 py-10" id="main_content">
         
         {/* Quick Highlights Row (Heavy Metric Cards) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border-2 border-black mb-10 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" id="quick_highlights">
-          <div className="p-4 sm:p-6 border-b-2 sm:border-r-2 lg:border-b-0 border-black flex flex-col justify-between">
-            <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Total Kompetisi</p>
-            <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-4xl sm:text-5xl font-black tracking-tighter">{totalSeasonsCount}</span>
-              <span className="text-xs font-bold uppercase opacity-55">Musim</span>
+        {activeTab === 'leaderboard' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border-2 border-black mb-10 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" id="quick_highlights">
+            <div className="p-4 sm:p-6 border-b-2 sm:border-r-2 lg:border-b-0 border-black flex flex-col justify-between">
+              <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Total Kompetisi</p>
+              <div className="flex items-baseline gap-2 mt-2">
+                <span className="text-4xl sm:text-5xl font-black tracking-tighter">{totalSeasonsCount}</span>
+                <span className="text-xs font-bold uppercase opacity-55">Musim</span>
+              </div>
+              <span className="text-[10px] text-emerald-600 font-bold bg-[#00FF85]/20 border border-black px-1.5 py-0.5 mt-3 w-max">TUNTAS SEJAK 1930</span>
             </div>
-            <span className="text-[10px] text-emerald-600 font-bold bg-[#00FF85]/20 border border-black px-1.5 py-0.5 mt-3 w-max">TUNTAS SEJAK 1930</span>
-          </div>
 
-          <div className="p-4 sm:p-6 border-b-2 lg:border-b-0 sm:border-r-2 lg:border-r-2 border-black flex flex-col justify-between bg-[#F2F2F2]/50">
-            <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Klub Paling Sukses</p>
-            <div className="flex flex-col mt-2">
-              <span className="text-2xl sm:text-3xl font-black italic tracking-tighter truncate uppercase">{allClubs[0]?.name}</span>
-              <span className="text-xs font-bold opacity-75 mt-1">{allClubs[0]?.titles} Gelar Era Profesional</span>
-              {(allClubs[0]?.amatirTitles ?? 0) > 0 && (
-                <span className="text-[9px] font-bold opacity-50 mt-0.5">+{allClubs[0]?.amatirTitles} Amatir Perserikatan</span>
-              )}
+            <div className="p-4 sm:p-6 border-b-2 lg:border-b-0 sm:border-r-2 lg:border-r-2 border-black flex flex-col justify-between bg-[#F2F2F2]/50">
+              <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Klub Paling Sukses</p>
+              <div className="flex flex-col mt-2">
+                <span className="text-2xl sm:text-3xl font-black italic tracking-tighter truncate uppercase">{allClubs[0]?.name}</span>
+                <span className="text-xs font-bold opacity-75 mt-1">{allClubs[0]?.titles} Gelar Era Profesional</span>
+                {(allClubs[0]?.amatirTitles ?? 0) > 0 && (
+                  <span className="text-[9px] font-bold opacity-50 mt-0.5">+{allClubs[0]?.amatirTitles} Amatir Perserikatan</span>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="p-4 sm:p-6 border-b-2 sm:border-b-0 sm:border-r-2 lg:border-r-2 border-black flex flex-col justify-between">
-            <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Trofi Pemegang Unik</p>
-            <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-4xl sm:text-5xl font-black tracking-tighter">{uniqueWinnersCount}</span>
-              <span className="text-xs font-bold uppercase opacity-55">Klub Berbeda</span>
+            <div className="p-4 sm:p-6 border-b-2 sm:border-b-0 sm:border-r-2 lg:border-r-2 border-black flex flex-col justify-between">
+              <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Trofi Pemegang Unik</p>
+              <div className="flex items-baseline gap-2 mt-2">
+                <span className="text-4xl sm:text-5xl font-black tracking-tighter">{uniqueWinnersCount}</span>
+                <span className="text-xs font-bold uppercase opacity-55">Klub Berbeda</span>
+              </div>
+              <span className="text-[10px] text-black font-bold bg-yellow-300 border border-black px-1.5 py-0.5 mt-3 w-max">LIGA DINAMIS</span>
             </div>
-            <span className="text-[10px] text-black font-bold bg-yellow-300 border border-black px-1.5 py-0.5 mt-3 w-max">LIGA DINAMIS</span>
-          </div>
 
-          <div className="p-4 sm:p-6 flex flex-col justify-between bg-[#F2F2F2]/80">
-            <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Rentang Waktu</p>
-            <div className="flex flex-col mt-2">
-              <span className="text-3xl sm:text-4xl font-black italic tracking-tighter">96 TAHUN</span>
-              <span className="text-xs font-bold opacity-60 mt-1">Era Kolonial s.d Proyeksi 2026</span>
+            <div className="p-4 sm:p-6 flex flex-col justify-between bg-[#F2F2F2]/80">
+              <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Rentang Waktu</p>
+              <div className="flex flex-col mt-2">
+                <span className="text-3xl sm:text-4xl font-black italic tracking-tighter">96 TAHUN</span>
+                <span className="text-xs font-bold opacity-60 mt-1">Era Kolonial s.d Proyeksi 2026</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
