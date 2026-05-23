@@ -13,6 +13,17 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
     "Siapa klub juara terbanyak sepanjang sejarah Liga Indonesia?",
     "Persib Bandung vs Persija Jakarta"
   ]);
+  const [apiKey, setApiKey] = useState("");
+
+  useEffect(() => {
+    const storedApiKey = localStorage.getItem("gemini_api_key");
+    if (storedApiKey) setApiKey(storedApiKey);
+  }, []);
+
+  const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setApiKey(e.target.value);
+    localStorage.setItem("gemini_api_key", e.target.value);
+  };
 
   const allClubs = getClubsRanking();
   const maxTitles = Math.max(...allClubs.map(c => c.titles));
@@ -48,7 +59,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
       const response = await fetch("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: queryText })
+        body: JSON.stringify({ query: queryText, apiKey })
       });
       if (response.ok) {
         const data = await response.json();
@@ -188,6 +199,25 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                     </button>
                   </div>
                 </form>
+
+                {/* API Key Input */}
+                <div className="bg-white border-2 border-black p-3 space-y-2">
+                  <label htmlFor="api_key_input" className="text-[10px] font-black uppercase tracking-widest block">
+                    Kunci API Gemini (Opsional)
+                  </label>
+                  <input
+                    type="password"
+                    id="api_key_input"
+                    value={apiKey}
+                    onChange={handleApiKeyChange}
+                    placeholder="Paste Gemini API Key Anda..."
+                    className="w-full text-xs font-mono bg-[#F2F2F2] border border-black p-2 focus:outline-none focus:bg-white focus:ring-2 focus:ring-black"
+                  />
+                  <p className="text-[9px] text-slate-500 font-bold leading-tight">
+                    Untuk hasil pencarian AI yang lebih responsif tanpa batasan rate-limit, Anda bisa memasukkan kunci API Anda sendiri. 
+                    Dapatkan secara gratis di <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-blue-600 underline">Google AI Studio</a>. Kunci disimpan aman di browser lokal Anda.
+                  </p>
+                </div>
 
                 {/* Session search logs */}
                 {searchHistory.length > 0 && (

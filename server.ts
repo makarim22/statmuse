@@ -8,6 +8,7 @@ import { leagueData, getClubsRanking } from "./src/data/leagueData.js";
 import { galatamaData, getGalatamaClubsRanking } from "./src/data/galatamaData.js";
 
 // Load environment variables
+dotenv.config({ path: ".env.local" });
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -266,22 +267,39 @@ const localSearchFallback = (query: string) => {
 
 // API Route for Natural Language Stats Query (Statmuse Search)
 app.post("/api/search", async (req, res) => {
-  const { query } = req.body;
+  const { query, apiKey } = req.body;
   if (!query || typeof query !== "string") {
     return res.status(400).json({ error: "Query parameter string is required." });
   }
 
+  let localAi = ai;
+
+  if (apiKey && typeof apiKey === "string" && apiKey.trim() !== "") {
+    try {
+      localAi = new GoogleGenAI({
+        apiKey: apiKey.trim(),
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build',
+          }
+        }
+      });
+    } catch (err) {
+      console.error("Failed to initialize custom Gemini API client:", err);
+    }
+  }
+
   // If Gemini client is not initialized, fallback to rules-based search offline
-  if (!ai) {
+  if (!localAi) {
     const fallbackResponse = localSearchFallback(query);
     return res.json({
       ...fallbackResponse,
-      answer: fallbackResponse.answer + "\n\n*(Catatan: Mode offline aktif karena kunci API belum diisi di dashboard AI Studio)*"
+      answer: fallbackResponse.answer + "\n\n*(Catatan: Mode offline aktif karena kunci API belum diatur. Anda bisa memasukkan API Key Anda sendiri)*"
     });
   }
 
   try {
-    const response = await ai.models.generateContent({
+    const response = await localAi.models.generateContent({
       model: "gemini-3.5-flash",
       contents: `Pengguna bertanya: "${query}"`,
       config: {
