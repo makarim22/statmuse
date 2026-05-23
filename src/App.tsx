@@ -140,7 +140,7 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#1A1A1A] font-sans antialiased selection:bg-[#00FF85] selection:text-black" id="main_root">
+    <div className="min-h-screen bg-transparent text-[#1A1A1A] font-sans antialiased selection:bg-[#00FF85] selection:text-black" id="main_root">
       
       {/* Audio Toggle */}
       <AudioToggle />
@@ -149,7 +149,7 @@ export default function App() {
       <InstallPWA />
 
       {/* Navigation Bar in Bold Neo-Brutalist Layout */}
-      <nav className="sticky top-0 z-40 bg-white border-b-4 border-black px-4 sm:px-10 py-5 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">
+      <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b-4 border-black px-4 sm:px-10 py-5 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 bg-[#00FF85] border-2 border-black flex items-center justify-center transform -rotate-3 hover:rotate-0 duration-150">
             <Trophy className="h-5 w-5 text-black font-black" />
@@ -163,7 +163,7 @@ export default function App() {
         </div>
 
         {/* View Toggle Tabs */}
-        <div className="flex flex-wrap justify-center bg-white border-2 border-black p-1 rounded-none gap-1" id="nav_tabs">
+        <div className="flex flex-wrap justify-center bg-white/70 backdrop-blur-md border-2 border-black p-1 rounded-none gap-1" id="nav_tabs">
           <button
             onClick={() => setActiveTab('ai-stats')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${

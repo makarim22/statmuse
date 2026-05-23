@@ -22,4 +22,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #222222;
 }
-
+body {
+  background-color: #ffffff;
+  background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
