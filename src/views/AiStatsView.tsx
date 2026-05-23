@@ -131,7 +131,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                   <button
                     key={idx}
                     onClick={() => handleExecuteSearch(fact.query)}
-                    className="p-5 text-left bg-white border-2 border-black hover:bg-[#00FF85]/10 hover:border-[#00FF85] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex flex-col justify-between space-y-3 relative group"
+                    className="p-5 text-left bg-white border-2 border-black hover:bg-[#00FF85]/10 hover:border-[#00FF85] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex flex-col justify-between space-y-3 relative group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
                   >
                     <div className="space-y-1.5">
                       <span className="text-[9px] font-black tracking-widest bg-black text-[#00FF85] px-1.5 py-0.5 uppercase">
@@ -179,7 +179,8 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                     <button
                       type="submit"
                       disabled={isSearching}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 p-2 bg-black hover:bg-zinc-800 text-white rounded-none cursor-pointer duration-150"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 p-2 bg-black hover:bg-zinc-800 text-white rounded-none cursor-pointer duration-150 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
+                      aria-label="Cari"
                     >
                       {isSearching ? <RefreshCw className="h-5 w-5 animate-spin text-[#00FF85]" /> : <Search className="h-5 w-5" />}
                     </button>
@@ -198,7 +199,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                         <button
                           key={idx}
                           onClick={() => handleExecuteSearch(histQuery)}
-                          className="bg-white border border-black hover:bg-[#00FF85] hover:text-black hover:border-black px-2 py-1 text-[10px] font-bold uppercase truncate max-w-full text-left cursor-pointer transition-all duration-100"
+                          className="bg-white border border-black hover:bg-[#00FF85] hover:text-black hover:border-black px-2 py-1 text-[10px] font-bold uppercase truncate max-w-full text-left cursor-pointer transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
                         >
                           {histQuery}
                         </button>
@@ -215,7 +216,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                       <button
                         key={idx}
                         onClick={() => handleExecuteSearch(p.text)}
-                        className={`text-left font-bold text-xs p-3 border-2 border-black transition-all hover:translate-x-1 hover:-translate-y-1 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer ${
+                        className={`text-left font-bold text-xs p-3 border-2 border-black transition-all hover:translate-x-1 hover:-translate-y-1 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black ${
                           searchQuery === p.text ? 'bg-[#00FF85] text-black' : 'bg-[#F2F2F2] hover:bg-[#00FF85]'
                         }`}
                       >
@@ -371,7 +372,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                               <button
                                 key={idx}
                                 onClick={() => handleExecuteSearch(promptText)}
-                                className="text-left font-bold text-xs p-3 bg-white border-2 border-black hover:bg-[#00FF85] duration-150 cursor-pointer flex-1 flex items-center justify-between group"
+                                className="text-left font-bold text-xs p-3 bg-white border-2 border-black hover:bg-[#00FF85] duration-150 cursor-pointer flex-1 flex items-center justify-between group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
                               >
                                 <span className="truncate uppercase">{promptText}</span>
                                 <ChevronRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />

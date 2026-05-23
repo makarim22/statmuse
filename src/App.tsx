@@ -166,7 +166,7 @@ export default function App() {
         <div className="flex flex-wrap justify-center bg-white/70 backdrop-blur-md border-2 border-black p-1 rounded-none gap-1" id="nav_tabs">
           <button
             onClick={() => setActiveTab('ai-stats')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'ai-stats' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -177,7 +177,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('standings')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'standings' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -188,7 +188,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('leaderboard')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'leaderboard' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -199,7 +199,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('map')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'map' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -210,7 +210,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('stats')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'stats' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -221,7 +221,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('kuis')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'kuis' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -232,7 +232,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('explorer')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'explorer' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -243,7 +243,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('perserikatan')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'perserikatan' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -254,7 +254,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('galatama')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'galatama' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -265,7 +265,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('liga-indonesia')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'liga-indonesia' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -276,7 +276,7 @@ export default function App() {
           </button>
           <button
             onClick={() => setActiveTab('era-modern')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'era-modern' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'

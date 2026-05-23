@@ -74,8 +74,9 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                 <div className="flex items-center gap-3 self-start sm:self-center flex-wrap">
                   <button
                     onClick={() => exportStandingsToCSV(sortedStandings, selectedStandingsSeason)}
-                    className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                    className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
                     title="Download klasemen sebagai CSV"
+                    aria-label="Unduh Klasemen sebagai CSV"
                   >
                     <Download className="h-4 w-4" />
                     CSV
@@ -87,7 +88,8 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                     <select
                       value={selectedStandingsSeason}
                       onChange={(e) => setSelectedStandingsSeason(e.target.value)}
-                      className="appearance-none w-full bg-white text-black text-xs font-black uppercase tracking-wider px-4 py-2.5 pr-10 border-2 border-black rounded-none shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer focus:outline-none focus:bg-[#00FF85]/10 focus:ring-0"
+                      className="appearance-none w-full bg-white text-black text-xs font-black uppercase tracking-wider px-4 py-2.5 pr-10 border-2 border-black rounded-none shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85] focus:bg-[#00FF85]/10 focus:ring-0"
+                      aria-label="Pilih musim klasemen"
                     >
                       {Object.keys(standingsSeasonList).map((seasonId) => (
                         <option key={seasonId} value={seasonId} className="text-black font-black uppercase">
@@ -209,7 +211,7 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                     value={standingsSearchQuery}
                     onChange={(e) => setStandingsSearchQuery(e.target.value)}
                     placeholder="Saring berdasarkan nama klub..."
-                    className="w-full text-xs font-bold bg-white border-2 border-black rounded-none py-2.5 pl-10 pr-4 focus:outline-none focus:bg-[#00FF85]/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all placeholder-slate-400"
+                    className="w-full text-xs font-bold bg-white border-2 border-black rounded-none py-2.5 pl-10 pr-4 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85] focus:bg-[#00FF85]/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all placeholder-slate-400"
                   />
                 </div>
                 
@@ -219,7 +221,8 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                   {standingsSearchQuery && (
                     <button 
                       onClick={() => setStandingsSearchQuery("")}
-                      className="bg-black text-white px-2 py-0.5 hover:bg-neutral-800 border border-black cursor-pointer uppercase text-[9px]"
+                      className="bg-black text-white px-2 py-0.5 hover:bg-neutral-800 border border-black cursor-pointer uppercase text-[9px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00FF85]"
+                      aria-label="Batal saring tabel klasemen"
                     >
                       Batal Saring
                     </button>

@@ -81,8 +81,9 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
           {/* Close button top corner */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 p-2 bg-black text-white hover:bg-[#00FF85] hover:text-black hover:border-black border-2 border-black transition-all cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+            className="absolute right-4 top-4 p-2 bg-black text-white hover:bg-[#00FF85] hover:text-black hover:border-black border-2 border-black transition-all cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
             title="Tutup Detail"
+            aria-label="Tutup detail"
           >
             <X className="h-5 w-5" />
           </button>
@@ -240,13 +241,13 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
           <div className="pt-6 border-t-2 border-black grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="modal_footer_actions">
             <button
               onClick={onClose}
-              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-neutral-100 cursor-pointer text-center duration-150"
+              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-neutral-100 cursor-pointer text-center duration-150 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
             >
               Kembali
             </button>
             <button
               onClick={handleCopyStatCard}
-              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-[#00FF85] cursor-pointer text-center duration-150 flex items-center justify-center gap-2"
+              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-[#00FF85] cursor-pointer text-center duration-150 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
             >
               {copySuccess ? (
                 <>
@@ -262,14 +263,14 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
             </button>
             <button
               onClick={handleDownloadImage}
-              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-rose-400 hover:text-white cursor-pointer text-center duration-150 flex items-center justify-center gap-2"
+              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-rose-400 hover:text-white cursor-pointer text-center duration-150 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
             >
               <Download className="h-4 w-4 shrink-0" />
               Download Kartu
             </button>
             <button
               onClick={handleAskHistoryAI}
-              className="w-full py-3 bg-black hover:bg-[#00FF85] hover:text-black hover:border-black text-white border-2 border-black font-black text-[10px] sm:text-xs uppercase flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all duration-150"
+              className="w-full py-3 bg-black hover:bg-[#00FF85] hover:text-black hover:border-black text-white border-2 border-black font-black text-[10px] sm:text-xs uppercase flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
             >
               <Sparkles className="h-4 w-4 shrink-0 text-[#00FF85] animate-pulse" />
               Tanya AI

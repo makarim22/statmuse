@@ -61,7 +61,8 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, isOpen, o
           
           <button 
             onClick={onClose}
-            className="bg-white text-black border-2 border-black p-1 hover:bg-black hover:text-white transition-colors"
+            className="bg-white text-black border-2 border-black p-1 hover:bg-black hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
+            aria-label="Tutup detail"
           >
             <X className="h-6 w-6" />
           </button>
@@ -98,7 +99,7 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, isOpen, o
         <div className="p-4 border-t-4 border-black bg-[#F2F2F2]">
           <button
             onClick={handleDownloadImage}
-            className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-rose-400 hover:text-white cursor-pointer text-center duration-150 flex items-center justify-center gap-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-1 hover:translate-x-1"
+            className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-rose-400 hover:text-white cursor-pointer text-center duration-150 flex items-center justify-center gap-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-1 hover:translate-x-1 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
           >
             <Download className="h-5 w-5 shrink-0" />
             Download Stat Card

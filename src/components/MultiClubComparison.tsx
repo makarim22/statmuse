@@ -69,7 +69,8 @@ export default function MultiClubComparison({ allClubs, onClose }: MultiClubComp
           </div>
           <button
             onClick={onClose}
-            className="p-2 bg-black text-white hover:bg-[#00FF85] hover:text-black border-2 border-black transition-all"
+            className="p-2 bg-black text-white hover:bg-[#00FF85] hover:text-black border-2 border-black transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
+            aria-label="Tutup perbandingan"
           >
             <X className="h-5 w-5" />
           </button>
@@ -84,7 +85,7 @@ export default function MultiClubComparison({ allClubs, onClose }: MultiClubComp
             {selectedClubs.length < 6 && (
               <button
                 onClick={addClub}
-                className="px-3 py-1.5 bg-[#00FF85] text-black border-2 border-black text-xs font-black uppercase flex items-center gap-1 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
+                className="px-3 py-1.5 bg-[#00FF85] text-black border-2 border-black text-xs font-black uppercase flex items-center gap-1 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
               >
                 <Plus className="h-3 w-3" />
                 Tambah Klub
@@ -109,7 +110,8 @@ export default function MultiClubComparison({ allClubs, onClose }: MultiClubComp
                 {selectedClubs.length > 2 && (
                   <button
                     onClick={() => removeClub(clubName)}
-                    className="p-1.5 bg-rose-500 text-white border-2 border-black hover:bg-rose-600"
+                    className="p-1.5 bg-rose-500 text-white border-2 border-black hover:bg-rose-600 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
+                    aria-label={`Hapus ${clubName} dari perbandingan`}
                   >
                     <Trash2 className="h-3 w-3" />
                   </button>
@@ -257,7 +259,7 @@ export default function MultiClubComparison({ allClubs, onClose }: MultiClubComp
         <div className="mt-6 pt-4 border-t-2 border-black">
           <button
             onClick={onClose}
-            className="w-full py-3 bg-black text-white border-2 border-black font-black text-xs uppercase hover:bg-[#00FF85] hover:text-black transition-all"
+            className="w-full py-3 bg-black text-white border-2 border-black font-black text-xs uppercase hover:bg-[#00FF85] hover:text-black transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
           >
             Tutup Perbandingan
           </button>
