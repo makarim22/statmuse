@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import { X, User, Flag, Trophy, Target } from "lucide-react";
+import { X, User, Flag, Trophy, Target, Download } from "lucide-react";
 import { TopScorer } from "../data/statisticsData";
 import { soundEngine } from "../utils/soundEngine";
+import ShareablePlayerCard from "./ShareablePlayerCard";
+import { downloadCardAsImage } from "../utils/imageExport";
 
 interface PlayerDetailModalProps {
   player: TopScorer | null;
@@ -15,6 +17,12 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, isOpen, o
       soundEngine.playThud();
     }
   }, [isOpen]);
+
+  const handleDownloadImage = () => {
+    if (!player) return;
+    const elementId = `shareable-player-${player.name.replace(/\s+/g, '-')}`;
+    downloadCardAsImage(elementId, `GarudaStats-${player.name.replace(/\s+/g, '')}`);
+  };
 
   if (!isOpen || !player) return null;
 
@@ -86,6 +94,19 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, isOpen, o
           </div>
         </div>
 
+        {/* Footer Actions */}
+        <div className="p-4 border-t-4 border-black bg-[#F2F2F2]">
+          <button
+            onClick={handleDownloadImage}
+            className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-rose-400 hover:text-white cursor-pointer text-center duration-150 flex items-center justify-center gap-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-y-1 hover:translate-x-1"
+          >
+            <Download className="h-5 w-5 shrink-0" />
+            Download Stat Card
+          </button>
+        </div>
+
+        {/* Off-screen Render Target for the PNG Download */}
+        <ShareablePlayerCard player={player} />
       </div>
     </div>
   );

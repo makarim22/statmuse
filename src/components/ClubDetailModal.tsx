@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Calendar, MapPin, Award, ShieldAlert, Sparkles, BookOpen, Copy, Check } from "lucide-react";
+import { X, Calendar, MapPin, Award, ShieldAlert, Sparkles, BookOpen, Copy, Check, Download } from "lucide-react";
 import { ClubMetadata } from "../data/clubMetadata";
 import ClubShield from "./ClubShield";
 import { copyStatCardToClipboard } from "../utils/exportUtils";
 import { soundEngine } from "../utils/soundEngine";
+import { downloadCardAsImage } from "../utils/imageExport";
+import ShareableClubCard from "./ShareableClubCard";
 
 interface ClubDetailModalProps {
   isOpen: boolean;
@@ -50,6 +52,11 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     }
+  };
+
+  const handleDownloadImage = () => {
+    const elementId = `shareable-club-${club.name.replace(/\s+/g, '-')}`;
+    downloadCardAsImage(elementId, `GarudaStats-${club.name.replace(/\s+/g, '')}`);
   };
 
   return (
@@ -230,16 +237,16 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
           </div>
 
           {/* Action Row at bottom */}
-          <div className="pt-6 border-t-2 border-black grid grid-cols-1 sm:grid-cols-3 gap-3" id="modal_footer_actions">
+          <div className="pt-6 border-t-2 border-black grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="modal_footer_actions">
             <button
               onClick={onClose}
-              className="w-full py-3 border-2 border-black font-black text-xs uppercase hover:bg-neutral-100 cursor-pointer text-center duration-150"
+              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-neutral-100 cursor-pointer text-center duration-150"
             >
-              Kembali ke Menu
+              Kembali
             </button>
             <button
               onClick={handleCopyStatCard}
-              className="w-full py-3 border-2 border-black font-black text-xs uppercase hover:bg-[#00FF85] cursor-pointer text-center duration-150 flex items-center justify-center gap-2"
+              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-[#00FF85] cursor-pointer text-center duration-150 flex items-center justify-center gap-2"
             >
               {copySuccess ? (
                 <>
@@ -249,19 +256,35 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
               ) : (
                 <>
                   <Copy className="h-4 w-4 shrink-0" />
-                  Salin Stat Card
+                  Salin Teks
                 </>
               )}
             </button>
             <button
+              onClick={handleDownloadImage}
+              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-rose-400 hover:text-white cursor-pointer text-center duration-150 flex items-center justify-center gap-2"
+            >
+              <Download className="h-4 w-4 shrink-0" />
+              Download Kartu
+            </button>
+            <button
               onClick={handleAskHistoryAI}
-              className="w-full py-3 bg-black hover:bg-[#00FF85] hover:text-black hover:border-black text-white border-2 border-black font-black text-xs uppercase flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all duration-150"
+              className="w-full py-3 bg-black hover:bg-[#00FF85] hover:text-black hover:border-black text-white border-2 border-black font-black text-[10px] sm:text-xs uppercase flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all duration-150"
             >
               <Sparkles className="h-4 w-4 shrink-0 text-[#00FF85] animate-pulse" />
-              Tanya Asisten AI tim ini
+              Tanya AI
             </button>
           </div>
 
+          {/* Off-screen Render Target for the PNG Download */}
+          <ShareableClubCard 
+            clubName={club.name}
+            titles={club.titles}
+            runnerUps={club.runnerUps}
+            primaryColor={primaryBg}
+            secondaryColor={secondaryBg}
+            symbol={metadata?.emblemSymbol || "star"}
+          />
         </motion.div>
       </div>
     </AnimatePresence>
