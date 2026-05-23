@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ReactMarkdown from "react-markdown";
 import {
@@ -41,26 +41,38 @@ import { SeasonRecord, ClubSummary, SearchQueryResponse } from "./types";
 import { clubMetadataList } from "./data/clubMetadata";
 import ClubShield from "./components/ClubShield";
 import ClubDetailModal from "./components/ClubDetailModal";
-import MultiClubComparison from "./components/MultiClubComparison";
 import TimelineVisualization from "./components/TimelineVisualization";
-import GeographicMapView from "./components/GeographicMapView";
 import { standingsSeasonList, StandingsEntry } from "./data/standingsData";
 import { exportToCSV, exportClubRankingsToCSV, exportToJSON, exportStandingsToCSV, copyStatCardToClipboard } from "./utils/exportUtils";
-import AllTimeStatsView from "./components/AllTimeStatsView";
-import QuizView from "./components/QuizView";
 import { leagueTrivia } from "./data/statisticsData";
 import { soundEngine } from "./utils/soundEngine";
 import AudioToggle from "./components/AudioToggle";
 import InstallPWA from "./components/InstallPWA";
 
-import AiStatsView from "./views/AiStatsView";
-import StandingsView from "./views/StandingsView";
-import LeaderboardView from "./views/LeaderboardView";
-import ExplorerView from "./views/ExplorerView";
-import GalatamaView from "./views/GalatamaView";
-import PerserikatanView from "./views/PerserikatanView";
-import LigaIndonesiaView from "./views/LigaIndonesiaView";
-import EraModernView from "./views/EraModernView";
+// Lazy loaded components and views
+const MultiClubComparison = lazy(() => import("./components/MultiClubComparison"));
+const GeographicMapView = lazy(() => import("./components/GeographicMapView"));
+const AllTimeStatsView = lazy(() => import("./components/AllTimeStatsView"));
+const QuizView = lazy(() => import("./components/QuizView"));
+
+const AiStatsView = lazy(() => import("./views/AiStatsView"));
+const StandingsView = lazy(() => import("./views/StandingsView"));
+const LeaderboardView = lazy(() => import("./views/LeaderboardView"));
+const ExplorerView = lazy(() => import("./views/ExplorerView"));
+const GalatamaView = lazy(() => import("./views/GalatamaView"));
+const PerserikatanView = lazy(() => import("./views/PerserikatanView"));
+const LigaIndonesiaView = lazy(() => import("./views/LigaIndonesiaView"));
+const EraModernView = lazy(() => import("./views/EraModernView"));
+
+// Loading Fallback for Suspense (Neo-Brutalist design)
+const LoadingFallback = () => (
+  <div className="w-full py-20 flex flex-col items-center justify-center gap-4 animate-pulse" id="loading_fallback">
+    <div className="h-12 w-12 border-4 border-black bg-[#00FF85] flex items-center justify-center animate-spin">
+      <div className="h-4 w-4 bg-black"></div>
+    </div>
+    <span className="font-black uppercase tracking-widest text-xs">Memuat Data...</span>
+  </div>
+);
 
 export default function App() {
   // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'stats' (All-time stats), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern), 'kuis' (Trivia Quiz)
@@ -340,113 +352,115 @@ export default function App() {
           </div>
         </div>
 
-        {/* VIEW 1: ADVANCED AI QUERY ENGINE (STATMUSE LAYOUT WITH DISCOVERABILITY & TRIVIA) */}
-        {/* VIEW 1: ADVANCED AI QUERY ENGINE */}
-        {activeTab === 'ai-stats' && (
-          <AiStatsView 
-            initialQuery={pendingAiQuery} 
-            onClearInitialQuery={() => setPendingAiQuery(null)} 
-          />
-        )}
+        <Suspense fallback={<LoadingFallback />}>
+          {/* VIEW 1: ADVANCED AI QUERY ENGINE (STATMUSE LAYOUT WITH DISCOVERABILITY & TRIVIA) */}
+          {/* VIEW 1: ADVANCED AI QUERY ENGINE */}
+          {activeTab === 'ai-stats' && (
+            <AiStatsView 
+              initialQuery={pendingAiQuery} 
+              onClearInitialQuery={() => setPendingAiQuery(null)} 
+            />
+          )}
 
-        {/* VIEW KLASEMEN INTERAKTIF */}
-        {activeTab === 'standings' && (
-          <StandingsView 
-            onOpenClubDetail={(club: any) => {
-              setSelectedModalClub(club);
-              setIsModalOpen(true);
-            }} 
-          />
-        )}
+          {/* VIEW KLASEMEN INTERAKTIF */}
+          {activeTab === 'standings' && (
+            <StandingsView 
+              onOpenClubDetail={(club: any) => {
+                setSelectedModalClub(club);
+                setIsModalOpen(true);
+              }} 
+            />
+          )}
 
-        {/* VIEW 2: CHAMPIONS LEADERBOARD PODIUM */}
-        {activeTab === 'leaderboard' && (
-          <LeaderboardView 
-            onOpenClubDetail={(club: any) => {
-              setSelectedModalClub(club);
-              setIsModalOpen(true);
-            }}
-            onOpenMultiCompare={() => setIsMultiCompareOpen(true)}
-          />
-        )}
+          {/* VIEW 2: CHAMPIONS LEADERBOARD PODIUM */}
+          {activeTab === 'leaderboard' && (
+            <LeaderboardView 
+              onOpenClubDetail={(club: any) => {
+                setSelectedModalClub(club);
+                setIsModalOpen(true);
+              }}
+              onOpenMultiCompare={() => setIsMultiCompareOpen(true)}
+            />
+          )}
 
-        {/* VIEW: GEOGRAPHIC MAP VIEW */}
-        {activeTab === 'map' && (
-          <div className="space-y-8 animate-fade-in" id="map_view">
-             <GeographicMapView
-                clubs={getClubsRanking()}
-                onClubClick={(club: any) => {
-                  setSelectedModalClub(club);
-                  setIsModalOpen(true);
-                }}
-              />
-          </div>
-        )}
+          {/* VIEW: GEOGRAPHIC MAP VIEW */}
+          {activeTab === 'map' && (
+            <div className="space-y-8 animate-fade-in" id="map_view">
+               <GeographicMapView
+                  clubs={getClubsRanking()}
+                  onClubClick={(club: any) => {
+                    setSelectedModalClub(club);
+                    setIsModalOpen(true);
+                  }}
+                />
+            </div>
+          )}
 
-        {/* VIEW: ALL TIME STATS & TRIVIA */}
-        {activeTab === 'stats' && (
-          <AllTimeStatsView />
-        )}
+          {/* VIEW: ALL TIME STATS & TRIVIA */}
+          {activeTab === 'stats' && (
+            <AllTimeStatsView />
+          )}
 
-        {/* VIEW 3: CHRONOLOGICAL SEASONS TIMELINE */}
-        {activeTab === 'explorer' && (
-          <ExplorerView 
-            onAskAboutSeason={handleAskAboutSeason}
-            onOpenClubDetail={(club: any) => {
-              setSelectedModalClub(club);
-              setIsModalOpen(true);
-            }}
-          />
-        )}
+          {/* VIEW 3: CHRONOLOGICAL SEASONS TIMELINE */}
+          {activeTab === 'explorer' && (
+            <ExplorerView 
+              onAskAboutSeason={handleAskAboutSeason}
+              onOpenClubDetail={(club: any) => {
+                setSelectedModalClub(club);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
 
-        {/* VIEW 5: LIGA GALATAMA */}
-        {activeTab === 'galatama' && (
-          <GalatamaView 
-            onAskAboutGalatamaSeason={handleAskAboutGalatamaSeason}
-            onOpenClubDetail={(club: any) => {
-              setSelectedModalClub(club);
-              setIsModalOpen(true);
-            }}
-          />
-        )}
+          {/* VIEW 5: LIGA GALATAMA */}
+          {activeTab === 'galatama' && (
+            <GalatamaView 
+              onAskAboutGalatamaSeason={handleAskAboutGalatamaSeason}
+              onOpenClubDetail={(club: any) => {
+                setSelectedModalClub(club);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
 
-        {/* VIEW 6: PERSERIKATAN */}
-        {activeTab === 'perserikatan' && (
-          <PerserikatanView 
-            onAskAboutPerserikatanSeason={handleAskAboutPerserikatanSeason}
-            onOpenClubDetail={(club: any) => {
-              setSelectedModalClub(club);
-              setIsModalOpen(true);
-            }}
-          />
-        )}
+          {/* VIEW 6: PERSERIKATAN */}
+          {activeTab === 'perserikatan' && (
+            <PerserikatanView 
+              onAskAboutPerserikatanSeason={handleAskAboutPerserikatanSeason}
+              onOpenClubDetail={(club: any) => {
+                setSelectedModalClub(club);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
 
-        {/* VIEW 7: LIGA INDONESIA */}
-        {activeTab === 'liga-indonesia' && (
-          <LigaIndonesiaView 
-            onAskAboutLiginaSeason={handleAskAboutLiginaSeason}
-            onOpenClubDetail={(club: any) => {
-              setSelectedModalClub(club);
-              setIsModalOpen(true);
-            }}
-          />
-        )}
+          {/* VIEW 7: LIGA INDONESIA */}
+          {activeTab === 'liga-indonesia' && (
+            <LigaIndonesiaView 
+              onAskAboutLiginaSeason={handleAskAboutLiginaSeason}
+              onOpenClubDetail={(club: any) => {
+                setSelectedModalClub(club);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
 
-        {/* VIEW 8: ERA MODERN */}
-        {activeTab === 'era-modern' && (
-          <EraModernView 
-            onAskAboutModernSeason={handleAskAboutModernSeason}
-            onOpenClubDetail={(club: any) => {
-              setSelectedModalClub(club);
-              setIsModalOpen(true);
-            }}
-          />
-        )}
+          {/* VIEW 8: ERA MODERN */}
+          {activeTab === 'era-modern' && (
+            <EraModernView 
+              onAskAboutModernSeason={handleAskAboutModernSeason}
+              onOpenClubDetail={(club: any) => {
+                setSelectedModalClub(club);
+                setIsModalOpen(true);
+              }}
+            />
+          )}
 
-        {/* QUIZ VIEW (GAMIFICATION) */}
-        {activeTab === 'kuis' && (
-          <QuizView />
-        )}
+          {/* QUIZ VIEW (GAMIFICATION) */}
+          {activeTab === 'kuis' && (
+            <QuizView />
+          )}
+        </Suspense>
       </main>
 
       {/* Styled Brutalist Footer Frame */}
@@ -488,10 +502,12 @@ export default function App() {
 
       {/* Multi-Club Comparison Modal */}
       {isMultiCompareOpen && (
-        <MultiClubComparison
-          allClubs={allClubs}
-          onClose={() => setIsMultiCompareOpen(false)}
-        />
+        <Suspense fallback={null}>
+          <MultiClubComparison
+            allClubs={allClubs}
+            onClose={() => setIsMultiCompareOpen(false)}
+          />
+        </Suspense>
       )}
     </div>
   );
