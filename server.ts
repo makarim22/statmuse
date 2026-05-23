@@ -267,7 +267,7 @@ const localSearchFallback = (query: string) => {
 
 // API Route for Natural Language Stats Query (Statmuse Search)
 app.post("/api/search", async (req, res) => {
-  const { query, apiKey } = req.body;
+  const { query, apiKey, openRouterKey } = req.body;
   if (!query || typeof query !== "string") {
     return res.status(400).json({ error: "Query parameter string is required." });
   }
@@ -289,13 +289,61 @@ app.post("/api/search", async (req, res) => {
     }
   }
 
-  // If Gemini client is not initialized, fallback to rules-based search offline
-  if (!localAi) {
+  const executeFallback = (errorMsg: string) => {
     const fallbackResponse = localSearchFallback(query);
     return res.json({
       ...fallbackResponse,
-      answer: fallbackResponse.answer + "\n\n*(Catatan: Mode offline aktif karena kunci API belum diatur. Anda bisa memasukkan API Key Anda sendiri)*"
+      answer: `*(Catatan: Menggunakan mode offline karena masalah koneksi AI: ${errorMsg})*\n\n${fallbackResponse.answer}`
     });
+  };
+
+  const executeOpenRouter = async (key: string) => {
+    try {
+      console.log("Mencoba OpenRouter fallback...");
+      const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${key}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": process.env.APP_URL || "http://localhost:3000",
+          "X-Title": "Garuda Stats"
+        },
+        body: JSON.stringify({
+          model: "google/gemma-2-9b-it:free",
+          temperature: 0.2,
+          messages: [
+            { role: "system", content: buildSystemInstruction() },
+            { role: "user", content: `Pengguna bertanya: "${query}"` }
+          ]
+        })
+      });
+
+      if (!orRes.ok) {
+        throw new Error(`OpenRouter HTTP error ${orRes.status}`);
+      }
+
+      const orData = await orRes.json();
+      let replyText = orData.choices[0].message.content || "";
+      
+      // Clean up potential markdown JSON wrapping from deepseek
+      replyText = replyText.replace(/```json/gi, "").replace(/```/g, "").trim();
+
+      const parsedJson = JSON.parse(replyText);
+      return res.json(parsedJson);
+    } catch (err: any) {
+      console.error("OpenRouter error:", err);
+      return executeFallback("Semua model AI (Gemini & OpenRouter) tidak merespons.");
+    }
+  };
+
+  const finalOpenRouterKey = openRouterKey || process.env.OPENROUTER_API_KEY;
+
+  if (!localAi) {
+    if (finalOpenRouterKey) {
+      return await executeOpenRouter(finalOpenRouterKey);
+    } else {
+      return executeFallback("Kunci API Gemini maupun OpenRouter belum diatur.");
+    }
   }
 
   try {
@@ -360,12 +408,11 @@ app.post("/api/search", async (req, res) => {
 
   } catch (err: any) {
     console.error("Gemini query matching error:", err);
-    // Graceful error recovery to maintain high accessibility
-    const fallbackResponse = localSearchFallback(query);
-    return res.json({
-      ...fallbackResponse,
-      answer: `Maaf, terjadi kesalahan sewaktu memproses query dengan model AI. Berikut adalah info berdasarkan basis data lokal:\n\n${fallbackResponse.answer}`
-    });
+    if (finalOpenRouterKey) {
+      console.log("Gemini gagal, beralih ke OpenRouter...");
+      return await executeOpenRouter(finalOpenRouterKey);
+    }
+    return executeFallback("Gemini gagal merespons dan OpenRouter tidak dikonfigurasi.");
   }
 });
 

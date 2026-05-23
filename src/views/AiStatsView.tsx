@@ -14,10 +14,14 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
     "Persib Bandung vs Persija Jakarta"
   ]);
   const [apiKey, setApiKey] = useState("");
+  const [openRouterKey, setOpenRouterKey] = useState("");
 
   useEffect(() => {
     const storedApiKey = localStorage.getItem("gemini_api_key");
     if (storedApiKey) setApiKey(storedApiKey);
+
+    const storedOpenRouterKey = localStorage.getItem("openrouter_api_key");
+    if (storedOpenRouterKey) setOpenRouterKey(storedOpenRouterKey);
   }, []);
 
   const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +29,10 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
     localStorage.setItem("gemini_api_key", e.target.value);
   };
 
+  const handleOpenRouterKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOpenRouterKey(e.target.value);
+    localStorage.setItem("openrouter_api_key", e.target.value);
+  };
   const allClubs = getClubsRanking();
   const maxTitles = Math.max(...allClubs.map(c => c.titles));
 
@@ -59,7 +67,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
       const response = await fetch("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: queryText, apiKey })
+        body: JSON.stringify({ query: queryText, apiKey, openRouterKey })
       });
       if (response.ok) {
         const data = await response.json();
@@ -200,23 +208,43 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                   </div>
                 </form>
 
-                {/* API Key Input */}
-                <div className="bg-white border-2 border-black p-3 space-y-2">
-                  <label htmlFor="api_key_input" className="text-[10px] font-black uppercase tracking-widest block">
-                    Kunci API Gemini (Opsional)
-                  </label>
-                  <input
-                    type="password"
-                    id="api_key_input"
-                    value={apiKey}
-                    onChange={handleApiKeyChange}
-                    placeholder="Paste Gemini API Key Anda..."
-                    className="w-full text-xs font-mono bg-[#F2F2F2] border border-black p-2 focus:outline-none focus:bg-white focus:ring-2 focus:ring-black"
-                  />
-                  <p className="text-[9px] text-slate-500 font-bold leading-tight">
-                    Untuk hasil pencarian AI yang lebih responsif tanpa batasan rate-limit, Anda bisa memasukkan kunci API Anda sendiri. 
-                    Dapatkan secara gratis di <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-blue-600 underline">Google AI Studio</a>. Kunci disimpan aman di browser lokal Anda.
-                  </p>
+                {/* API Key Inputs */}
+                <div className="bg-white border-2 border-black p-3 space-y-4">
+                  <div className="space-y-2">
+                    <label htmlFor="api_key_input" className="text-[10px] font-black uppercase tracking-widest block flex items-center justify-between">
+                      <span>Kunci API Gemini (Opsional)</span>
+                      <span className="bg-blue-100 text-blue-800 px-1 py-0.5 text-[8px] border border-blue-300">UTAMA</span>
+                    </label>
+                    <input
+                      type="password"
+                      id="api_key_input"
+                      value={apiKey}
+                      onChange={handleApiKeyChange}
+                      placeholder="Paste Gemini API Key Anda..."
+                      className="w-full text-xs font-mono bg-[#F2F2F2] border border-black p-2 focus:outline-none focus:bg-white focus:ring-2 focus:ring-black"
+                    />
+                    <p className="text-[9px] text-slate-500 font-bold leading-tight">
+                      Dapatkan gratis di <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-blue-600 underline">Google AI Studio</a>.
+                    </p>
+                  </div>
+
+                  <div className="space-y-2 border-t border-dashed border-slate-300 pt-3">
+                    <label htmlFor="openrouter_key_input" className="text-[10px] font-black uppercase tracking-widest block flex items-center justify-between">
+                      <span>Kunci API OpenRouter (Opsional)</span>
+                      <span className="bg-orange-100 text-orange-800 px-1 py-0.5 text-[8px] border border-orange-300">FALLBACK (GEMMA)</span>
+                    </label>
+                    <input
+                      type="password"
+                      id="openrouter_key_input"
+                      value={openRouterKey}
+                      onChange={handleOpenRouterKeyChange}
+                      placeholder="Paste OpenRouter API Key Anda..."
+                      className="w-full text-xs font-mono bg-[#F2F2F2] border border-black p-2 focus:outline-none focus:bg-white focus:ring-2 focus:ring-black"
+                    />
+                    <p className="text-[9px] text-slate-500 font-bold leading-tight">
+                      Alternatif cerdas jika Gemini terkena limit. Gunakan model gratis (seperti Gemma). Dapatkan di <a href="https://openrouter.ai/keys" target="_blank" rel="noreferrer" className="text-blue-600 underline">OpenRouter</a>.
+                    </p>
+                  </div>
                 </div>
 
                 {/* Session search logs */}
