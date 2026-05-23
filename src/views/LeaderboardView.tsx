@@ -5,7 +5,7 @@ import { clubMetadataList } from "../data/clubMetadata";
 import ClubShield from "../components/ClubShield";
 import { exportClubRankingsToCSV, exportToJSON } from "../utils/exportUtils";
 
-export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare }: any) {
+export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, onAskAI }: any) {
   const allClubs = getClubsRanking();
   const [compareClubA, setCompareClubA] = useState<string>(allClubs[0]?.name || "Persija Jakarta");
   const [compareClubB, setCompareClubB] = useState<string>(allClubs[1]?.name || "Persib Bandung");
@@ -24,6 +24,8 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare }
 
   return (
           <div className="space-y-12 animate-fade-in" id="leaderboard_view">
+            <title>Papan Juara & Perbandingan Klub (VS Mode) - Garuda Stats</title>
+            <meta name="description" content="Daftar juara liga terbanyak, peringkat podium, dan fitur perbandingan multi-klub head-to-head secara interaktif." />
             
             <div className="border-b-4 border-black pb-5 flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
@@ -228,7 +230,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare }
                   </div>
                 </div>
                 <button
-                  onClick={() => setIsMultiCompareOpen(true)}
+                  onClick={onOpenMultiCompare}
                   className="bg-black text-[#00FF85] border-2 border-black px-4 py-2 text-xs font-black uppercase hover:bg-[#00FF85] hover:text-black transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none flex items-center gap-2"
                 >
                   <ArrowRightLeft className="h-4 w-4" />
@@ -329,7 +331,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare }
                       <span className="text-[9px] font-black uppercase tracking-widest opacity-80 text-emerald-800">TANYAKAN KE ASISTEN</span>
                       <p className="text-[10px] font-bold text-slate-700 leading-tight my-2">Bandingkan rivalitas taktis kedua klub ini via AI Engine.</p>
                       <button
-                        onClick={() => handleExecuteSearch(`${clubAData.name} vs ${clubBData.name}`)}
+                        onClick={() => onAskAI(`${clubAData.name} vs ${clubBData.name}`)}
                         className="w-full py-2 bg-black hover:bg-neutral-800 text-white font-black uppercase text-[10px] transition-all cursor-pointer"
                       >
                         ANALISIS RIVALITAS

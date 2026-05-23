@@ -7,6 +7,8 @@ import ClubShield from "../components/ClubShield";
 export default function GalatamaView({ onAskAboutGalatamaSeason, onOpenClubDetail }: any) {
   return (
           <div className="space-y-10" id="galatama_view">
+            <title>Sejarah Liga Galatama (1979-1994) - Garuda Stats</title>
+            <meta name="description" content="Catatan sejarah, klasemen sepanjang masa, dan daftar juara Liga Galatama, kompetisi semi-profesional legendaris Indonesia." />
             {/* Galatama Hero Card */}
             <div className="bg-[#8A5CF5] border-4 border-black p-6 sm:p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white relative overflow-hidden">
               <div className="absolute right-0 bottom-0 opacity-10 translate-x-10 translate-y-10 select-none pointer-events-none">

@@ -50,6 +50,8 @@ export default function QuizView() {
 
   return (
     <div className="space-y-8 animate-fade-in" id="quiz_view">
+      <title>Kuis Trivia Sejarah Sepak Bola Indonesia - Garuda Stats</title>
+      <meta name="description" content="Uji wawasan sepak bola nasional Anda dengan kuis pilihan ganda interaktif mengenai sejarah PSSI, juara liga, dan Galatama." />
       {/* Header */}
       <div className="flex items-center gap-3 mb-6 border-b-4 border-black pb-4">
         <div className="h-12 w-12 bg-[#00FF85] flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_0px_#000]">

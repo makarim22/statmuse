@@ -78,6 +78,8 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
           className="relative w-full max-w-2xl bg-white border-4 border-black p-6 sm:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] z-10 flex flex-col max-h-[90vh] overflow-y-auto"
         >
+          <title>{`${club.name} (${metadata?.nickname || ""}) - Sejarah Klub - Garuda Stats`}</title>
+          <meta name="description" content={`Informasi sejarah lengkap klub ${club.name}, perolehan ${club.titles} trofi era profesional, dan ${club.amatirTitles || 0} trofi Perserikatan.`} />
           {/* Close button top corner */}
           <button
             onClick={onClose}

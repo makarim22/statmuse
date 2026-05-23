@@ -55,6 +55,8 @@ export default function StandingsView({ onOpenClubDetail }: any) {
 
           return (
             <div className="space-y-10 animate-fade-in" id="standings_view">
+              <title>Klasemen Liga 1 Indonesia Terbaru - Garuda Stats</title>
+              <meta name="description" content="Tabel Klasemen Resmi terbaru Liga 1 Indonesia beserta rekor pertandingan kandang/tandang, poin, dan selisih gol." />
               
               {/* Header section with Season Toggles */}
               <div className="border-b-4 border-black pb-5 flex flex-col md:flex-row md:items-center justify-between gap-4">

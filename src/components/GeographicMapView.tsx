@@ -105,6 +105,8 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
 
   return (
     <div className="space-y-8 animate-fade-in">
+      <title>Peta Distribusi Juara Liga Indonesia - Garuda Stats</title>
+      <meta name="description" content="Visualisasi peta geografis persebaran trofi juara kasta tertinggi sepak bola Indonesia dari Sabang sampai Merauke." />
       <div className="flex items-center gap-3 mb-6 border-b-4 border-black pb-4">
         <div className="h-12 w-12 bg-black flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_0px_#00FF85]">
           <MapPin className="h-6 w-6 text-white" />

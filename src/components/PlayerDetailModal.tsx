@@ -36,6 +36,8 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, isOpen, o
       
       {/* Modal Content */}
       <div className="relative w-full max-w-2xl bg-white border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] flex flex-col max-h-[90vh] animate-fade-in z-10">
+        <title>{`${player.name} - Legenda Top Skorer - Garuda Stats`}</title>
+        <meta name="description" content={`Profil singkat legenda pencetak gol terbanyak ${player.name} (${player.club}) dengan catatan ${player.goals} gol pada musim ${player.season}.`} />
         
         {/* Header */}
         <div className="bg-[#00FF85] border-b-4 border-black p-4 md:p-6 flex justify-between items-start">

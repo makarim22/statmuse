@@ -25,6 +25,8 @@ const AllTimeStatsView: React.FC = () => {
   };
   return (
     <div className="space-y-12 animate-fade-in" id="all_time_stats_view">
+      <title>Statistik Sepanjang Masa & Trivia - Garuda Stats</title>
+      <meta name="description" content="Kumpulan data rekor gol, klub tersukses, persebaran gelar juara per dekade, dan trivia unik sepak bola Indonesia." />
       {/* Header */}
       <div className="border-b-4 border-black pb-5">
         <span className="bg-[#00FF85] px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block mb-2">

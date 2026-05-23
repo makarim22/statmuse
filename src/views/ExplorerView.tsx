@@ -51,6 +51,8 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
 
   return (
           <div className="space-y-8 animate-fade-in" id="explorer_view">
+            <title>Riwayat Lengkap Juara Liga Indonesia (1930-2026) - Garuda Stats</title>
+            <meta name="description" content="Eksplorasi garis waktu (timeline) sejarah sepak bola nasional sejak era kolonial hingga era profesional modern." />
             
             {/* Header section with inline query toggles */}
             <div className="border-b-4 border-black pb-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -182,8 +184,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
               <TimelineVisualization
                 data={sortedSeasons}
                 onSeasonClick={(season) => {
-                  setActiveTab('ai-stats');
-                  handleExecuteSearch(`Siapa juara liga tahun ${season} dan bagaimana jalannya kompetisi waktu itu?`);
+                  onAskAboutSeason(season);
                 }}
               />
             ) : (

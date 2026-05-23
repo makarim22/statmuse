@@ -12,6 +12,8 @@ export default function EraModernView({ onAskAboutModernSeason, onOpenClubDetail
 
           return (
             <div className="space-y-10" id="era_modern_view">
+              <title>Sejarah Liga Indonesia Era Modern (2008-2026) - Garuda Stats</title>
+              <meta name="description" content="Catatan rekor juara era Indonesia Super League (ISL), TSC, hingga Liga 1 era modern terkini." />
               {/* Era Modern Hero Card */}
               <div className="bg-[#0D9488] border-4 border-black p-6 sm:p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white relative overflow-hidden">
                 <div className="absolute right-0 bottom-0 opacity-10 translate-x-10 translate-y-10 select-none pointer-events-none">

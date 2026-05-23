@@ -119,6 +119,8 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
 
   return (
           <div className="space-y-10" id="ai_stats_view">
+            <title>Pencarian AI & Statistik Interaktif - Garuda Stats</title>
+            <meta name="description" content="Tanyakan asisten kecerdasan buatan (AI) Garuda Stats mengenai statistik sejarah juara Liga Indonesia dan Galatama secara interaktif." />
             
             {/* Top Interactive Curated Trivia Row */}
             <div>

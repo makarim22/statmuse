@@ -12,6 +12,8 @@ export default function PerserikatanView({ onAskAboutPerserikatanSeason, onOpenC
 
           return (
             <div className="space-y-10" id="perserikatan_view">
+              <title>Sejarah Era Perserikatan (1930-1994) - Garuda Stats</title>
+              <meta name="description" content="Catatan turnamen amatir legendaris Perserikatan PSSI sejak era perjuangan kemerdekaan hingga unifikasi liga." />
               {/* Perserikatan Hero Card */}
               <div className="bg-[#E64A19] border-4 border-black p-6 sm:p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white relative overflow-hidden">
                 <div className="absolute right-0 bottom-0 opacity-10 translate-x-10 translate-y-10 select-none pointer-events-none">

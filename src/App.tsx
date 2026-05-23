@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
+import { useLocation, useNavigate, Routes, Route, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import ReactMarkdown from "react-markdown";
 import {
@@ -75,8 +76,15 @@ const LoadingFallback = () => (
 );
 
 export default function App() {
-  // Navigation tabs: 'ai-stats' (Statmuse search), 'standings' (Recent standings), 'leaderboard' (All-time champions list), 'map' (Geographic Map), 'stats' (All-time stats), 'explorer' (Chronological timeline), 'galatama' (Liga Galatama), 'perserikatan' (Perserikatan), 'liga-indonesia' (Liga Indonesia), 'era-modern' (Era Modern), 'kuis' (Trivia Quiz)
-  const [activeTab, setActiveTab] = useState<'ai-stats' | 'standings' | 'leaderboard' | 'map' | 'stats' | 'explorer' | 'galatama' | 'perserikatan' | 'liga-indonesia' | 'era-modern' | 'kuis'>('standings');
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const getTabFromPath = (path: string) => {
+    const cleanPath = path.replace(/^\//, '');
+    const validTabs = ['ai-stats', 'standings', 'leaderboard', 'map', 'stats', 'explorer', 'galatama', 'perserikatan', 'liga-indonesia', 'era-modern', 'kuis'];
+    return validTabs.includes(cleanPath) ? cleanPath : 'standings';
+  };
+  const activeTab = getTabFromPath(location.pathname);
   
   const [pendingAiQuery, setPendingAiQuery] = useState<string | null>(null);
   // States for Club Detail Modal
@@ -111,31 +119,31 @@ export default function App() {
   const uniqueWinnersCount = allClubs.length;
 
   const handleAskAboutSeason = (seasonName: string) => {
-    setActiveTab('ai-stats');
+    navigate('/ai-stats');
     setPendingAiQuery(`Siapa juara liga tahun ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAskAboutGalatamaSeason = (seasonName: string) => {
-    setActiveTab('ai-stats');
+    navigate('/ai-stats');
     setPendingAiQuery(`Siapa juara Galatama musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAskAboutPerserikatanSeason = (seasonName: string) => {
-    setActiveTab('ai-stats');
+    navigate('/ai-stats');
     setPendingAiQuery(`Siapa juara Perserikatan musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAskAboutLiginaSeason = (seasonName: string) => {
-    setActiveTab('ai-stats');
+    navigate('/ai-stats');
     setPendingAiQuery(`Siapa juara Liga Indonesia (Ligina) musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAskAboutModernSeason = (seasonName: string) => {
-    setActiveTab('ai-stats');
+    navigate('/ai-stats');
     setPendingAiQuery(`Siapa juara Liga Indonesia/Liga 1 musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -165,7 +173,7 @@ export default function App() {
         {/* View Toggle Tabs */}
         <div className="flex flex-wrap justify-center bg-white/70 backdrop-blur-md border-2 border-black p-1 rounded-none gap-1" id="nav_tabs">
           <button
-            onClick={() => setActiveTab('ai-stats')}
+            onClick={() => navigate('/ai-stats')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'ai-stats' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -176,7 +184,7 @@ export default function App() {
             PENCARIAN AI
           </button>
           <button
-            onClick={() => setActiveTab('standings')}
+            onClick={() => navigate('/standings')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'standings' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -187,7 +195,7 @@ export default function App() {
             KLASEMEN LIGA
           </button>
           <button
-            onClick={() => setActiveTab('leaderboard')}
+            onClick={() => navigate('/leaderboard')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'leaderboard' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -198,7 +206,7 @@ export default function App() {
             PAPAN JUARA & VS MODE
           </button>
           <button
-            onClick={() => setActiveTab('map')}
+            onClick={() => navigate('/map')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'map' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -209,7 +217,7 @@ export default function App() {
             PETA DISTRIBUSI
           </button>
           <button
-            onClick={() => setActiveTab('stats')}
+            onClick={() => navigate('/stats')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'stats' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -220,7 +228,7 @@ export default function App() {
             STATISTIK & REKOR
           </button>
           <button
-            onClick={() => setActiveTab('kuis')}
+            onClick={() => navigate('/kuis')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'kuis' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -231,7 +239,7 @@ export default function App() {
             KUIS SEJARAH
           </button>
           <button
-            onClick={() => setActiveTab('explorer')}
+            onClick={() => navigate('/explorer')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'explorer' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -242,7 +250,7 @@ export default function App() {
             RIWAYAT LENGKAP
           </button>
           <button
-            onClick={() => setActiveTab('perserikatan')}
+            onClick={() => navigate('/perserikatan')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'perserikatan' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -253,7 +261,7 @@ export default function App() {
             PERSERIKATAN
           </button>
           <button
-            onClick={() => setActiveTab('galatama')}
+            onClick={() => navigate('/galatama')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'galatama' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -264,7 +272,7 @@ export default function App() {
             LIGA GALATAMA
           </button>
           <button
-            onClick={() => setActiveTab('liga-indonesia')}
+            onClick={() => navigate('/liga-indonesia')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'liga-indonesia' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -275,7 +283,7 @@ export default function App() {
             LIGA INDONESIA
           </button>
           <button
-            onClick={() => setActiveTab('era-modern')}
+            onClick={() => navigate('/era-modern')}
             className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'era-modern' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
@@ -353,113 +361,122 @@ export default function App() {
         </div>
 
         <Suspense fallback={<LoadingFallback />}>
-          {/* VIEW 1: ADVANCED AI QUERY ENGINE (STATMUSE LAYOUT WITH DISCOVERABILITY & TRIVIA) */}
-          {/* VIEW 1: ADVANCED AI QUERY ENGINE */}
-          {activeTab === 'ai-stats' && (
-            <AiStatsView 
-              initialQuery={pendingAiQuery} 
-              onClearInitialQuery={() => setPendingAiQuery(null)} 
+          <Routes>
+            <Route 
+              path="/ai-stats" 
+              element={
+                <AiStatsView 
+                  initialQuery={pendingAiQuery} 
+                  onClearInitialQuery={() => setPendingAiQuery(null)} 
+                />
+              } 
             />
-          )}
-
-          {/* VIEW KLASEMEN INTERAKTIF */}
-          {activeTab === 'standings' && (
-            <StandingsView 
-              onOpenClubDetail={(club: any) => {
-                setSelectedModalClub(club);
-                setIsModalOpen(true);
-              }} 
+            <Route 
+              path="/standings" 
+              element={
+                <StandingsView 
+                  onOpenClubDetail={(club: any) => {
+                    setSelectedModalClub(club);
+                    setIsModalOpen(true);
+                  }} 
+                />
+              } 
             />
-          )}
-
-          {/* VIEW 2: CHAMPIONS LEADERBOARD PODIUM */}
-          {activeTab === 'leaderboard' && (
-            <LeaderboardView 
-              onOpenClubDetail={(club: any) => {
-                setSelectedModalClub(club);
-                setIsModalOpen(true);
-              }}
-              onOpenMultiCompare={() => setIsMultiCompareOpen(true)}
+            <Route 
+              path="/leaderboard" 
+              element={
+                <LeaderboardView 
+                  onOpenClubDetail={(club: any) => {
+                    setSelectedModalClub(club);
+                    setIsModalOpen(true);
+                  }}
+                  onOpenMultiCompare={() => setIsMultiCompareOpen(true)}
+                  onAskAI={(query: string) => {
+                    navigate('/ai-stats');
+                    setPendingAiQuery(query);
+                  }}
+                />
+              } 
             />
-          )}
-
-          {/* VIEW: GEOGRAPHIC MAP VIEW */}
-          {activeTab === 'map' && (
-            <div className="space-y-8 animate-fade-in" id="map_view">
-               <GeographicMapView
-                  clubs={getClubsRanking()}
-                  onClubClick={(club: any) => {
+            <Route 
+              path="/map" 
+              element={
+                <div className="space-y-8 animate-fade-in" id="map_view">
+                   <GeographicMapView
+                      clubs={getClubsRanking()}
+                      onClubClick={(club: any) => {
+                        setSelectedModalClub(club);
+                        setIsModalOpen(true);
+                      }}
+                    />
+                </div>
+              } 
+            />
+            <Route path="/stats" element={<AllTimeStatsView />} />
+            <Route 
+              path="/explorer" 
+              element={
+                <ExplorerView 
+                  onAskAboutSeason={handleAskAboutSeason}
+                  onOpenClubDetail={(club: any) => {
                     setSelectedModalClub(club);
                     setIsModalOpen(true);
                   }}
                 />
-            </div>
-          )}
-
-          {/* VIEW: ALL TIME STATS & TRIVIA */}
-          {activeTab === 'stats' && (
-            <AllTimeStatsView />
-          )}
-
-          {/* VIEW 3: CHRONOLOGICAL SEASONS TIMELINE */}
-          {activeTab === 'explorer' && (
-            <ExplorerView 
-              onAskAboutSeason={handleAskAboutSeason}
-              onOpenClubDetail={(club: any) => {
-                setSelectedModalClub(club);
-                setIsModalOpen(true);
-              }}
+              } 
             />
-          )}
-
-          {/* VIEW 5: LIGA GALATAMA */}
-          {activeTab === 'galatama' && (
-            <GalatamaView 
-              onAskAboutGalatamaSeason={handleAskAboutGalatamaSeason}
-              onOpenClubDetail={(club: any) => {
-                setSelectedModalClub(club);
-                setIsModalOpen(true);
-              }}
+            <Route 
+              path="/galatama" 
+              element={
+                <GalatamaView 
+                  onAskAboutGalatamaSeason={handleAskAboutGalatamaSeason}
+                  onOpenClubDetail={(club: any) => {
+                    setSelectedModalClub(club);
+                    setIsModalOpen(true);
+                  }}
+                />
+              } 
             />
-          )}
-
-          {/* VIEW 6: PERSERIKATAN */}
-          {activeTab === 'perserikatan' && (
-            <PerserikatanView 
-              onAskAboutPerserikatanSeason={handleAskAboutPerserikatanSeason}
-              onOpenClubDetail={(club: any) => {
-                setSelectedModalClub(club);
-                setIsModalOpen(true);
-              }}
+            <Route 
+              path="/perserikatan" 
+              element={
+                <PerserikatanView 
+                  onAskAboutPerserikatanSeason={handleAskAboutPerserikatanSeason}
+                  onOpenClubDetail={(club: any) => {
+                    setSelectedModalClub(club);
+                    setIsModalOpen(true);
+                  }}
+                />
+              } 
             />
-          )}
-
-          {/* VIEW 7: LIGA INDONESIA */}
-          {activeTab === 'liga-indonesia' && (
-            <LigaIndonesiaView 
-              onAskAboutLiginaSeason={handleAskAboutLiginaSeason}
-              onOpenClubDetail={(club: any) => {
-                setSelectedModalClub(club);
-                setIsModalOpen(true);
-              }}
+            <Route 
+              path="/liga-indonesia" 
+              element={
+                <LigaIndonesiaView 
+                  onAskAboutLiginaSeason={handleAskAboutLiginaSeason}
+                  onOpenClubDetail={(club: any) => {
+                    setSelectedModalClub(club);
+                    setIsModalOpen(true);
+                  }}
+                />
+              } 
             />
-          )}
-
-          {/* VIEW 8: ERA MODERN */}
-          {activeTab === 'era-modern' && (
-            <EraModernView 
-              onAskAboutModernSeason={handleAskAboutModernSeason}
-              onOpenClubDetail={(club: any) => {
-                setSelectedModalClub(club);
-                setIsModalOpen(true);
-              }}
+            <Route 
+              path="/era-modern" 
+              element={
+                <EraModernView 
+                  onAskAboutModernSeason={handleAskAboutModernSeason}
+                  onOpenClubDetail={(club: any) => {
+                    setSelectedModalClub(club);
+                    setIsModalOpen(true);
+                  }}
+                />
+              } 
             />
-          )}
-
-          {/* QUIZ VIEW (GAMIFICATION) */}
-          {activeTab === 'kuis' && (
-            <QuizView />
-          )}
+            <Route path="/kuis" element={<QuizView />} />
+            <Route path="/" element={<Navigate to="/standings" replace />} />
+            <Route path="*" element={<Navigate to="/standings" replace />} />
+          </Routes>
         </Suspense>
       </main>
 
@@ -495,7 +512,7 @@ export default function App() {
         club={selectedModalClub}
         metadata={selectedModalClub ? clubMetadataList[selectedModalClub.name] : null}
         onAskAI={(query) => {
-          setActiveTab('ai-stats');
+          navigate('/ai-stats');
           setPendingAiQuery(query);
         }}
       />

@@ -12,6 +12,8 @@ export default function LigaIndonesiaView({ onAskAboutLiginaSeason, onOpenClubDe
 
           return (
             <div className="space-y-10" id="liga_indonesia_view">
+              <title>Sejarah Liga Indonesia (1994-2007) - Garuda Stats</title>
+              <meta name="description" content="Era unifikasi Divisi Utama Liga Indonesia (Ligina) hingga era Indonesia Super League (ISL)." />
               {/* Liga Indonesia Hero Card */}
               <div className="bg-[#0284C7] border-4 border-black p-6 sm:p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-white relative overflow-hidden">
                 <div className="absolute right-0 bottom-0 opacity-10 translate-x-10 translate-y-10 select-none pointer-events-none">
