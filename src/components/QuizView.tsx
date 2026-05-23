@@ -1,20 +1,28 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Gamepad2, CheckCircle2, XCircle, RotateCcw, Trophy, Award } from "lucide-react";
-import { quizQuestions } from "../data/quizData";
+import { quizQuestions, QuizQuestion } from "../data/quizData";
 import { soundEngine } from "../utils/soundEngine";
 
 export default function QuizView() {
+  // Helper to get 10 random questions
+  const getRandomQuestions = (count = 10): QuizQuestion[] => {
+    const shuffled = [...quizQuestions].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
+
+  const [activeQuestions, setActiveQuestions] = useState<QuizQuestion[]>(() => getRandomQuestions(10));
   const [gameState, setGameState] = useState<'start' | 'playing' | 'results'>('start');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
-  const currentQuestion = quizQuestions[currentQuestionIndex];
+  const currentQuestion = activeQuestions[currentQuestionIndex];
   const isAnswered = selectedOption !== null;
-  const isCorrect = isAnswered && selectedOption === currentQuestion.correctAnswer;
+  const isCorrect = isAnswered && selectedOption === currentQuestion?.correctAnswer;
 
   const handleStart = () => {
+    setActiveQuestions(getRandomQuestions(10));
     setGameState('playing');
     setCurrentQuestionIndex(0);
     setScore(0);
@@ -24,7 +32,7 @@ export default function QuizView() {
   const handleOptionClick = (index: number) => {
     if (isAnswered) return; // Prevent changing answer
     setSelectedOption(index);
-    if (index === currentQuestion.correctAnswer) {
+    if (index === currentQuestion?.correctAnswer) {
       setScore(prev => prev + 1);
       soundEngine.playSuccess();
     } else {
@@ -33,7 +41,7 @@ export default function QuizView() {
   };
 
   const handleNext = () => {
-    if (currentQuestionIndex < quizQuestions.length - 1) {
+    if (currentQuestionIndex < activeQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
       setSelectedOption(null);
     } else {
@@ -90,7 +98,7 @@ export default function QuizView() {
           )}
 
           {/* PLAYING SCREEN */}
-          {gameState === 'playing' && (
+          {gameState === 'playing' && currentQuestion && (
             <motion.div 
               key="playing"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -100,7 +108,7 @@ export default function QuizView() {
               {/* Score & Progress Bar */}
               <div className="flex justify-between items-center mb-4">
                 <span className="bg-black text-white px-4 py-1 text-sm font-black uppercase tracking-widest border-2 border-black">
-                  Soal {currentQuestionIndex + 1} / {quizQuestions.length}
+                  Soal {currentQuestionIndex + 1} / {activeQuestions.length}
                 </span>
                 <span className="bg-white text-black px-4 py-1 text-sm font-black uppercase tracking-widest border-2 border-black shadow-[2px_2px_0px_0px_#000]">
                   Skor: {score}
@@ -109,7 +117,7 @@ export default function QuizView() {
               <div className="w-full bg-gray-200 border-2 border-black h-4 mb-8">
                 <div 
                   className="bg-[#00FF85] h-full border-r-2 border-black transition-all duration-300"
-                  style={{ width: `${((currentQuestionIndex + 1) / quizQuestions.length) * 100}%` }}
+                  style={{ width: `${((currentQuestionIndex + 1) / activeQuestions.length) * 100}%` }}
                 />
               </div>
 
@@ -181,7 +189,7 @@ export default function QuizView() {
                         onClick={handleNext}
                         className="bg-black text-white border-4 border-black px-8 py-3 text-lg font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#00FF85] active:translate-y-0 active:shadow-none transition-all"
                       >
-                        {currentQuestionIndex < quizQuestions.length - 1 ? 'Pertanyaan Berikutnya ➔' : 'Lihat Hasil Akhir 🏆'}
+                        {currentQuestionIndex < activeQuestions.length - 1 ? 'Pertanyaan Berikutnya ➔' : 'Lihat Hasil Akhir 🏆'}
                       </button>
                     </div>
                   </motion.div>
@@ -206,7 +214,7 @@ export default function QuizView() {
                 
                 <h2 className="text-2xl font-bold uppercase text-slate-500 tracking-widest mb-2">Skor Akhir Anda</h2>
                 <div className="text-7xl font-black italic tracking-tighter mb-6">
-                  {score} <span className="text-4xl text-slate-300">/ {quizQuestions.length}</span>
+                  {score} <span className="text-4xl text-slate-300">/ {activeQuestions.length}</span>
                 </div>
                 
                 <div className="bg-gray-100 border-4 border-black p-6 mb-10 max-w-md mx-auto">

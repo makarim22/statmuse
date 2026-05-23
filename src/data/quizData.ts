@@ -1,3 +1,5 @@
+import newQuizQuestions from "../assets/quiz_questions_1000.json";
+
 export interface QuizQuestion {
   id: string;
   question: string;
@@ -6,7 +8,7 @@ export interface QuizQuestion {
   explanation: string;
 }
 
-export const quizQuestions: QuizQuestion[] = [
+const originalQuestions: QuizQuestion[] = [
   {
     id: "q1",
     question: "Klub mana yang berhasil menjadi juara pada edisi perdana Liga Indonesia (Liga Dunhill) musim 1994-1995?",
@@ -77,4 +79,9 @@ export const quizQuestions: QuizQuestion[] = [
     correctAnswer: 1,
     explanation: "Bali United berhasil menjadi juara beruntun (Back-to-Back) pada kompetisi Liga 1 musim 2019 dan 2021-2022 (musim 2020 dibatalkan karena pandemi)."
   }
+];
+
+export const quizQuestions: QuizQuestion[] = [
+  ...originalQuestions.map(q => ({ ...q, id: `orig_${q.id}` })),
+  ...(newQuizQuestions as QuizQuestion[]).map(q => ({ ...q, id: `new_${q.id}` }))
 ];
