@@ -1,7 +1,24 @@
 import React, { useState } from "react";
+import AremaLogo from "./logos/AremaLogo";
+import BaliUnitedLogo from "./logos/BaliUnitedLogo";
+import BhayangkaraLogo from "./logos/BhayangkaraLogo";
+import BorneoFcLogo from "./logos/BorneoFcLogo";
+import DewaUnitedLogo from "./logos/DewaUnitedLogo";
+import MaduraUnitedLogo from "./logos/MaduraUnitedLogo";
+import MalutUnitedLogo from "./logos/MalutUnitedLogo";
+import PersebayaSurabayaLogo from "./logos/PersebayaSurabayaLogo";
+import PersijaJakartaLogo from "./logos/PersijaJakartaLogo";
+import PersijapJeparaLogo from "./logos/PersijapJeparaLogo";
+import PersikKediriLogo from "./logos/PersikKediriLogo";
+import PersisSoloLogo from "./logos/PersisSoloLogo";
+import PersitaTangerangLogo from "./logos/PersitaTangerangLogo";
+import PsbsBiakLogo from "./logos/PsbsBiakLogo";
+import PsimYogyakartaLogo from "./logos/PsimYogyakartaLogo";
+import PsmMakassarLogo from "./logos/PsmMakassarLogo";
+import SemenPadangLogo from "./logos/SemenPadangLogo";
 
 interface ClubShieldProps {
-  symbol: 'tiger' | 'crocodile' | 'mountain' | 'flame' | 'pearl' | 'ship' | 'leaf' | 'barong' | 'lion' | 'trident' | 'lightning' | 'wings' | 'claws' | 'horn' | 'monument' | 'sword' | 'star' | 'roof' | string;
+  symbol: 'tiger' | 'crocodile' | 'mountain' | 'flame' | 'pearl' | 'ship' | 'leaf' | 'barong' | 'lion' | 'trident' | 'lightning' | 'wings' | 'claws' | 'horn' | 'monument' | 'sword' | 'star' | 'roof' | 'wave' | 'shield' | 'persib' | 'arema' | 'bali-united' | 'bhayangkara' | 'borneo-fc' | 'dewa-united' | 'madura-united' | 'malut-united' | 'persebaya-surabaya' | 'persija-jakarta' | 'persijap-jepara' | 'persik-kediri' | 'persis-solo' | 'persita-tangerang' | 'psbs-biak' | 'psim-yogyakarta' | 'psm-makassar' | 'semen-padang' | string;
   primaryColor: string;
   secondaryColor: string;
   className?: string;
@@ -230,6 +247,73 @@ export default function ClubShield({ symbol, primaryColor, secondaryColor, class
             <path d="M35 35 H65 V55 C65 65 50 72 50 72 C50 72 35 65 35 55 Z" fill={secondaryColor} stroke="#1A1A1A" strokeWidth="3.5" strokeLinejoin="round" />
             <circle cx="50" cy="48" r="4" fill="#1A1A1A" />
           </>
+        );
+      case "arema":
+        return <AremaLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "bali-united":
+        return <BaliUnitedLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "bhayangkara":
+        return <BhayangkaraLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "borneo-fc":
+        return <BorneoFcLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "dewa-united":
+        return <DewaUnitedLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "madura-united":
+        return <MaduraUnitedLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "malut-united":
+        return <MalutUnitedLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "persebaya-surabaya":
+        return <PersebayaSurabayaLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "persija-jakarta":
+        return <PersijaJakartaLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "persijap-jepara":
+        return <PersijapJeparaLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "persik-kediri":
+        return <PersikKediriLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "persis-solo":
+        return <PersisSoloLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "persita-tangerang":
+        return <PersitaTangerangLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "psbs-biak":
+        return <PsbsBiakLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "psim-yogyakarta":
+        return <PsimYogyakartaLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "psm-makassar":
+        return <PsmMakassarLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "semen-padang":
+        return <SemenPadangLogo x="25" y="25" width="50" height="50" primaryColor={primaryColor} secondaryColor={secondaryColor} borderColor="#1A1A1A" />;
+      case "persib":
+        return (
+          <g transform="translate(30, 20) scale(0.055)">
+            {/* Stars */}
+            <g fill={secondaryColor} stroke="#1A1A1A" strokeWidth="20" strokeLinejoin="round">
+              <polygon points="106.27 24.94 124.69 82.16 184.6 82.06 136.04 117.27 154.67 174.38 106.27 138.96 57.87 174.38 76.5 117.27 28 82.06 87.9 82.16 106.27 24.94"/>
+              <polygon points="271.09 0 289.51 57.22 349.42 57.12 300.86 92.33 319.49 149.44 271.09 114.02 222.69 149.44 241.32 92.33 192.82 57.12 252.72 57.22 271.09 0"/>
+              <polygon points="455.56 0 473.98 57.22 533.88 57.11 485.32 92.32 503.96 149.44 455.56 114.01 407.15 149.44 425.79 92.32 377.28 57.11 437.18 57.22 455.56 0"/>
+              <polygon points="620.39 24.94 638.82 82.16 698.72 82.06 650.16 117.27 668.8 174.38 620.39 138.96 571.99 174.38 590.63 117.27 542.12 82.06 602.02 82.16 620.39 24.94"/>
+            </g>
+            
+            {/* Outer and Inner Shield */}
+            <path fill="#1A1A1A" d="M32.37,264.48q146.58-35,331-35.74,184.41.8,331,35.74c20.13,4.38,31.85,22.45,32.38,37.33V715.65c0,201.21-162.53,364.35-363.06,364.35h-.6C162.6,1080,0,916.86,0,715.65V301.81c.53-14.88,12.25-32.95,32.37-37.33Z"/>
+            <path fill={secondaryColor} stroke="#1A1A1A" strokeWidth="20" d="M713.28,314.36l-.6,399.69c0,194.7-155,350.74-349,350.74h-.53c-194,0-349-156-349-350.74l-.66-399.69C12.78,290.12,21.85,280,43.1,275.7c96.52-18.6,193.18-31.22,320.29-32.88,127.05,1.66,223.71,14.28,320.3,32.88C704.87,280,713.94,290.12,713.28,314.36Z"/>
+            
+            {/* PERSIB Text Bar */}
+            <polygon fill="#1A1A1A" points="168.82 672.8 251.24 672.8 251.24 639.79 323.07 639.79 323.07 672.8 363.39 672.8 403.71 672.8 403.71 639.79 475.48 639.79 475.48 672.8 557.97 672.8 557.97 639.79 629.73 639.79 629.73 672.8 698.71 672.8 698.71 736.71 363.39 736.71 28 736.71 28 672.8 96.99 672.8 96.99 639.79 168.82 639.79 168.82 672.8"/>
+            
+            {/* Top Yellow area (Brutalist colored) */}
+            <path fill="#FACC15" stroke="#1A1A1A" strokeWidth="15" d="M698.72,315.43V659.12H643.43v-26a7,7,0,0,0-6.81-7H551.08a7,7,0,0,0-6.82,7v26H489.18v-26a7,7,0,0,0-6.82-7H396.89a7,7,0,0,0-6.88,7v26h-53.3v-26a7,7,0,0,0-6.81-7H244.43a7,7,0,0,0-6.82,7v26H182.46v-26a7,7,0,0,0-6.82-7H90.17a7,7,0,0,0-6.82,7v26H28V315.43c0-24.58,4.31-20.14,24.43-26.51,93.81-16.35,187.3-30.62,311-31,123.6.4,217.09,14.67,311,31C694.41,295.29,698.72,290.85,698.72,315.43Z"/>
+            
+            {/* Mountain */}
+            <path fill="#16A34A" stroke="#1A1A1A" strokeWidth="15" d="M643.44,633.15a7,7,0,0,0-6.82-7H551.08a7,7,0,0,0-6.82,7v26H489.18v-26a7,7,0,0,0-6.82-7H396.89a7.05,7.05,0,0,0-6.88,7v26h-53.3v-26a7,7,0,0,0-6.82-7H244.43a7,7,0,0,0-6.82,7v26H182.46v-26a7,7,0,0,0-6.82-7H90.17a7,7,0,0,0-6.82,7v26H28l70-98.65.06-.06c7.75-10.9,13.18-14.15,29.93-14.15H598.68c16.75,0,22.18,3.25,29.93,14.15l.06.06,70,98.65H643.44Z"/>
+            
+            {/* Waves */}
+            <g fill={primaryColor} stroke="#1A1A1A" strokeWidth="15">
+              <path d="M644.76,754.37a18.18,18.18,0,0,0-11.26,0l-81,25.65a17.27,17.27,0,0,1-11.25,0L461,754.24a17.69,17.69,0,0,0-11.26,0l-81,25.64a20.35,20.35,0,0,1-5.37.93,19.43,19.43,0,0,1-5.36-.93l-81-25.64a17.69,17.69,0,0,0-11.26,0L185.5,780a17.26,17.26,0,0,1-11.25,0l-81-25.65a18.18,18.18,0,0,0-11.26,0L32,770.45a303,303,0,0,0,7.22,32.82L82,789.51a17.69,17.69,0,0,1,11.26,0l81,25.65a17.66,17.66,0,0,0,11.25,0l80.24-25.78a17.69,17.69,0,0,1,11.26,0L358,815a19.43,19.43,0,0,0,5.36.93,20.35,20.35,0,0,0,5.37-.93l81-25.64a17.69,17.69,0,0,1,11.26,0l80.24,25.78a17.67,17.67,0,0,0,11.25,0l81-25.65a17.69,17.69,0,0,1,11.26,0l42.77,13.76c3-10.9,5.36-21.86,7.21-32.82ZM357.37,780l-81.5-25.78a2.49,2.49,0,0,1,.66.13l81.57,25.84C357.83,780.15,357.63,780.08,357.37,780Zm12,0-.47.13,81.31-25.78a3.18,3.18,0,0,1,.66-.13Z"/>
+              <path d="M357.76,851.23l-81-25.65a17.66,17.66,0,0,0-11.25,0l-80.24,25.78a17.22,17.22,0,0,1-11.26,0L93,825.72a18.08,18.08,0,0,0-11.25,0L50.05,835.88a331.67,331.67,0,0,0,13.84,30.69l17.81-5.71a17.52,17.52,0,0,1,11.25,0l81,25.64a17.69,17.69,0,0,0,11.26,0l80.24-25.78a17.66,17.66,0,0,1,11.25,0l81,25.65a22.65,22.65,0,0,0,5.63.93,23.1,23.1,0,0,0,5.63-.93l81-25.65a17.66,17.66,0,0,1,11.25,0l80.24,25.78a17.7,17.7,0,0,0,11.26,0l81-25.64a17.52,17.52,0,0,1,11.25,0l17.81,5.71a334.34,334.34,0,0,0,13.84-30.69L645,825.72a18.08,18.08,0,0,0-11.25,0l-81,25.64a17.23,17.23,0,0,1-11.26,0l-80.24-25.78a17.66,17.66,0,0,0-11.25,0l-81,25.65a20.17,20.17,0,0,1-5.63.93,19.83,19.83,0,0,1-5.63-.93Z"/>
+              <path d="M357.76,922.57l-81-25.64a17.59,17.59,0,0,0-11.25,0L185.24,922.7a17.62,17.62,0,0,1-11.26,0L93,897.06a17.89,17.89,0,0,0-11.19,0,346.2,346.2,0,0,0,31.65,41.65L174,957.84a17.62,17.62,0,0,0,11.26,0l80.24-25.77a17.13,17.13,0,0,1,11.25,0l81,25.64a22.2,22.2,0,0,0,5.63.93,22.63,22.63,0,0,0,5.63-.93l81-25.64a17.13,17.13,0,0,1,11.25,0l80.24,25.77a17.63,17.63,0,0,0,11.26,0l60.57-19.13A339.56,339.56,0,0,0,645,897.06a18.08,18.08,0,0,0-11.25,0l-81,25.64a17.63,17.63,0,0,1-11.26,0l-80.24-25.77a17.59,17.59,0,0,0-11.25,0l-81,25.64a19.81,19.81,0,0,1-5.63.93,19.48,19.48,0,0,1-5.63-.93Z"/>
+              <path d="M357.76,993.91l-81-25.64a17.59,17.59,0,0,0-11.25,0L185.24,994a17.2,17.2,0,0,1-7.09.87,335.77,335.77,0,0,0,41,23.38l46.35-14.88a17.13,17.13,0,0,1,11.25,0l81,25.57a17.36,17.36,0,0,0,5.63.93A17.62,17.62,0,0,0,369,1029l81-25.57a17.13,17.13,0,0,1,11.25,0l46.41,14.88a334.11,334.11,0,0,0,40.91-23.38,17.13,17.13,0,0,1-7.08-.87l-80.24-25.77a17.59,17.59,0,0,0-11.25,0l-81,25.64a19.81,19.81,0,0,1-5.63.93,19.48,19.48,0,0,1-5.63-.93Z"/>
+            </g>
+          </g>
         );
       default:
         return (

@@ -10,7 +10,7 @@ export interface ClubMetadata {
     border: string;        // Hex color for brutalist border
     text: string;          // Hex color for text inside badge
   };
-  emblemSymbol: 'tiger' | 'crocodile' | 'mountain' | 'flame' | 'pearl' | 'ship' | 'leaf' | 'barong' | 'lion' | 'trident' | 'lightning' | 'wings' | 'claws' | 'horn' | 'monument' | 'sword' | 'star' | 'roof' | 'wave' | 'shield';
+  emblemSymbol: 'tiger' | 'crocodile' | 'mountain' | 'flame' | 'pearl' | 'ship' | 'leaf' | 'barong' | 'lion' | 'trident' | 'lightning' | 'wings' | 'claws' | 'horn' | 'monument' | 'sword' | 'star' | 'roof' | 'wave' | 'shield' | 'persib';
   logoUrl?: string; // Optional URL or overriding path for official club logo
 }
 
@@ -27,7 +27,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "tiger"
+    emblemSymbol: "persija-jakarta"
   },
   "Persebaya Surabaya": {
     name: "Persebaya Surabaya",
@@ -41,7 +41,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "crocodile"
+    emblemSymbol: "persebaya-surabaya"
   },
   "Persib Bandung": {
     name: "Persib Bandung",
@@ -55,7 +55,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "mountain"
+    emblemSymbol: "persib"
   },
   "Persis Solo": {
     name: "Persis Solo",
@@ -69,7 +69,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "flame"
+    emblemSymbol: "persis-solo"
   },
   "Persipura Jayapura": {
     name: "Persipura Jayapura",
@@ -97,7 +97,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "ship"
+    emblemSymbol: "psm-makassar"
   },
   "PSMS Medan": {
     name: "PSMS Medan",
@@ -125,7 +125,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#D4AF37",
       text: "#FFFFFF"
     },
-    emblemSymbol: "barong"
+    emblemSymbol: "bali-united"
   },
   "Arema Indonesia": {
     name: "Arema Indonesia",
@@ -139,7 +139,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "lion"
+    emblemSymbol: "arema"
   },
   "PSIS Semarang": {
     name: "PSIS Semarang",
@@ -195,7 +195,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "claws"
+    emblemSymbol: "persik-kediri"
   },
   "Petrokimia Putra": {
     name: "Petrokimia Putra",
@@ -223,7 +223,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "monument"
+    emblemSymbol: "psim-yogyakarta"
   },
   "Persiraja Banda Aceh": {
     name: "Persiraja Banda Aceh",
@@ -251,7 +251,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "star"
+    emblemSymbol: "bhayangkara"
   },
   "Semen Padang": {
     name: "Semen Padang",
@@ -265,7 +265,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "roof"
+    emblemSymbol: "semen-padang"
   },
   "Borneo FC": {
     name: "Borneo FC",
@@ -279,7 +279,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "wave"
+    emblemSymbol: "borneo-fc"
   },
   "Madura United": {
     name: "Madura United",
@@ -293,7 +293,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "horn"
+    emblemSymbol: "madura-united"
   },
   "Dewa United": {
     name: "Dewa United",
@@ -307,7 +307,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "lightning"
+    emblemSymbol: "dewa-united"
   },
   "Persita Tangerang": {
     name: "Persita Tangerang",
@@ -321,7 +321,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "sword"
+    emblemSymbol: "persita-tangerang"
   },
   "Barito Putera": {
     name: "Barito Putera",
@@ -559,7 +559,7 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       border: "#1A1A1A",
       text: "#FFFFFF"
     },
-    emblemSymbol: "claws"
+    emblemSymbol: "persijap-jepara"
   },
   "Mitra Kukar": {
     name: "Mitra Kukar",
@@ -812,5 +812,33 @@ export const clubMetadataList: Record<string, ClubMetadata> = {
       text: "#FFFFFF"
     },
     emblemSymbol: "monument"
+  },
+  "Malut United": {
+    name: "Malut United",
+    founded: 2023,
+    nickname: "Laskar Kie Raha",
+    city: "Ternate, Maluku Utara",
+    description: "Klub kebanggaan bumi rempah-rempah Maluku Utara. Meskipun terbilang baru, Malut United berhasil menembus kasta tertinggi sepak bola Indonesia dengan cepat, membawa kembali kejayaan sepak bola kawasan timur.",
+    colors: {
+      primary: "#DC2626",
+      secondary: "#FFFFFF",
+      border: "#1A1A1A",
+      text: "#FFFFFF"
+    },
+    emblemSymbol: "malut-united"
+  },
+  "PSBS Biak": {
+    name: "PSBS Biak",
+    founded: 1968,
+    nickname: "Badai Pasifik",
+    city: "Biak Numfor, Papua",
+    description: "Klub kebanggaan masyarakat Biak Numfor, Papua yang dijuluki Badai Pasifik. Tampil trengginas menjuarai kasta kedua dan langsung menggebrak kompetisi tertinggi dengan permainan enerjik khas pesisir.",
+    colors: {
+      primary: "#38BDF8",
+      secondary: "#FACC15",
+      border: "#1A1A1A",
+      text: "#1A1A1A"
+    },
+    emblemSymbol: "psbs-biak"
   }
 };
