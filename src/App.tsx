@@ -313,23 +313,29 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Marquee Ticker (Neo-Brutalist) */}
-      <div className="w-full bg-black text-primary border-b-4 border-black overflow-hidden py-3 whitespace-nowrap flex items-center relative z-10 shadow-[0px_8px_0px_0px_rgba(0,0,0,1)] mb-4">
+      {/* Marquee Ticker (Modern Brutalist) */}
+      <div className="w-full bg-white text-black border-y-4 border-black overflow-hidden py-3 whitespace-nowrap flex items-center relative z-10 shadow-[0px_8px_0px_0px_rgba(0,0,0,1)] mb-8">
         <motion.div
           animate={{ x: [0, -3000] }}
           transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
-          className="flex gap-16 items-center"
+          className="flex gap-8 items-center"
         >
           {leagueTrivia.map((trivia, idx) => (
-            <span key={idx} className="font-black uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
-              {trivia.fact}
-            </span>
+            <div key={idx} className="flex items-center gap-8">
+              <span className="font-black uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
+                {trivia.fact}
+              </span>
+              <span className="text-black font-black">⚡</span>
+            </div>
           ))}
           {/* Duplicate for seamless loop */}
           {leagueTrivia.map((trivia, idx) => (
-            <span key={`dup-${idx}`} className="font-black uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
-              {trivia.fact}
-            </span>
+            <div key={`dup-${idx}`} className="flex items-center gap-8">
+              <span className="font-black uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
+                {trivia.fact}
+              </span>
+              <span className="text-black font-black">⚡</span>
+            </div>
           ))}
         </motion.div>
       </div>
