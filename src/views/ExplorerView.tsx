@@ -72,7 +72,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
               <div className="flex flex-wrap items-center gap-2 shrink-0">
                 <button
                   onClick={() => setExplorerViewMode(prev => prev === 'grid' ? 'timeline' : 'grid')}
-                  className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-[#00FF85] transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                  className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-primary transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
                   title="Toggle view mode"
                 >
                   <Calendar className="h-4 w-4" />
@@ -80,7 +80,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                 </button>
                 <button
                   onClick={() => exportToCSV(sortedSeasons, 'liga-indonesia-history.csv')}
-                  className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                  className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-primary hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
                   title="Download sebagai CSV"
                 >
                   <Download className="h-4 w-4" />
@@ -104,7 +104,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                   onClick={() => setSelectedEra("Semua")}
                   className={`p-3 text-xs font-black uppercase tracking-wider text-center border-2 border-black cursor-pointer transition-all ${
                     selectedEra === "Semua"
-                      ? 'bg-black text-[#00FF85] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+                      ? 'bg-black text-primary shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
                       : 'bg-white text-black hover:bg-[#F2F2F2]'
                   }`}
                 >
@@ -114,7 +114,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                   onClick={() => setSelectedEra("perserikatan")}
                   className={`p-3 text-xs font-black uppercase tracking-wider text-center border-2 border-black cursor-pointer transition-all ${
                     selectedEra === "perserikatan"
-                      ? 'bg-black text-[#00FF85] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+                      ? 'bg-black text-primary shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
                       : 'bg-white text-black hover:bg-[#F2F2F2]'
                   }`}
                 >
@@ -124,7 +124,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                   onClick={() => setSelectedEra("klasik")}
                   className={`p-3 text-xs font-black uppercase tracking-wider text-center border-2 border-black cursor-pointer transition-all ${
                     selectedEra === "klasik"
-                      ? 'bg-black text-[#00FF85] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+                      ? 'bg-black text-primary shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
                       : 'bg-white text-black hover:bg-[#F2F2F2]'
                   }`}
                 >
@@ -134,7 +134,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                   onClick={() => setSelectedEra("modern")}
                   className={`p-3 text-xs font-black uppercase tracking-wider text-center border-2 border-black cursor-pointer transition-all ${
                     selectedEra === "modern"
-                      ? 'bg-black text-[#00FF85] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+                      ? 'bg-black text-primary shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
                       : 'bg-white text-black hover:bg-[#F2F2F2]'
                   }`}
                 >
@@ -153,7 +153,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                   value={explorerQuery}
                   onChange={(e) => setExplorerQuery(e.target.value)}
                   placeholder="Cari kata kunci (Tahun/Klub/Topscorer/Pelatih)..."
-                  className="w-full text-xs font-bold bg-white border-2 border-black rounded-none py-3.5 pl-11 pr-4 focus:outline-none focus:bg-[#00FF85]/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] placeholder-slate-500 transition-all"
+                  className="w-full text-xs font-bold bg-white border-2 border-black rounded-none py-3.5 pl-11 pr-4 focus:outline-none focus:bg-primary/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] placeholder-slate-500 transition-all"
                 />
               </div>
 
@@ -163,7 +163,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                 <select
                   value={selectedClubFilter}
                   onChange={(e) => setSelectedClubFilter(e.target.value)}
-                  className="w-full text-xs font-bold bg-white border-2 border-black rounded-none py-3.5 pl-11 pr-4 focus:outline-none focus:bg-[#00FF85]/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all appearance-none cursor-pointer"
+                  className="w-full text-xs font-bold bg-white border-2 border-black rounded-none py-3.5 pl-11 pr-4 focus:outline-none focus:bg-primary/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all appearance-none cursor-pointer"
                 >
                   <option value="Semua">FILTER BERDASARKAN KLUB (SEMUA)</option>
                   {allClubs.map((club, idx) => (
@@ -173,7 +173,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
               </div>
 
               {/* Reset counters and information bubble */}
-              <div className="bg-[#00FF85] border-2 border-black p-3.5 flex items-center justify-between text-xs font-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
+              <div className="bg-primary border-2 border-black p-3.5 flex items-center justify-between text-xs font-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                 <span className="uppercase text-black">Hasil Saringan data:</span>
                 <span className="bg-black text-white px-2.5 py-0.5 font-mono">{sortedSeasons.length} KOMPETISI</span>
               </div>
@@ -235,7 +235,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                             {record.coach && (
                               <div>
                                 <span className="text-[8px] font-black uppercase tracking-widest opacity-50">PELATIH JUARA</span>
-                                <p className="text-sm font-bold text-[#00FF85] bg-black inline-block px-1.5 py-0.5 leading-none mt-1 uppercase text-xs">{record.coach}</p>
+                                <p className="text-sm font-bold text-primary bg-black inline-block px-1.5 py-0.5 leading-none mt-1 uppercase text-xs">{record.coach}</p>
                               </div>
                             )}
                           </div>
@@ -261,7 +261,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                       <div className="mt-5 pt-3.5 border-t-2 border-black flex flex-col gap-2">
                         <button
                           onClick={() => setExpandedSeason(isExpanded ? null : record.season)}
-                          className="w-full text-center py-2 bg-slate-100 hover:bg-[#00FF85] text-black font-black text-[10px] uppercase border border-black cursor-pointer transition-all"
+                          className="w-full text-center py-2 bg-slate-100 hover:bg-primary text-black font-black text-[10px] uppercase border border-black cursor-pointer transition-all"
                         >
                           {isExpanded ? "▲ TUTUP DETAIL HISTORIS" : "▼ LIHAT DETAIL HISTORIS & TRIVIA"}
                         </button>
@@ -286,7 +286,7 @@ export default function ExplorerView({ onAskAboutSeason }: any) {
                               onClick={() => onAskAboutSeason(record.season)}
                               className="w-full py-2 bg-black hover:bg-neutral-800 text-white font-black uppercase text-[9px] flex items-center justify-center gap-1 cursor-pointer"
                             >
-                              <Sparkles className="h-3 w-3 text-[#00FF85]" />
+                              <Sparkles className="h-3 w-3 text-primary" />
                               TANYAKAN DETAIL LENGKAP KE ASISTEN AI
                             </button>
                           </motion.div>

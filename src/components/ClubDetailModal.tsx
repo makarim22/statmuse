@@ -83,7 +83,7 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
           {/* Close button top corner */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 p-2 bg-black text-white hover:bg-[#00FF85] hover:text-black hover:border-black border-2 border-black transition-all cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
+            className="absolute right-4 top-4 p-2 bg-black text-white hover:bg-primary hover:text-black hover:border-black border-2 border-black transition-all cursor-pointer shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary"
             title="Tutup Detail"
             aria-label="Tutup detail"
           >
@@ -109,7 +109,7 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
             </div>
 
             <div className="space-y-1.5 flex-1">
-              <span className="text-[10px] font-black tracking-widest bg-black text-[#00FF85] px-2.5 py-0.5 uppercase inline-block">
+              <span className="text-[10px] font-black tracking-widest bg-black text-primary px-2.5 py-0.5 uppercase inline-block">
                 KONTRIBUTOR SEJARAH LIGA ID
               </span>
               <h3 className="text-3xl sm:text-4xl font-black italic tracking-tighter uppercase leading-none">
@@ -141,7 +141,7 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
 
               {/* Founded year & Nickname */}
               <div className="flex items-center gap-3 p-4 bg-[#F2F2F2] border-2 border-black">
-                <div className="h-10 w-10 bg-[#00FF85] border-2 border-black flex items-center justify-center">
+                <div className="h-10 w-10 bg-primary border-2 border-black flex items-center justify-center">
                   <Calendar className="h-5 w-5 text-black" />
                 </div>
                 <div>
@@ -206,7 +206,7 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
                   club.seasonsWon.map((yr, idx) => (
                     <span 
                       key={idx} 
-                      className="px-3 py-1.5 text-xs font-mono font-bold border-2 border-black bg-[#00FF85] uppercase tracking-tight text-black flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                      className="px-3 py-1.5 text-xs font-mono font-bold border-2 border-black bg-primary uppercase tracking-tight text-black flex items-center gap-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                     >
                       <Award className="h-3 w-3 shrink-0 text-black" />
                       {yr}
@@ -249,7 +249,7 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
             </button>
             <button
               onClick={handleCopyStatCard}
-              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-[#00FF85] cursor-pointer text-center duration-150 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
+              className="w-full py-3 border-2 border-black font-black text-[10px] sm:text-xs uppercase hover:bg-primary cursor-pointer text-center duration-150 flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
             >
               {copySuccess ? (
                 <>
@@ -272,9 +272,9 @@ export default function ClubDetailModal({ isOpen, onClose, club, metadata, onAsk
             </button>
             <button
               onClick={handleAskHistoryAI}
-              className="w-full py-3 bg-black hover:bg-[#00FF85] hover:text-black hover:border-black text-white border-2 border-black font-black text-[10px] sm:text-xs uppercase flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
+              className="w-full py-3 bg-black hover:bg-primary hover:text-black hover:border-black text-white border-2 border-black font-black text-[10px] sm:text-xs uppercase flex items-center justify-center gap-2 cursor-pointer shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all duration-150 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary"
             >
-              <Sparkles className="h-4 w-4 shrink-0 text-[#00FF85] animate-pulse" />
+              <Sparkles className="h-4 w-4 shrink-0 text-primary animate-pulse" />
               Tanya AI
             </button>
           </div>

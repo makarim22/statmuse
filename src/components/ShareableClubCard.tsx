@@ -15,7 +15,7 @@ export default function ShareableClubCard({
   clubName, 
   titles, 
   runnerUps,
-  primaryColor = '#00FF85',
+  primaryColor = 'var(--theme-primary)',
   secondaryColor = '#000000',
   symbol = 'star'
 }: ShareableClubCardProps) {
@@ -57,10 +57,10 @@ export default function ShareableClubCard({
         </h1>
 
         <div className="flex gap-8">
-          <div className="bg-black text-white px-12 py-6 border-[8px] border-[#00FF85] transform rotate-2 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.2)]">
+          <div className="bg-black text-white px-12 py-6 border-[8px] border-primary transform rotate-2 shadow-[12px_12px_0px_0px_rgba(0,0,0,0.2)]">
             <p className="text-2xl font-black uppercase tracking-widest mb-1 opacity-80">JUARA LIGA</p>
             <p className="text-[120px] font-black leading-none flex items-center gap-4">
-              {titles} <Trophy className="h-20 w-20 text-[#00FF85]" />
+              {titles} <Trophy className="h-20 w-20 text-primary" />
             </p>
           </div>
           {runnerUps > 0 && (

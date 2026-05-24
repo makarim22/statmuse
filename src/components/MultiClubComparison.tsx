@@ -101,7 +101,7 @@ export default function MultiClubComparison({ allClubs, onClose, onAskAI }: Mult
           </div>
           <button
             onClick={onClose}
-            className="p-2 bg-black text-white hover:bg-[#00FF85] hover:text-black border-2 border-black transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
+            className="p-2 bg-black text-white hover:bg-primary hover:text-black border-2 border-black transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary"
             aria-label="Tutup perbandingan"
           >
             <X className="h-5 w-5" />
@@ -117,7 +117,7 @@ export default function MultiClubComparison({ allClubs, onClose, onAskAI }: Mult
             {selectedClubs.length < 6 && (
               <button
                 onClick={addClub}
-                className="px-3 py-1.5 bg-[#00FF85] text-black border-2 border-black text-xs font-black uppercase flex items-center gap-1 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
+                className="px-3 py-1.5 bg-primary text-black border-2 border-black text-xs font-black uppercase flex items-center gap-1 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
               >
                 <Plus className="h-3 w-3" />
                 Tambah Klub
@@ -174,7 +174,7 @@ export default function MultiClubComparison({ allClubs, onClose, onAskAI }: Mult
                   onClose();
                   onAskAI(`Tolong ceritakan sejarah lengkap rivalitas antara ${selectedClubs[0]} dan ${selectedClubs[1]}`);
                 }}
-                className="bg-[#00FF85] text-black border-2 border-[#00FF85] hover:bg-white hover:border-white px-6 py-3 md:py-4 text-xs md:text-sm font-black uppercase tracking-widest flex items-center gap-2 transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-[4px_4px_0px_0px_#00FF85] active:translate-y-0 active:shadow-none hover:-translate-y-1"
+                className="bg-primary text-black border-2 border-primary hover:bg-white hover:border-white px-6 py-3 md:py-4 text-xs md:text-sm font-black uppercase tracking-widest flex items-center gap-2 transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-[4px_4px_0px_0px_var(--theme-primary)] active:translate-y-0 active:shadow-none hover:-translate-y-1"
               >
                 <Sparkles className="h-4 w-4 shrink-0" />
                 Tanyakan AI Tentang Sejarah Rivalitas Ini
@@ -226,13 +226,13 @@ export default function MultiClubComparison({ allClubs, onClose, onAskAI }: Mult
                         )}
                         <span className="uppercase">{clubName}</span>
                       </div>
-                      <span className="font-mono bg-[#00FF85] border border-black px-2 py-0.5">
+                      <span className="font-mono bg-primary border border-black px-2 py-0.5">
                         {club?.titles || 0} GELAR
                       </span>
                     </div>
                     <div className="relative h-8 w-full bg-[#F2F2F2] border-2 border-black">
                       <div
-                        className="absolute left-0 top-0 bottom-0 bg-[#00FF85] border-r-2 border-black transition-all duration-500"
+                        className="absolute left-0 top-0 bottom-0 bg-primary border-r-2 border-black transition-all duration-500"
                         style={{ width: `${percentage}%` }}
                       />
                       <div className="absolute inset-0 flex items-center px-2">
@@ -321,7 +321,7 @@ export default function MultiClubComparison({ allClubs, onClose, onAskAI }: Mult
         <div className="mt-6 pt-4 border-t-2 border-black">
           <button
             onClick={onClose}
-            className="w-full py-3 bg-black text-white border-2 border-black font-black text-xs uppercase hover:bg-[#00FF85] hover:text-black transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
+            className="w-full py-3 bg-black text-white border-2 border-black font-black text-xs uppercase hover:bg-primary hover:text-black transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary"
           >
             Tutup Perbandingan
           </button>

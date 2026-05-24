@@ -58,7 +58,7 @@ export default function TimelineVisualization({ data, onSeasonClick }: TimelineV
 
   const getDecadeColor = (decade: string) => {
     const year = parseInt(decade);
-    if (year >= 2020) return "bg-[#00FF85]";
+    if (year >= 2020) return "bg-primary";
     if (year >= 2010) return "bg-blue-400";
     if (year >= 2000) return "bg-purple-400";
     if (year >= 1990) return "bg-yellow-400";
@@ -126,11 +126,11 @@ export default function TimelineVisualization({ data, onSeasonClick }: TimelineV
                         className={`flex flex-col md:flex-row w-full ${isEven ? 'md:justify-start' : 'md:justify-end'} relative group`}
                       >
                         {/* Center Node Badge (Desktop) */}
-                        <div className="hidden md:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#00FF85] border-2 border-black z-30 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] group-hover:scale-110 transition-transform px-3 py-1.5 font-black uppercase text-xs tracking-widest">
+                        <div className="hidden md:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-primary border-2 border-black z-30 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] group-hover:scale-110 transition-transform px-3 py-1.5 font-black uppercase text-xs tracking-widest">
                           {season.season}
                         </div>
                         {/* Node Badge (Mobile) */}
-                        <div className="md:hidden absolute top-8 left-8 transform -translate-x-1/2 bg-[#00FF85] border-2 border-black z-30 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-2 py-1 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">
+                        <div className="md:hidden absolute top-8 left-8 transform -translate-x-1/2 bg-primary border-2 border-black z-30 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-2 py-1 font-black uppercase text-[10px] tracking-widest whitespace-nowrap">
                           {season.season}
                         </div>
 
@@ -168,7 +168,7 @@ export default function TimelineVisualization({ data, onSeasonClick }: TimelineV
                                       </div>
                                     )}
                                     <div>
-                                      <p className="text-[10px] font-black uppercase text-emerald-600 flex items-center gap-1 bg-[#00FF85]/20 inline-flex px-1 border border-emerald-600/30">
+                                      <p className="text-[10px] font-black uppercase text-emerald-600 flex items-center gap-1 bg-primary/20 inline-flex px-1 border border-emerald-600/30">
                                         <Trophy className="h-3 w-3" />
                                         JUARA
                                       </p>

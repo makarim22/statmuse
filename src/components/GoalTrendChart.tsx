@@ -40,7 +40,7 @@ export default function GoalTrendChart({ className }: GoalTrendProps) {
           <p className="font-black text-lg border-b-2 border-black pb-1 mb-2">Musim {data.fullSeason}</p>
           <div className="space-y-1">
             <p className="text-sm font-bold uppercase tracking-wider text-slate-500">Top Skor:</p>
-            <p className="text-xl font-black text-[#00FF85] drop-shadow-[1px_1px_0px_rgba(0,0,0,1)]">
+            <p className="text-xl font-black text-primary drop-shadow-[1px_1px_0px_rgba(0,0,0,1)]">
               {data.goals} GOL
             </p>
             <p className="text-sm font-bold text-black mt-1">👤 {data.player}</p>
@@ -68,8 +68,8 @@ export default function GoalTrendChart({ className }: GoalTrendProps) {
           >
             <defs>
               <linearGradient id="colorGoals" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#00FF85" stopOpacity={1}/>
-                <stop offset="95%" stopColor="#00FF85" stopOpacity={0.2}/>
+                <stop offset="5%" stopColor="var(--theme-primary)" stopOpacity={1}/>
+                <stop offset="95%" stopColor="var(--theme-primary)" stopOpacity={0.2}/>
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="0" vertical={false} stroke="#000" strokeWidth={1} opacity={0.2} />

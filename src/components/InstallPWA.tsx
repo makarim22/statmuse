@@ -30,7 +30,7 @@ export default function InstallPWA() {
       <div className="bg-white border-4 border-black p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] max-w-sm">
         <div className="flex justify-between items-start mb-3">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 bg-[#00FF85] border-2 border-black flex items-center justify-center">
+            <div className="h-8 w-8 bg-primary border-2 border-black flex items-center justify-center">
               {offlineReady ? <Download className="h-4 w-4" /> : <RefreshCw className="h-4 w-4 animate-spin-slow" />}
             </div>
             <h3 className="font-black uppercase tracking-tighter text-lg leading-none">
@@ -58,7 +58,7 @@ export default function InstallPWA() {
                 soundEngine.playThud();
                 updateServiceWorker(true);
               }}
-              className="flex-1 bg-black text-white px-3 py-2 text-xs font-black uppercase tracking-widest hover:bg-[#00FF85] hover:text-black border-2 border-black transition-all"
+              className="flex-1 bg-black text-white px-3 py-2 text-xs font-black uppercase tracking-widest hover:bg-primary hover:text-black border-2 border-black transition-all"
             >
               Muat Ulang
             </button>

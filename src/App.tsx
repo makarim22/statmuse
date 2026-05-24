@@ -27,8 +27,8 @@ import {
   Copy,
   Gamepad2
 } from "lucide-react";
-import { 
-  leagueData, 
+import {
+  leagueData,
   getClubsRanking,
   getPerserikatanData,
   getPerserikatanClubsRanking,
@@ -48,6 +48,7 @@ import { exportToCSV, exportClubRankingsToCSV, exportToJSON, exportStandingsToCS
 import { leagueTrivia } from "./data/statisticsData";
 import { soundEngine } from "./utils/soundEngine";
 import AudioToggle from "./components/AudioToggle";
+import ThemeSwitcher from "./components/ThemeSwitcher";
 import InstallPWA from "./components/InstallPWA";
 
 // Lazy loaded components and views
@@ -68,7 +69,7 @@ const EraModernView = lazy(() => import("./views/EraModernView"));
 // Loading Fallback for Suspense (Neo-Brutalist design)
 const LoadingFallback = () => (
   <div className="w-full py-20 flex flex-col items-center justify-center gap-4 animate-pulse" id="loading_fallback">
-    <div className="h-12 w-12 border-4 border-black bg-[#00FF85] flex items-center justify-center animate-spin">
+    <div className="h-12 w-12 border-4 border-black bg-primary flex items-center justify-center animate-spin">
       <div className="h-4 w-4 bg-black"></div>
     </div>
     <span className="font-black uppercase tracking-widest text-xs">Memuat Data...</span>
@@ -85,7 +86,7 @@ export default function App() {
     return validTabs.includes(cleanPath) ? cleanPath : 'standings';
   };
   const activeTab = getTabFromPath(location.pathname);
-  
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Derived state from URL parameters
@@ -93,7 +94,7 @@ export default function App() {
   const allClubs = getClubsRanking();
   const selectedModalClub = clubParam ? allClubs.find(c => c.name === clubParam) || null : null;
   const isModalOpen = !!selectedModalClub;
-  
+
   const isMultiCompareOpen = searchParams.get('compare') === 'true';
 
   // Modal open handlers
@@ -137,7 +138,7 @@ export default function App() {
       document.removeEventListener('click', unlockAudio);
     };
     document.addEventListener('click', unlockAudio);
-    
+
     return () => document.removeEventListener('click', unlockAudio);
   }, []);
 
@@ -170,11 +171,14 @@ export default function App() {
     navigateToAiQuery(`Siapa juara Liga Indonesia/Liga 1 musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
   };
   return (
-    <div className="min-h-screen bg-transparent text-[#1A1A1A] font-sans antialiased selection:bg-[#00FF85] selection:text-black" id="main_root">
-      
+    <div className="min-h-screen bg-transparent text-[#1A1A1A] font-sans antialiased selection:bg-primary selection:text-black" id="main_root">
+
       {/* Audio Toggle */}
       <AudioToggle />
-      
+
+      {/* Theme Switcher */}
+      <ThemeSwitcher />
+
       {/* PWA Install/Update Prompt */}
       <InstallPWA />
 
@@ -182,7 +186,7 @@ export default function App() {
       <nav className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b-4 border-black px-4 sm:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">
         <div className="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-start">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 shrink-0 bg-[#00FF85] border-2 border-black flex items-center justify-center transform -rotate-3 hover:rotate-0 duration-150">
+            <div className="h-10 w-10 shrink-0 bg-primary border-2 border-black flex items-center justify-center transform -rotate-3 hover:rotate-0 duration-150">
               <Trophy className="h-5 w-5 text-black font-black" />
             </div>
             <div>
@@ -198,121 +202,110 @@ export default function App() {
         <div className="flex flex-nowrap lg:flex-wrap overflow-x-auto hide-scrollbar justify-start lg:justify-center bg-white/70 backdrop-blur-md border-2 border-black p-1 rounded-none gap-1 w-full" id="nav_tabs">
           <button
             onClick={() => navigate('/ai-stats')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'ai-stats' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'ai-stats'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_ai"
           >
             PENCARIAN AI
           </button>
           <button
             onClick={() => navigate('/standings')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'standings' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'standings'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_standings"
           >
             KLASEMEN LIGA
           </button>
           <button
             onClick={() => navigate('/leaderboard')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'leaderboard' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'leaderboard'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_leaders"
           >
             PAPAN JUARA & VS MODE
           </button>
           <button
             onClick={() => navigate('/map')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'map' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'map'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_map"
           >
             PETA DISTRIBUSI
           </button>
           <button
             onClick={() => navigate('/stats')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'stats' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'stats'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_stats"
           >
             STATISTIK & REKOR
           </button>
           <button
             onClick={() => navigate('/kuis')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'kuis' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'kuis'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_kuis"
           >
             KUIS SEJARAH
           </button>
           <button
             onClick={() => navigate('/explorer')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'explorer' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'explorer'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_explorer"
           >
             RIWAYAT LENGKAP
           </button>
           <button
             onClick={() => navigate('/perserikatan')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'perserikatan' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'perserikatan'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_perserikatan"
           >
             PERSERIKATAN
           </button>
           <button
             onClick={() => navigate('/galatama')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'galatama' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'galatama'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_galatama"
           >
             LIGA GALATAMA
           </button>
           <button
             onClick={() => navigate('/liga-indonesia')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'liga-indonesia' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'liga-indonesia'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_liga_indonesia"
           >
             LIGA INDONESIA
           </button>
           <button
             onClick={() => navigate('/era-modern')}
-            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
-              activeTab === 'era-modern' 
-                ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
-                : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
-            }`}
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${activeTab === 'era-modern'
+              ? 'bg-primary text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
+              : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
+              }`}
             id="tab_era_modern"
           >
             ERA MODERN
@@ -321,7 +314,7 @@ export default function App() {
       </nav>
 
       {/* Marquee Ticker (Neo-Brutalist) */}
-      <div className="w-full bg-black text-[#00FF85] border-b-4 border-black overflow-hidden py-3 whitespace-nowrap flex items-center relative z-10 shadow-[0px_8px_0px_0px_rgba(0,0,0,1)] mb-4">
+      <div className="w-full bg-black text-primary border-b-4 border-black overflow-hidden py-3 whitespace-nowrap flex items-center relative z-10 shadow-[0px_8px_0px_0px_rgba(0,0,0,1)] mb-4">
         <motion.div
           animate={{ x: [0, -3000] }}
           transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
@@ -343,7 +336,7 @@ export default function App() {
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-10 py-6 sm:py-10" id="main_content">
-        
+
         {/* Quick Highlights Row (Heavy Metric Cards) */}
         {activeTab === 'leaderboard' && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border-2 border-black mb-10 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" id="quick_highlights">
@@ -353,7 +346,7 @@ export default function App() {
                 <span className="text-4xl sm:text-5xl font-black tracking-tighter">{totalSeasonsCount}</span>
                 <span className="text-xs font-bold uppercase opacity-55">Musim</span>
               </div>
-              <span className="text-[10px] text-emerald-600 font-bold bg-[#00FF85]/20 border border-black px-1.5 py-0.5 mt-3 w-max">TUNTAS SEJAK 1930</span>
+              <span className="text-[10px] text-emerald-600 font-bold bg-primary/20 border border-black px-1.5 py-0.5 mt-3 w-max">TUNTAS SEJAK 1930</span>
             </div>
 
             <div className="p-4 sm:p-6 border-b-2 lg:border-b-0 sm:border-r-2 lg:border-r-2 border-black flex flex-col justify-between bg-[#F2F2F2]/50">
@@ -388,86 +381,86 @@ export default function App() {
 
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
-            <Route 
-              path="/ai-stats" 
+            <Route
+              path="/ai-stats"
               element={
                 <AiStatsView />
-              } 
+              }
             />
-            <Route 
-              path="/standings" 
+            <Route
+              path="/standings"
               element={
-                <StandingsView 
-                  onOpenClubDetail={openClubDetail} 
+                <StandingsView
+                  onOpenClubDetail={openClubDetail}
                 />
-              } 
+              }
             />
-            <Route 
-              path="/leaderboard" 
+            <Route
+              path="/leaderboard"
               element={
-                <LeaderboardView 
+                <LeaderboardView
                   onOpenClubDetail={openClubDetail}
                   onOpenMultiCompare={openMultiCompare}
                   onAskAI={navigateToAiQuery}
                 />
-              } 
+              }
             />
-            <Route 
-              path="/map" 
+            <Route
+              path="/map"
               element={
                 <div className="space-y-8 animate-fade-in" id="map_view">
-                   <GeographicMapView
-                      clubs={getClubsRanking()}
-                      onClubClick={openClubDetail}
-                    />
+                  <GeographicMapView
+                    clubs={getClubsRanking()}
+                    onClubClick={openClubDetail}
+                  />
                 </div>
-              } 
+              }
             />
             <Route path="/stats" element={<AllTimeStatsView />} />
-            <Route 
-              path="/explorer" 
+            <Route
+              path="/explorer"
               element={
-                <ExplorerView 
+                <ExplorerView
                   onAskAboutSeason={handleAskAboutSeason}
                   onOpenClubDetail={openClubDetail}
                 />
-              } 
+              }
             />
-            <Route 
-              path="/galatama" 
+            <Route
+              path="/galatama"
               element={
-                <GalatamaView 
+                <GalatamaView
                   onAskAboutGalatamaSeason={handleAskAboutGalatamaSeason}
                   onOpenClubDetail={openClubDetail}
                 />
-              } 
+              }
             />
-            <Route 
-              path="/perserikatan" 
+            <Route
+              path="/perserikatan"
               element={
-                <PerserikatanView 
+                <PerserikatanView
                   onAskAboutPerserikatanSeason={handleAskAboutPerserikatanSeason}
                   onOpenClubDetail={openClubDetail}
                 />
-              } 
+              }
             />
-            <Route 
-              path="/liga-indonesia" 
+            <Route
+              path="/liga-indonesia"
               element={
-                <LigaIndonesiaView 
+                <LigaIndonesiaView
                   onAskAboutLiginaSeason={handleAskAboutLiginaSeason}
                   onOpenClubDetail={openClubDetail}
                 />
-              } 
+              }
             />
-            <Route 
-              path="/era-modern" 
+            <Route
+              path="/era-modern"
               element={
-                <EraModernView 
+                <EraModernView
                   onAskAboutModernSeason={handleAskAboutModernSeason}
                   onOpenClubDetail={openClubDetail}
                 />
-              } 
+              }
             />
             <Route path="/kuis" element={<QuizView />} />
             <Route path="/" element={<Navigate to="/standings" replace />} />
@@ -480,7 +473,7 @@ export default function App() {
       <footer className="mt-20 bg-black text-white border-t-4 border-black py-16 px-4 sm:px-10" id="app_footer_nav">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2 text-center md:text-left">
-            <h4 className="text-2xl font-black tracking-tighter uppercase italic text-[#00FF85]">GARUDA STATS</h4>
+            <h4 className="text-2xl font-black tracking-tighter uppercase italic text-primary">GARUDA STATS</h4>
             <p className="text-[10px] font-bold uppercase tracking-widest opacity-50 max-w-md">
               Dibuat mengacu pada data resmi juara dari PSSI serta diolah oleh model AI Google Gemini secara live demi literasi sepakbola nasional.
             </p>

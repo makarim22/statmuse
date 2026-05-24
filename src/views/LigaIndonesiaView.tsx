@@ -151,7 +151,7 @@ export default function LigaIndonesiaView({ onAskAboutLiginaSeason, onOpenClubDe
                               <Calendar className="h-4.5 w-4.5 text-[#0284C7]" />
                               <span className="text-sm font-black tracking-tight text-black">{record.season}</span>
                             </div>
-                            <span className="text-[9px] font-black uppercase bg-black text-[#00FF85] border border-black px-2 py-0.5">
+                            <span className="text-[9px] font-black uppercase bg-black text-primary border border-black px-2 py-0.5">
                               {record.isCancelled ? "BATAL" : "PROFESIONAL"}
                             </span>
                           </div>
@@ -177,7 +177,7 @@ export default function LigaIndonesiaView({ onAskAboutLiginaSeason, onOpenClubDe
                                     };
                                     onOpenClubDetail(c);
                                   }}
-                                  className="flex items-center gap-3 p-2 border border-black bg-[#F8FAF3] hover:bg-[#00FF85]/10 cursor-pointer transition-colors"
+                                  className="flex items-center gap-3 p-2 border border-black bg-[#F8FAF3] hover:bg-primary/10 cursor-pointer transition-colors"
                                 >
                                   <div className="h-9 w-9 bg-yellow-300 border border-black flex items-center justify-center shrink-0">
                                     🏆
@@ -236,7 +236,7 @@ export default function LigaIndonesiaView({ onAskAboutLiginaSeason, onOpenClubDe
                               onClick={() => onAskAboutLiginaSeason(record.season)}
                               className="w-full py-2 bg-black hover:bg-neutral-800 text-white font-black uppercase text-[9px] flex items-center justify-center gap-1 cursor-pointer"
                             >
-                              <Sparkles className="h-3 w-3 text-[#00FF85]" />
+                              <Sparkles className="h-3 w-3 text-primary" />
                               TANYAKAN DETAIL KE ASISTEN AI
                             </button>
                           </div>

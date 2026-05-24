@@ -180,7 +180,7 @@ export default function AiStatsView() {
             {/* Top Interactive Curated Trivia Row */}
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="h-4 w-4 text-[#00FF85]" />
+                <Sparkles className="h-4 w-4 text-primary" />
                 <span className="text-xs font-black uppercase tracking-widest">Eksplorasi Sejarah Tersembunyi (Klik untuk Analisis AI)</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -188,10 +188,10 @@ export default function AiStatsView() {
                   <button
                     key={idx}
                     onClick={() => triggerSearch(fact.query)}
-                    className="p-5 text-left bg-white border-2 border-black hover:bg-[#00FF85]/10 hover:border-[#00FF85] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex flex-col justify-between space-y-3 relative group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
+                    className="p-5 text-left bg-white border-2 border-black hover:bg-primary/10 hover:border-primary hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex flex-col justify-between space-y-3 relative group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
                   >
                     <div className="space-y-1.5">
-                      <span className="text-[9px] font-black tracking-widest bg-black text-[#00FF85] px-1.5 py-0.5 uppercase">
+                      <span className="text-[9px] font-black tracking-widest bg-black text-primary px-1.5 py-0.5 uppercase">
                         {fact.tag}
                       </span>
                       <h4 className="font-extrabold max-w-xs text-sm leading-tight text-black group-hover:text-emerald-950">
@@ -211,7 +211,7 @@ export default function AiStatsView() {
               {/* Left Search input and prompt choices */}
               <div className="lg:col-span-4 space-y-6">
                 <div className="space-y-4">
-                  <span className="bg-[#00FF85] px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block">
+                  <span className="bg-primary px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block">
                     Statmuse Indonesia 
                   </span>
                   <h2 className="text-5xl font-black italic tracking-tighter uppercase leading-[0.9] mb-4">
@@ -230,16 +230,16 @@ export default function AiStatsView() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Contoh: Juara terbanyak, siapa juara 1994, Persib vs Persija"
-                      className="w-full text-sm font-bold bg-white border-4 border-black rounded-none p-4.5 pr-14 focus:outline-none focus:bg-[#00FF85]/5 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder-slate-400"
+                      className="w-full text-sm font-bold bg-white border-4 border-black rounded-none p-4.5 pr-14 focus:outline-none focus:bg-primary/5 focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder-slate-400"
                       id="query_input"
                     />
                     <button
                       type="submit"
                       disabled={isSearching}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 p-2 bg-black hover:bg-zinc-800 text-white rounded-none cursor-pointer duration-150 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 p-2 bg-black hover:bg-zinc-800 text-white rounded-none cursor-pointer duration-150 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary"
                       aria-label="Cari"
                     >
-                      {isSearching ? <RefreshCw className="h-5 w-5 animate-spin text-[#00FF85]" /> : <Search className="h-5 w-5" />}
+                      {isSearching ? <RefreshCw className="h-5 w-5 animate-spin text-primary" /> : <Search className="h-5 w-5" />}
                     </button>
                   </div>
                 </form>
@@ -295,7 +295,7 @@ export default function AiStatsView() {
                         <button
                           key={idx}
                           onClick={() => triggerSearch(histQuery)}
-                          className="bg-white border border-black hover:bg-[#00FF85] hover:text-black hover:border-black px-2 py-1 text-[10px] font-bold uppercase truncate max-w-full text-left cursor-pointer transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+                          className="bg-white border border-black hover:bg-primary hover:text-black hover:border-black px-2 py-1 text-[10px] font-bold uppercase truncate max-w-full text-left cursor-pointer transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
                         >
                           {histQuery}
                         </button>
@@ -313,7 +313,7 @@ export default function AiStatsView() {
                         key={idx}
                         onClick={() => triggerSearch(p.text)}
                         className={`text-left font-bold text-xs p-3 border-2 border-black transition-all hover:translate-x-1 hover:-translate-y-1 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black ${
-                          searchQuery === p.text ? 'bg-[#00FF85] text-black' : 'bg-[#F2F2F2] hover:bg-[#00FF85]'
+                          searchQuery === p.text ? 'bg-primary text-black' : 'bg-[#F2F2F2] hover:bg-primary'
                         }`}
                       >
                         {p.label}
@@ -334,7 +334,7 @@ export default function AiStatsView() {
                       className="flex-1 flex flex-col items-center justify-center border-4 border-black bg-[#F2F2F2]/40 p-10 space-y-4"
                     >
                       <div className="relative h-16 w-16">
-                        <div className="h-full w-full rounded-none border-4 border-black border-t-[#00FF85] animate-spin" />
+                        <div className="h-full w-full rounded-none border-4 border-black border-t-[var(--theme-primary)] animate-spin" />
                       </div>
                       <p className="text-sm font-black uppercase tracking-widest">MEMBEDAH BASIS DATA OLAHRAGA INDONESIA...</p>
                     </motion.div>
@@ -347,7 +347,7 @@ export default function AiStatsView() {
                       {/* Header line with metadata */}
                       <div className="flex items-center justify-between border-b-2 border-black pb-4">
                         <div className="flex items-center gap-2">
-                          <span className="h-2 w-2 bg-[#00FF85] border border-black animate-ping" />
+                          <span className="h-2 w-2 bg-primary border border-black animate-ping" />
                           <span className="text-[10px] font-black tracking-widest uppercase">HASIL ANALISIS DATA</span>
                         </div>
                         <span className="text-[10px] font-mono font-bold bg-[#F2F2F2] border border-black px-2 py-0.5">EST: 2026.05</span>
@@ -381,11 +381,11 @@ export default function AiStatsView() {
                                   <div key={idx} className="space-y-1">
                                     <div className="flex justify-between text-xs font-bold leading-none">
                                       <span className="uppercase">{idx + 1}. {item.label}</span>
-                                      <span className="font-mono bg-[#00FF85] border border-black px-1">{val} GELAR</span>
+                                      <span className="font-mono bg-primary border border-black px-1">{val} GELAR</span>
                                     </div>
                                     <div className="relative h-6 w-full bg-white border-2 border-black flex items-center px-1">
                                       <div 
-                                        className="absolute left-0 top-0 bottom-0 bg-[#00FF85] border-r border-black"
+                                        className="absolute left-0 top-0 bottom-0 bg-primary border-r border-black"
                                         style={{ width: `${scalePercent}%` }}
                                       />
                                       <span className="relative z-10 text-[9px] font-black text-black uppercase truncate pl-1">{item.subtext || ""}</span>
@@ -402,7 +402,7 @@ export default function AiStatsView() {
                               {searchResult.autoQueryStats.data.slice(0, 8).map((item: any, idx: number) => (
                                 <div key={idx} className="relative">
                                   {/* Dot */}
-                                  <div className="absolute -left-[27px] top-1 h-3.5 w-3.5 bg-[#00FF85] border-2 border-black" />
+                                  <div className="absolute -left-[27px] top-1 h-3.5 w-3.5 bg-primary border-2 border-black" />
                                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 leading-none mb-1">
                                     <span className="text-[10px] font-mono font-bold bg-black text-white px-1.5 py-0.5">{item.label}</span>
                                     <span className="text-[10px] font-bold opacity-60 uppercase">{item.value ? `${item.value} Gelar` : ""}</span>
@@ -424,7 +424,7 @@ export default function AiStatsView() {
                                     <p className="text-[10px] uppercase font-bold text-slate-500 mt-1">{item.subtext || ""}</p>
                                   </div>
                                   {item.value !== undefined && (
-                                    <div className="text-3xl font-black text-black bg-[#00FF85] h-12 w-12 border-2 border-black flex items-center justify-center font-mono">
+                                    <div className="text-3xl font-black text-black bg-primary h-12 w-12 border-2 border-black flex items-center justify-center font-mono">
                                       {item.value}
                                     </div>
                                   )}
@@ -468,7 +468,7 @@ export default function AiStatsView() {
                               <button
                                 key={idx}
                                 onClick={() => triggerSearch(promptText)}
-                                className="text-left font-bold text-xs p-3 bg-white border-2 border-black hover:bg-[#00FF85] duration-150 cursor-pointer flex-1 flex items-center justify-between group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
+                                className="text-left font-bold text-xs p-3 bg-white border-2 border-black hover:bg-primary duration-150 cursor-pointer flex-1 flex items-center justify-between group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
                               >
                                 <span className="truncate uppercase">{promptText}</span>
                                 <ChevronRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />

@@ -40,10 +40,10 @@ const PlayerDetailModal: React.FC<PlayerDetailModalProps> = ({ player, isOpen, o
         <meta name="description" content={`Profil singkat legenda pencetak gol terbanyak ${player.name} (${player.club}) dengan catatan ${player.goals} gol pada musim ${player.season}.`} />
         
         {/* Header */}
-        <div className="bg-[#00FF85] border-b-4 border-black p-4 md:p-6 flex justify-between items-start">
+        <div className="bg-primary border-b-4 border-black p-4 md:p-6 flex justify-between items-start">
           <div className="flex gap-4 items-center">
             <div className="h-16 w-16 bg-black flex items-center justify-center border-2 border-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              <User className="h-8 w-8 text-[#00FF85]" />
+              <User className="h-8 w-8 text-primary" />
             </div>
             <div>
               <h2 className="text-3xl font-black uppercase italic tracking-tighter leading-none text-black">

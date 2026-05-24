@@ -83,7 +83,7 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
     if (count >= 10) provinceColors[provinceId] = '#EF4444'; // Red (Extreme dominance)
     else if (count >= 5) provinceColors[provinceId] = '#F97316'; // Orange
     else if (count >= 3) provinceColors[provinceId] = '#EAB308'; // Yellow
-    else if (count >= 1) provinceColors[provinceId] = '#00FF85'; // Green
+    else if (count >= 1) provinceColors[provinceId] = 'var(--theme-primary)'; // Green
   });
 
   // Calculate region statistics
@@ -108,7 +108,7 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
       <title>Peta Distribusi Juara Liga Indonesia - Garuda Stats</title>
       <meta name="description" content="Visualisasi peta geografis persebaran trofi juara kasta tertinggi sepak bola Indonesia dari Sabang sampai Merauke." />
       <div className="flex items-center gap-3 mb-6 border-b-4 border-black pb-4">
-        <div className="h-12 w-12 bg-black flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_0px_#00FF85]">
+        <div className="h-12 w-12 bg-black flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_0px_var(--theme-primary)]">
           <MapPin className="h-6 w-6 text-white" />
         </div>
         <div>
@@ -159,7 +159,7 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
                         <span className="text-[10px] font-black uppercase">Klub Juara:</span>
                         <span className="text-xs font-black">{region.clubCount}</span>
                       </div>
-                      <div className="flex justify-between items-center bg-[#00FF85]/20 px-2 py-1 border border-black">
+                      <div className="flex justify-between items-center bg-primary/20 px-2 py-1 border border-black">
                         <span className="text-[10px] font-black uppercase">Gelar Pro:</span>
                         <span className="text-xs font-black">{region.totalTitles}</span>
                       </div>
@@ -210,7 +210,7 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
               <span>3-4 Gelar (Kekuatan Utama)</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="h-4 w-4 border-2 border-black bg-[#00FF85]"></div>
+              <div className="h-4 w-4 border-2 border-black bg-primary"></div>
               <span>1-2 Gelar (Pernah Juara)</span>
             </div>
             <div className="flex items-center gap-2">
@@ -238,7 +238,7 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
                 <div>
                   <h4 className="text-xl font-black uppercase italic tracking-tighter leading-none" style={{ color: region.color }}>{region.name}</h4>
                   <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[10px] font-bold bg-[#00FF85]/30 px-1 border border-black uppercase tracking-wider">{region.totalTitles} Pro</span>
+                    <span className="text-[10px] font-bold bg-primary/30 px-1 border border-black uppercase tracking-wider">{region.totalTitles} Pro</span>
                     {region.totalAmatirTitles > 0 && (
                       <span className="text-[10px] font-bold bg-gray-200 px-1 border border-black uppercase tracking-wider">+{region.totalAmatirTitles} Amatir</span>
                     )}
@@ -254,7 +254,7 @@ export default function GeographicMapView({ clubs, onClubClick }: GeographicMapV
                     <button
                       key={clubIdx}
                       onClick={() => onClubClick?.(club)}
-                      className="w-full flex items-center gap-3 p-2 bg-white border-2 border-black hover:bg-[#00FF85] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all text-left group"
+                      className="w-full flex items-center gap-3 p-2 bg-white border-2 border-black hover:bg-primary hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all text-left group"
                     >
                       {meta && (
                         <div className="h-8 w-8 border-2 border-black bg-white p-1 shrink-0 flex items-center justify-center">

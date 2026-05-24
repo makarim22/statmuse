@@ -29,7 +29,7 @@ const AllTimeStatsView: React.FC = () => {
       <meta name="description" content="Kumpulan data rekor gol, klub tersukses, persebaran gelar juara per dekade, dan trivia unik sepak bola Indonesia." />
       {/* Header */}
       <div className="border-b-4 border-black pb-5">
-        <span className="bg-[#00FF85] px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block mb-2">
+        <span className="bg-primary px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block mb-2">
           Pusat Data Sejarah
         </span>
         <h2 className="text-4xl font-black italic tracking-tighter uppercase">
@@ -47,7 +47,7 @@ const AllTimeStatsView: React.FC = () => {
       <div className="border-4 border-black bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-6 md:p-8">
         <div className="flex items-center gap-3 mb-6 border-b-2 border-black pb-4">
           <div className="h-10 w-10 bg-black flex items-center justify-center border border-black transform rotate-3">
-            <Target className="h-5 w-5 text-[#00FF85]" />
+            <Target className="h-5 w-5 text-primary" />
           </div>
           <div>
             <h3 className="text-2xl font-black uppercase italic leading-none">Pencetak Gol Terbanyak</h3>
@@ -59,7 +59,7 @@ const AllTimeStatsView: React.FC = () => {
           
           {/* Data Per Musim */}
           <div className="flex-1 overflow-x-auto border-2 border-black">
-            <div className="bg-black text-[#00FF85] p-3 border-b-2 border-black">
+            <div className="bg-black text-primary p-3 border-b-2 border-black">
               <h4 className="font-black uppercase text-sm">Pencetak Gol Terbanyak (Per Musim)</h4>
             </div>
             <table className="w-full text-left border-collapse min-w-[500px]">
@@ -75,7 +75,7 @@ const AllTimeStatsView: React.FC = () => {
                 {topScorers.map((scorer, idx) => (
                   <tr 
                     key={idx} 
-                    className="border-b border-black/10 hover:bg-[#00FF85]/10 transition-colors cursor-pointer"
+                    className="border-b border-black/10 hover:bg-primary/10 transition-colors cursor-pointer"
                     onClick={() => handlePlayerClick(scorer)}
                   >
                     <td className="p-3 border-r border-black/20 text-center font-bold text-slate-400">{idx + 1}</td>
@@ -85,7 +85,7 @@ const AllTimeStatsView: React.FC = () => {
                     </td>
                     <td className="p-3 border-r border-black/20 font-mono text-xs">{scorer.season}</td>
                     <td className="p-3 text-right">
-                      <span className="bg-[#00FF85] border border-black px-2 py-0.5 font-black text-lg italic inline-block transform -skew-x-6 group-hover:scale-110 transition-transform">
+                      <span className="bg-primary border border-black px-2 py-0.5 font-black text-lg italic inline-block transform -skew-x-6 group-hover:scale-110 transition-transform">
                         {scorer.goals}
                       </span>
                     </td>
@@ -97,7 +97,7 @@ const AllTimeStatsView: React.FC = () => {
 
           {/* Data Kumulatif Sepanjang Masa */}
           <div className="flex-1 overflow-x-auto border-2 border-black">
-            <div className="bg-[#00FF85] text-black p-3 border-b-2 border-black">
+            <div className="bg-primary text-black p-3 border-b-2 border-black">
               <h4 className="font-black uppercase text-sm">Top Skor Kumulatif (Sepanjang Karier)</h4>
             </div>
             <table className="w-full text-left border-collapse min-w-[500px]">
@@ -120,7 +120,7 @@ const AllTimeStatsView: React.FC = () => {
                     <td className="p-3 border-r border-black/20 font-black text-sm uppercase">{scorer.name}</td>
                     <td className="p-3 border-r border-black/20 font-bold text-[10px] uppercase text-slate-500">{scorer.club}</td>
                     <td className="p-3 text-right">
-                      <span className="bg-black text-[#00FF85] border border-black px-2 py-0.5 font-black text-lg italic inline-block transform -skew-x-6">
+                      <span className="bg-black text-primary border border-black px-2 py-0.5 font-black text-lg italic inline-block transform -skew-x-6">
                         {scorer.goals}
                       </span>
                     </td>
@@ -156,7 +156,7 @@ const AllTimeStatsView: React.FC = () => {
                 </div>
                 <h4 className="font-black text-sm uppercase pr-32">{record.title}</h4>
                 <div className="flex items-center gap-2 mt-2 mb-1">
-                  <span className="text-2xl font-black italic tracking-tighter text-[#00FF85] drop-shadow-[1px_1px_0px_#000]">
+                  <span className="text-2xl font-black italic tracking-tighter text-primary drop-shadow-[1px_1px_0px_#000]">
                     {record.value}
                   </span>
                 </div>
@@ -169,13 +169,13 @@ const AllTimeStatsView: React.FC = () => {
         </div>
 
         {/* League Trivia */}
-        <div className="border-4 border-black bg-black text-white shadow-[8px_8px_0px_0px_#00FF85] p-6 md:p-8">
+        <div className="border-4 border-black bg-black text-white shadow-[8px_8px_0px_0px_var(--theme-primary)] p-6 md:p-8">
           <div className="flex items-center gap-3 mb-6 border-b-2 border-white/20 pb-4">
-            <div className="h-10 w-10 bg-[#00FF85] flex items-center justify-center border border-black">
+            <div className="h-10 w-10 bg-primary flex items-center justify-center border border-black">
               <Zap className="h-5 w-5 text-black" />
             </div>
             <div>
-              <h3 className="text-xl font-black uppercase italic leading-none text-[#00FF85]">Fakta Menarik (Trivia)</h3>
+              <h3 className="text-xl font-black uppercase italic leading-none text-primary">Fakta Menarik (Trivia)</h3>
               <p className="text-[10px] font-bold text-slate-400 uppercase">Tahukah Anda tentang sejarah ini?</p>
             </div>
           </div>
@@ -184,7 +184,7 @@ const AllTimeStatsView: React.FC = () => {
             {leagueTrivia.map((trivia, idx) => (
               <div key={idx} className="flex gap-4 p-4 border border-white/20 bg-white/5 hover:bg-white/10 transition-colors">
                 <div className="shrink-0 pt-0.5">
-                  <BookOpen className="h-4 w-4 text-[#00FF85]" />
+                  <BookOpen className="h-4 w-4 text-primary" />
                 </div>
                 <p className="text-sm font-medium leading-relaxed">
                   {trivia.fact}
@@ -224,7 +224,7 @@ const AllTimeStatsView: React.FC = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[600px]">
                 <thead>
-                  <tr className="bg-black text-[#00FF85] border-b-2 border-black text-xs font-black uppercase tracking-wider">
+                  <tr className="bg-black text-primary border-b-2 border-black text-xs font-black uppercase tracking-wider">
                     <th className="p-4 border-r border-white/20 w-10 text-center"></th>
                     <th className="p-4 border-r border-white/20">Nama Pemain</th>
                     <th className="p-4 border-r border-white/20">Klub Ikonik</th>
@@ -238,7 +238,7 @@ const AllTimeStatsView: React.FC = () => {
                       <React.Fragment key={player.id}>
                         {/* Main Row */}
                         <tr 
-                          className={`border-b border-black/20 hover:bg-[#00FF85]/10 cursor-pointer transition-colors ${expandedRow === player.id ? 'bg-[#00FF85]/20' : ''}`}
+                          className={`border-b border-black/20 hover:bg-primary/10 cursor-pointer transition-colors ${expandedRow === player.id ? 'bg-primary/20' : ''}`}
                           onClick={() => setExpandedRow(expandedRow === player.id ? null : player.id)}
                         >
                           <td className="p-4 border-r border-black/20 text-center text-xs font-bold text-slate-400">
@@ -284,7 +284,7 @@ const AllTimeStatsView: React.FC = () => {
                                         <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1">Masa Aktif</p>
                                         <p className="font-mono font-black text-sm">{player.activeYears}</p>
                                       </div>
-                                      <div className="bg-[#00FF85]/20 border-2 border-black p-3 shadow-[2px_2px_0px_0px_#000]">
+                                      <div className="bg-primary/20 border-2 border-black p-3 shadow-[2px_2px_0px_0px_#000]">
                                         <p className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-1">Pencapaian Utama</p>
                                         <p className="font-bold text-xs uppercase leading-snug">{player.achievements}</p>
                                       </div>

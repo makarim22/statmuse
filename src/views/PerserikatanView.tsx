@@ -170,7 +170,7 @@ export default function PerserikatanView({ onAskAboutPerserikatanSeason, onOpenC
                                 };
                                 onOpenClubDetail(c);
                               }}
-                              className="flex items-center gap-3 p-2 border border-black bg-[#F8FAF3] hover:bg-[#00FF85]/10 cursor-pointer transition-colors"
+                              className="flex items-center gap-3 p-2 border border-black bg-[#F8FAF3] hover:bg-primary/10 cursor-pointer transition-colors"
                             >
                               <div className="h-9 w-9 bg-yellow-300 border border-black flex items-center justify-center shrink-0">
                                 🏆
@@ -227,7 +227,7 @@ export default function PerserikatanView({ onAskAboutPerserikatanSeason, onOpenC
                               onClick={() => onAskAboutPerserikatanSeason(record.season)}
                               className="w-full py-2 bg-black hover:bg-neutral-800 text-white font-black uppercase text-[9px] flex items-center justify-center gap-1 cursor-pointer"
                             >
-                              <Sparkles className="h-3 w-3 text-[#00FF85]" />
+                              <Sparkles className="h-3 w-3 text-primary" />
                               TANYAKAN DETAIL KE ASISTEN AI
                             </button>
                           </div>

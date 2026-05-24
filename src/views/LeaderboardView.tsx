@@ -29,7 +29,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
             
             <div className="border-b-4 border-black pb-5 flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
-                <span className="bg-[#00FF85] px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block mb-2">
+                <span className="bg-primary px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block mb-2">
                   Peringkat Terbaik Sepanjang Masa
                 </span>
                 <h2 className="text-4xl font-black italic tracking-tighter uppercase">
@@ -42,7 +42,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
               <div className="flex gap-2 flex-wrap">
                 <button
                   onClick={() => exportClubRankingsToCSV(allClubs)}
-                  className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                  className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-primary hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
                   title="Download sebagai CSV"
                 >
                   <Download className="h-4 w-4" />
@@ -50,7 +50,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                 </button>
                 <button
                   onClick={() => exportToJSON(allClubs, 'club-rankings.json')}
-                  className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-[#00FF85] transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
+                  className="px-4 py-2 bg-white text-black border-2 border-black hover:bg-primary transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none"
                   title="Download sebagai JSON"
                 >
                   <Download className="h-4 w-4" />
@@ -68,7 +68,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   onClick={() => {
                     onOpenClubDetail(allClubs[1]);
                   }}
-                  className="p-8 order-2 md:order-1 border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#F2F2F2]/40 hover:bg-[#00FF85]/5 duration-150 cursor-pointer group"
+                  className="p-8 order-2 md:order-1 border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#F2F2F2]/40 hover:bg-primary/5 duration-150 cursor-pointer group"
                 >
                   <span className="text-xs font-black uppercase text-slate-500 tracking-widest">RUNNER-UP TERATAS</span>
                   
@@ -86,7 +86,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                     </div>
                     <div className="space-y-1">
                       <h3 className="text-2xl font-black italic tracking-tighter uppercase leading-none">{allClubs[1].name}</h3>
-                      <p className="text-[10px] font-black uppercase text-emerald-700 bg-[#00FF85]/20 border border-black/10 px-1 inline-block">
+                      <p className="text-[10px] font-black uppercase text-emerald-700 bg-primary/20 border border-black/10 px-1 inline-block">
                         {clubMetadataList[allClubs[1].name]?.nickname || "Klub Legendaris"}
                       </p>
                     </div>
@@ -100,7 +100,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   <div className="w-full text-left bg-white border-2 border-black p-3 text-xs">
                     <div className="flex justify-between items-center opacity-60 text-[9px] font-black uppercase tracking-widest border-b border-black/10 pb-1 mb-1">
                       <span>Gelar Era Profesional</span>
-                      <span className="bg-[#00FF85] text-black border border-black px-1">{allClubs[1].titles} Trofi Pro</span>
+                      <span className="bg-primary text-black border border-black px-1">{allClubs[1].titles} Trofi Pro</span>
                     </div>
                     <p className="font-mono font-bold mt-1 line-clamp-1">{allClubs[1].seasonsWon.length > 0 ? allClubs[1].seasonsWon.join(", ") : "—"}</p>
                     {(allClubs[1].amatirTitles ?? 0) > 0 && (
@@ -119,7 +119,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   onClick={() => {
                     onOpenClubDetail(allClubs[0]);
                   }}
-                  className="p-10 order-1 md:order-2 border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#00FF85]/10 hover:bg-[#00FF85]/20 duration-150 cursor-pointer group"
+                  className="p-10 order-1 md:order-2 border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-primary/10 hover:bg-primary/20 duration-150 cursor-pointer group"
                 >
                   <div className="absolute top-4 right-4 bg-yellow-300 text-black border-2 border-black uppercase text-[9px] font-black px-2 py-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                     UTAMA
@@ -140,13 +140,13 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                     </div>
                     <div className="space-y-1">
                       <h3 className="text-3xl font-black italic tracking-tighter uppercase leading-none">{allClubs[0].name}</h3>
-                      <p className="text-[10px] font-black uppercase bg-black text-[#00FF85] border border-black px-1.5 inline-block">
+                      <p className="text-[10px] font-black uppercase bg-black text-primary border border-black px-1.5 inline-block">
                         {clubMetadataList[allClubs[0].name]?.nickname || "Raja Trofi"}
                       </p>
                     </div>
                   </div>
 
-                  <div className="h-16 w-full bg-[#00FF85] border-2 border-black flex flex-col items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <div className="h-16 w-full bg-primary border-2 border-black flex flex-col items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     <span className="text-xs font-black uppercase tracking-widest text-[#1A1A1A]">RAJA LIGA</span>
                     <span className="text-3xl font-mono font-black italic">#01</span>
                   </div>
@@ -154,7 +154,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   <div className="w-full text-left bg-white border-2 border-black p-3 text-xs mt-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                     <div className="flex justify-between items-center opacity-60 text-[9px] font-black uppercase tracking-widest border-b border-black/10 pb-1 mb-1">
                       <span>Gelar Era Profesional</span>
-                      <span className="bg-[#00FF85] text-black border border-black px-1">{allClubs[0].titles} Trofi Pro</span>
+                      <span className="bg-primary text-black border border-black px-1">{allClubs[0].titles} Trofi Pro</span>
                     </div>
                     <p className="font-mono font-bold mt-1 line-clamp-1">{allClubs[0].seasonsWon.length > 0 ? allClubs[0].seasonsWon.join(", ") : "—"}</p>
                     {(allClubs[0].amatirTitles ?? 0) > 0 && (
@@ -173,7 +173,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   onClick={() => {
                     onOpenClubDetail(allClubs[2]);
                   }}
-                  className="p-8 order-3 flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#F2F2F2]/10 hover:bg-[#00FF85]/5 duration-150 cursor-pointer group"
+                  className="p-8 order-3 flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#F2F2F2]/10 hover:bg-primary/5 duration-150 cursor-pointer group"
                 >
                   <span className="text-xs font-black uppercase text-amber-800 tracking-widest font-sans">PERINGKAT KETIGA</span>
                   
@@ -205,7 +205,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   <div className="w-full text-left bg-white border-2 border-black p-3">
                     <div className="flex justify-between items-center opacity-60 text-[9px] font-black uppercase tracking-widest border-b border-black/10 pb-1 mb-1">
                       <span>Gelar Era Profesional</span>
-                      <span className="bg-[#00FF85] text-black border border-black px-1">{allClubs[2].titles} Trofi Pro</span>
+                      <span className="bg-primary text-black border border-black px-1">{allClubs[2].titles} Trofi Pro</span>
                     </div>
                     <p className="text-xs font-black mt-1 line-clamp-1">{allClubs[2].seasonsWon.length > 0 ? allClubs[2].seasonsWon.join(", ") : "—"}</p>
                     {(allClubs[2].amatirTitles ?? 0) > 0 && (
@@ -223,7 +223,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
             <div className="border-4 border-black bg-white p-4 sm:p-6 md:p-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] space-y-6" id="vs_mode_panel">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-black pb-4 gap-4">
                 <div className="flex items-center gap-2">
-                  <span className="h-6 w-6 bg-black text-[#00FF85] border border-black flex items-center justify-center font-bold text-xs">VS</span>
+                  <span className="h-6 w-6 bg-black text-primary border border-black flex items-center justify-center font-bold text-xs">VS</span>
                   <div>
                     <h3 className="text-xl font-black uppercase italic leading-none">MODUL ADU KLUB (VS MODE)</h3>
                     <p className="text-[10px] font-bold text-slate-500 uppercase mt-1">Uji kekuatan historis head-to-head secara instan</p>
@@ -231,7 +231,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                 </div>
                 <button
                   onClick={onOpenMultiCompare}
-                  className="bg-black text-[#00FF85] border-2 border-black px-4 py-2 text-xs font-black uppercase hover:bg-[#00FF85] hover:text-black transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none flex items-center gap-2"
+                  className="bg-black text-primary border-2 border-black px-4 py-2 text-xs font-black uppercase hover:bg-primary hover:text-black transition-all shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none flex items-center gap-2"
                 >
                   <ArrowRightLeft className="h-4 w-4" />
                   BANDINGKAN 3+ KLUB
@@ -246,7 +246,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   <select
                     value={compareClubA}
                     onChange={(e) => setCompareClubA(e.target.value)}
-                    className="w-full text-sm font-black bg-white border-2 border-black rounded-none p-4 focus:outline-none focus:bg-[#00FF85]/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer appearance-none uppercase"
+                    className="w-full text-sm font-black bg-white border-2 border-black rounded-none p-4 focus:outline-none focus:bg-primary/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer appearance-none uppercase"
                   >
                     {allClubs.map((club, idx) => (
                       <option key={idx} value={club.name}>{club.name} ({club.titles} Pro{club.amatirTitles > 0 ? ` +${club.amatirTitles} Amatir` : ''})</option>
@@ -260,7 +260,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   <select
                     value={compareClubB}
                     onChange={(e) => setCompareClubB(e.target.value)}
-                    className="w-full text-sm font-black bg-white border-2 border-black rounded-none p-4 focus:outline-none focus:bg-[#00FF85]/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer appearance-none uppercase"
+                    className="w-full text-sm font-black bg-white border-2 border-black rounded-none p-4 focus:outline-none focus:bg-primary/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] cursor-pointer appearance-none uppercase"
                   >
                     {allClubs.map((club, idx) => (
                       <option key={idx} value={club.name}>{club.name} ({club.titles} Pro{club.amatirTitles > 0 ? ` +${club.amatirTitles} Amatir` : ''})</option>
@@ -273,7 +273,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
               {clubAData && clubBData ? (
                 <div className="bg-[#F2F2F2] border-2 border-black p-6 space-y-6">
                   {/* Verdict badge */}
-                  <div className="bg-black text-[#00FF85] text-center p-3 text-xs font-black uppercase tracking-wider">
+                  <div className="bg-black text-primary text-center p-3 text-xs font-black uppercase tracking-wider">
                     🏆 HASIL: {getH2HWinnerMessage()}
                   </div>
 
@@ -300,7 +300,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                            style={{ width: `${(clubAData.titles / ((clubAData.titles + clubBData.titles) || 1)) * 100}%` }}
                          />
                          <div 
-                           className="h-full bg-[#00FF85]" 
+                           className="h-full bg-primary" 
                            style={{ width: `${(clubBData.titles / ((clubAData.titles + clubBData.titles) || 1)) * 100}%` }}
                          />
                        </div>
@@ -320,14 +320,14 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                           style={{ width: `${(clubAData.runnerUps / ((clubAData.runnerUps + clubBData.runnerUps) || 1)) * 100}%` }}
                         />
                         <div 
-                          className="h-full bg-[#00FF85]" 
+                          className="h-full bg-primary" 
                           style={{ width: `${(clubBData.runnerUps / ((clubAData.runnerUps + clubBData.runnerUps) || 1)) * 100}%` }}
                         />
                       </div>
                     </div>
 
                     {/* Dynamic AI Inquiry action */}
-                    <div className="bg-[#00FF85]/20 border-2 border-black p-4 flex flex-col justify-between items-center text-center">
+                    <div className="bg-primary/20 border-2 border-black p-4 flex flex-col justify-between items-center text-center">
                       <span className="text-[9px] font-black uppercase tracking-widest opacity-80 text-emerald-800">TANYAKAN KE ASISTEN</span>
                       <p className="text-[10px] font-bold text-slate-700 leading-tight my-2">Bandingkan rivalitas taktis kedua klub ini via AI Engine.</p>
                       <button
@@ -351,7 +351,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                       </p>
                     </div>
                     <div className="bg-white p-4 border border-black space-y-2">
-                      <h4 className="font-extrabold text-xs uppercase bg-[#00FF85] text-black px-2 py-1 inline-block">
+                      <h4 className="font-extrabold text-xs uppercase bg-primary text-black px-2 py-1 inline-block">
                         TAHUN JUARA - {clubBData.name.toUpperCase()}
                       </h4>
                       <p className="text-xs font-mono font-bold text-slate-800 leading-relaxed">
@@ -370,7 +370,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   <span className="text-xs font-black uppercase tracking-wider block">DAFTAR KESELURUHAN SEJARAH JUARA LIGA</span>
                   <span className="text-[9px] font-bold text-slate-500 uppercase">Diurutkan: Gelar Era Profesional (Utama) · Gelar Perserikatan Amatir sebagai Info Tambahan</span>
                 </div>
-                <span className="text-xs font-mono font-bold bg-[#00FF85] border border-black px-2 py-0.5">{allClubs.length} TIM UNGGUL</span>
+                <span className="text-xs font-mono font-bold bg-primary border border-black px-2 py-0.5">{allClubs.length} TIM UNGGUL</span>
               </div>
               <div className="divide-y-2 divide-black">
                 {allClubs.slice(3).map((club, index) => {
@@ -381,11 +381,11 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                       onClick={() => {
                         onOpenClubDetail(club);
                       }}
-                      className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-[#00FF85]/5 cursor-pointer transition-all duration-100 group"
+                      className="p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-primary/5 cursor-pointer transition-all duration-100 group"
                     >
                       <div className="flex items-center gap-4">
                         {/* Rank badge */}
-                        <span className="h-10 w-10 bg-black text-white font-mono font-black rounded-none flex items-center justify-center text-sm select-none group-hover:bg-[#00FF85] group-hover:text-black transition-colors shrink-0">
+                        <span className="h-10 w-10 bg-black text-white font-mono font-black rounded-none flex items-center justify-center text-sm select-none group-hover:bg-primary group-hover:text-black transition-colors shrink-0">
                           {index + 4}
                         </span>
 
@@ -407,7 +407,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                           <h4 className="text-base font-black uppercase tracking-tight flex flex-wrap items-center gap-2">
                             {club.name}
                             {meta?.nickname && (
-                              <span className="text-[10px] font-black px-1.5 py-0.5 bg-black text-[#00FF85] uppercase">
+                              <span className="text-[10px] font-black px-1.5 py-0.5 bg-black text-primary uppercase">
                                 {meta.nickname}
                               </span>
                             )}
@@ -435,7 +435,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                           <span className="text-[8px] font-black uppercase opacity-50">Runner-up</span>
                           <p className="text-xs font-black uppercase">{club.runnerUps} KALI</p>
                         </div>
-                        <div className="bg-white group-hover:bg-[#00FF85] border-2 border-black px-5 py-2 text-center min-w-[100px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-center transition-colors">
+                        <div className="bg-white group-hover:bg-primary border-2 border-black px-5 py-2 text-center min-w-[100px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-center transition-colors">
                           <span className="text-[8px] font-black uppercase tracking-widest leading-none block text-black mb-0.5">GELAR PRO</span>
                           <span className="text-xl font-mono font-black text-black leading-none">{club.titles}</span>
                           {club.amatirTitles > 0 && (

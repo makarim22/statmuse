@@ -21,11 +21,11 @@ export default function ShareablePlayerCard({ player }: ShareablePlayerCardProps
 
       {/* Header / Watermark */}
       <div className="flex justify-between items-center p-8 border-b-[8px] border-black bg-black">
-        <h2 className="text-3xl font-black uppercase tracking-widest text-[#00FF85] flex items-center gap-4">
-          <Star className="h-8 w-8 fill-[#00FF85]" />
+        <h2 className="text-3xl font-black uppercase tracking-widest text-primary flex items-center gap-4">
+          <Star className="h-8 w-8 fill-primary" />
           GARUDA STATS
         </h2>
-        <p className="text-2xl font-black italic bg-[#00FF85] text-black px-6 py-2 border-4 border-black">
+        <p className="text-2xl font-black italic bg-primary text-black px-6 py-2 border-4 border-black">
           TOP SKOR
         </p>
       </div>
@@ -44,7 +44,7 @@ export default function ShareablePlayerCard({ player }: ShareablePlayerCardProps
         </p>
 
         <div className="flex gap-8">
-          <div className="bg-[#00FF85] text-black px-16 py-8 border-[8px] border-black transform rotate-2 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
+          <div className="bg-primary text-black px-16 py-8 border-[8px] border-black transform rotate-2 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
             <p className="text-2xl font-black uppercase tracking-widest mb-2 opacity-80">GOL DICETAK</p>
             <p className="text-[140px] font-black leading-none flex items-center gap-6">
               {player.goals} <Target className="h-24 w-24 text-black" />
@@ -54,7 +54,7 @@ export default function ShareablePlayerCard({ player }: ShareablePlayerCardProps
       </div>
 
       {/* Footer */}
-      <div className="bg-black text-white p-6 flex justify-center items-center border-t-[8px] border-[#00FF85]">
+      <div className="bg-black text-white p-6 flex justify-center items-center border-t-[8px] border-primary">
         <p className="text-2xl font-black tracking-widest uppercase">STATISTIK RESMI • DIBUAT DENGAN GARUDA STATS</p>
       </div>
       </div>

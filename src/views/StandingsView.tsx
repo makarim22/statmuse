@@ -61,7 +61,7 @@ export default function StandingsView({ onOpenClubDetail }: any) {
               {/* Header section with Season Toggles */}
               <div className="border-b-4 border-black pb-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="space-y-1">
-                  <span className="bg-[#00FF85] px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block mb-1">
+                  <span className="bg-primary px-3 py-1 text-xs font-bold border-2 border-black uppercase tracking-widest inline-block mb-1">
                     Klasemen Resmi Terbaru
                   </span>
                   <h2 className="text-3xl font-black italic tracking-tighter uppercase">
@@ -76,7 +76,7 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                 <div className="flex items-center gap-3 self-start sm:self-center flex-wrap">
                   <button
                     onClick={() => exportStandingsToCSV(sortedStandings, selectedStandingsSeason)}
-                    className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-[#00FF85] hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85]"
+                    className="px-4 py-2 bg-black text-white border-2 border-black hover:bg-primary hover:text-black transition-all text-xs font-black uppercase flex items-center gap-2 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary"
                     title="Download klasemen sebagai CSV"
                     aria-label="Unduh Klasemen sebagai CSV"
                   >
@@ -90,7 +90,7 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                     <select
                       value={selectedStandingsSeason}
                       onChange={(e) => setSelectedStandingsSeason(e.target.value)}
-                      className="appearance-none w-full bg-white text-black text-xs font-black uppercase tracking-wider px-4 py-2.5 pr-10 border-2 border-black rounded-none shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85] focus:bg-[#00FF85]/10 focus:ring-0"
+                      className="appearance-none w-full bg-white text-black text-xs font-black uppercase tracking-wider px-4 py-2.5 pr-10 border-2 border-black rounded-none shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus:bg-primary/10 focus:ring-0"
                       aria-label="Pilih musim klasemen"
                     >
                       {Object.keys(standingsSeasonList).map((seasonId) => (
@@ -181,14 +181,14 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                   dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }} 
                   dragElastic={0.2} 
                   whileDrag={{ scale: 1.01, zIndex: 50 }}
-                  className="bg-[#00FF85]/10 border-2 border-black p-5 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden lg:col-span-3 cursor-grab active:cursor-grabbing"
+                  className="bg-primary/10 border-2 border-black p-5 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden lg:col-span-3 cursor-grab active:cursor-grabbing"
                 >
                   <div className="absolute right-[-10px] bottom-[-40px] opacity-10">
                     <Trophy className="h-40 w-40 text-emerald-950 font-black transform rotate-12" />
                   </div>
                   <div className="relative z-10 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
                     <div>
-                      <span className="text-[9px] font-black tracking-widest bg-black text-[#00FF85] px-2 py-0.5 uppercase">📝 REGULASI LIGA</span>
+                      <span className="text-[9px] font-black tracking-widest bg-black text-primary px-2 py-0.5 uppercase">📝 REGULASI LIGA</span>
                       <h4 className="text-xl font-black uppercase tracking-tight italic mt-2 leading-none">
                         CHAMPIONSHIP & PLAYOFFS
                       </h4>
@@ -213,17 +213,17 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                     value={standingsSearchQuery}
                     onChange={(e) => setStandingsSearchQuery(e.target.value)}
                     placeholder="Saring berdasarkan nama klub..."
-                    className="w-full text-xs font-bold bg-white border-2 border-black rounded-none py-2.5 pl-10 pr-4 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#00FF85] focus:bg-[#00FF85]/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all placeholder-slate-400"
+                    className="w-full text-xs font-bold bg-white border-2 border-black rounded-none py-2.5 pl-10 pr-4 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary focus:bg-primary/5 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all placeholder-slate-400"
                   />
                 </div>
                 
                 <div className="flex flex-wrap items-center gap-2 text-xs font-black uppercase tracking-wider text-black">
                   <span>Hasil Saringan:</span>
-                  <span className="bg-[#00FF85] border border-black px-2 py-0.5 font-mono">{filteredStandings.length} dari {standingsRawData.length} tim</span>
+                  <span className="bg-primary border border-black px-2 py-0.5 font-mono">{filteredStandings.length} dari {standingsRawData.length} tim</span>
                   {standingsSearchQuery && (
                     <button 
                       onClick={() => setStandingsSearchQuery("")}
-                      className="bg-black text-white px-2 py-0.5 hover:bg-neutral-800 border border-black cursor-pointer uppercase text-[9px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00FF85]"
+                      className="bg-black text-white px-2 py-0.5 hover:bg-neutral-800 border border-black cursor-pointer uppercase text-[9px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       aria-label="Batal saring tabel klasemen"
                     >
                       Batal Saring
@@ -287,7 +287,7 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                       </th>
                       <th 
                         onClick={() => handleSortStandings("points")} 
-                        className="px-4 py-3 w-24 text-center bg-[#00FF85] text-black cursor-pointer hover:opacity-90 transition-colors"
+                        className="px-4 py-3 w-24 text-center bg-primary text-black cursor-pointer hover:opacity-90 transition-colors"
                       >
                         <div className="flex items-center justify-center gap-1">
                           <span>PTS</span>
@@ -321,7 +321,7 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                               };
                               onOpenClubDetail(mockany);
                             }}
-                            className={`hover:bg-[#00FF85]/5 transition-all duration-100 cursor-pointer group ${
+                            className={`hover:bg-primary/5 transition-all duration-100 cursor-pointer group ${
                               isTopZone ? 'bg-emerald-500/5' : isRelegationZone ? 'bg-rose-500/5' : ''
                             }`}
                           >
@@ -329,7 +329,7 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                             <td className="px-3 py-3 w-12 text-center select-none font-mono font-black border-r border-black/10">
                               <span className={`inline-flex items-center justify-center h-7 w-7 border border-black font-black text-xs ${
                                 isTopZone 
-                                  ? 'bg-[#00FF85] text-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]' 
+                                  ? 'bg-primary text-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]' 
                                   : isRelegationZone 
                                     ? 'bg-rose-500 text-white shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]' 
                                     : 'bg-[#F2F2F2] text-black'
@@ -415,7 +415,7 @@ export default function StandingsView({ onOpenClubDetail }: any) {
                                     key={fIdx} 
                                     className={`inline-flex items-center justify-center text-[9px] font-black leading-none h-5 w-5 border border-black ${
                                       formResult === "W" 
-                                        ? 'bg-[#00FF85] text-black' 
+                                        ? 'bg-primary text-black' 
                                         : formResult === "D" 
                                           ? 'bg-amber-300 text-black' 
                                           : 'bg-rose-500 text-white'
@@ -444,7 +444,7 @@ export default function StandingsView({ onOpenClubDetail }: any) {
               {/* Informative Legend explanation panel in Brutalist frame */}
               <div className="bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-800 font-bold">
                 <div className="flex items-start gap-2">
-                  <span className="h-5 w-5 shrink-0 bg-[#00FF85] border border-black flex items-center justify-center font-black text-[9px]">1-4</span>
+                  <span className="h-5 w-5 shrink-0 bg-primary border border-black flex items-center justify-center font-black text-[9px]">1-4</span>
                   <div>
                     <span className="uppercase text-black block tracking-tight font-black">Championship & Zona Asia</span>
                     <p className="font-medium text-slate-500 mt-0.5">Musim reguler teratas berhak maju memperebutkan gelar piala bergilir tertinggi serta jatah representasi Indonesia di kancah antarklub Benua Asia.</p>
