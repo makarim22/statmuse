@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, Plus, Trash2, BarChart3, TrendingUp, Trophy } from "lucide-react";
+import { X, Plus, Trash2, BarChart3, TrendingUp, Trophy, Sparkles, Flame } from "lucide-react";
 import { ClubSummary } from "../types";
 import { clubMetadataList } from "../data/clubMetadata";
 import ClubShield from "./ClubShield";
@@ -9,9 +9,33 @@ import { soundEngine } from "../utils/soundEngine";
 interface MultiClubComparisonProps {
   allClubs: ClubSummary[];
   onClose: () => void;
+  onAskAI: (query: string) => void;
 }
 
-export default function MultiClubComparison({ allClubs, onClose }: MultiClubComparisonProps) {
+const RIVALRY_DICT = [
+  {
+    clubs: ["Persija Jakarta", "Persib Bandung"],
+    title: "🔥 EL CLASICO INDONESIA 🔥",
+    description: "Perseteruan paling ikonis dan panas di tanah air. Rivalitas yang merentang dari era Perserikatan hingga dominasi profesional modern."
+  },
+  {
+    clubs: ["Persebaya Surabaya", "Arema FC"],
+    title: "⚔️ DERBY JAWA TIMUR ⚔️",
+    description: "Rivalitas sengit penguasa Jawa Timur. Pertarungan gengsi antara Bonek dan Aremania yang selalu menyajikan tensi tinggi."
+  },
+  {
+    clubs: ["Persipura Jayapura", "PSM Makassar"],
+    title: "🌊 DERBY INDONESIA TIMUR 🌊",
+    description: "Dua raksasa dari Timur Indonesia. Pertarungan antara teknik Mutiara Hitam dan permainan keras Juku Eja."
+  },
+  {
+    clubs: ["PSMS Medan", "Persib Bandung"],
+    title: "🥊 EL CLASICO PERSERIKATAN 🥊",
+    description: "Mengingat kembali memori final legendaris 1985 yang memecahkan rekor penonton amatir terbanyak di Stadion Senayan."
+  }
+];
+
+export default function MultiClubComparison({ allClubs, onClose, onAskAI }: MultiClubComparisonProps) {
   useEffect(() => {
     soundEngine.playThud();
   }, []);
@@ -52,6 +76,14 @@ export default function MultiClubComparison({ allClubs, onClose }: MultiClubComp
     const club = getClubData(name);
     return (club?.titles || 0) + (club?.amatirTitles || 0);
   }));
+
+  let activeRivalry = null;
+  if (selectedClubs.length === 2) {
+    const sortedSelected = [...selectedClubs].sort();
+    activeRivalry = RIVALRY_DICT.find(r => 
+      [...r.clubs].sort().join("|") === sortedSelected.join("|")
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
@@ -120,6 +152,36 @@ export default function MultiClubComparison({ allClubs, onClose }: MultiClubComp
             ))}
           </div>
         </div>
+
+        {/* Derby Detection Banner */}
+        {activeRivalry && (
+          <div className="mb-6 bg-black text-white p-6 md:p-8 border-4 border-rose-500 shadow-[8px_8px_0px_0px_#e11d48] animate-fade-in relative overflow-hidden">
+            <div className="absolute -right-10 -top-10 opacity-10">
+              <Flame className="h-48 w-48 text-rose-500" />
+            </div>
+            <div className="relative z-10">
+              <div className="inline-block bg-rose-500 text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest mb-3">
+                RIVALITAS KLASIK TERDETEKSI
+              </div>
+              <h3 className="text-3xl md:text-4xl font-black italic tracking-tighter uppercase mb-3 text-rose-400">
+                {activeRivalry.title}
+              </h3>
+              <p className="text-sm md:text-base font-medium text-slate-300 mb-6 max-w-2xl leading-relaxed">
+                {activeRivalry.description}
+              </p>
+              <button
+                onClick={() => {
+                  onClose();
+                  onAskAI(`Tolong ceritakan sejarah lengkap rivalitas antara ${selectedClubs[0]} dan ${selectedClubs[1]}`);
+                }}
+                className="bg-[#00FF85] text-black border-2 border-[#00FF85] hover:bg-white hover:border-white px-6 py-3 md:py-4 text-xs md:text-sm font-black uppercase tracking-widest flex items-center gap-2 transition-all shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:shadow-[4px_4px_0px_0px_#00FF85] active:translate-y-0 active:shadow-none hover:-translate-y-1"
+              >
+                <Sparkles className="h-4 w-4 shrink-0" />
+                Tanyakan AI Tentang Sejarah Rivalitas Ini
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Comparison Grid */}
         <div className="space-y-6">

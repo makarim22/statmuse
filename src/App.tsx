@@ -516,6 +516,7 @@ export default function App() {
           <MultiClubComparison
             allClubs={allClubs}
             onClose={closeMultiCompare}
+            onAskAI={navigateToAiQuery}
           />
         </Suspense>
       )}
