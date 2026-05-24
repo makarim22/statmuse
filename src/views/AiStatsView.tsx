@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import { Search, Sparkles, RefreshCw, History, TrendingUp, ChevronRight } from "lucide-react";
 import { SearchQueryResponse } from "../types";
 import { getClubsRanking } from "../data/leagueData";
+import { soundEngine } from "../utils/soundEngine";
 
 export default function AiStatsView() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -13,6 +14,7 @@ export default function AiStatsView() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [searchResult, setSearchResult] = useState<SearchQueryResponse | null>(null);
+  const [displayedAnswer, setDisplayedAnswer] = useState("");
   const [searchHistory, setSearchHistory] = useState<string[]>([
     "Siapa klub juara terbanyak sepanjang sejarah Liga Indonesia?",
     "Persib Bandung vs Persija Jakarta"
@@ -132,6 +134,33 @@ export default function AiStatsView() {
       setIsSearching(false);
     }
   };
+
+  useEffect(() => {
+    if (searchResult && searchResult.answer) {
+      setDisplayedAnswer("");
+      let currentIndex = 0;
+      const fullText = searchResult.answer;
+      
+      const typingInterval = setInterval(() => {
+        if (currentIndex < fullText.length) {
+          setDisplayedAnswer(fullText.slice(0, currentIndex + 1));
+          
+          // Play typewriter sound every 3 characters to mimic rhythm
+          if (currentIndex % 3 === 0) {
+            soundEngine.playTypewriter();
+          }
+          
+          currentIndex++;
+        } else {
+          clearInterval(typingInterval);
+        }
+      }, 15); // 15ms per character
+      
+      return () => clearInterval(typingInterval);
+    } else {
+      setDisplayedAnswer("");
+    }
+  }, [searchResult]);
 
   useEffect(() => {
     const query = qParam || "Siapa klub juara terbanyak sepanjang sejarah Liga Indonesia?";
@@ -325,8 +354,8 @@ export default function AiStatsView() {
                       </div>
 
                       {/* Rich Response Content Area */}
-                      <div className="prose prose-emerald max-w-none text-[#1A1A1A] font-medium leading-relaxed font-sans text-md sm:text-lg" id="markdown_body">
-                        <ReactMarkdown>{searchResult.answer}</ReactMarkdown>
+                      <div className="prose prose-emerald max-w-none text-[#1A1A1A] font-medium leading-relaxed font-sans text-md sm:text-lg min-h-[100px]" id="markdown_body">
+                        <ReactMarkdown>{displayedAnswer}</ReactMarkdown>
                       </div>
 
                       {/* Highly polished dynamic visualization widgets */}

@@ -143,6 +143,89 @@ class SoundEngine {
     osc.start(t);
     osc.stop(t + 0.35);
   }
+
+  // Fast 2-tone jump for Coin-up
+  public playCoinUp() {
+    if (this.isMuted || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    
+    osc.type = 'square';
+    
+    osc.frequency.setValueAtTime(987.77, t); // B5
+    osc.frequency.setValueAtTime(1318.51, t + 0.1); // E6
+    
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(0.1, t + 0.05);
+    gain.gain.setValueAtTime(0.1, t + 0.15);
+    gain.gain.linearRampToValueAtTime(0, t + 0.25);
+    
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    
+    osc.start(t);
+    osc.stop(t + 0.25);
+  }
+
+  // Very short, snappy noise burst for Typewriter
+  public playTypewriter() {
+    if (this.isMuted || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    
+    const bufferSize = this.ctx.sampleRate * 0.02; // 20ms
+    const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+    
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+    
+    const noiseFilter = this.ctx.createBiquadFilter();
+    noiseFilter.type = 'highpass';
+    noiseFilter.frequency.value = 1000;
+    
+    const noiseEnvelope = this.ctx.createGain();
+    noiseEnvelope.gain.setValueAtTime(0.2, t);
+    noiseEnvelope.gain.exponentialRampToValueAtTime(0.01, t + 0.02);
+    
+    noise.connect(noiseFilter);
+    noiseFilter.connect(noiseEnvelope);
+    noiseEnvelope.connect(this.ctx.destination);
+    
+    noise.start(t);
+  }
+
+  // Triumphant Fanfare for High Score / Level Up
+  public playLevelUp() {
+    if (this.isMuted || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    
+    osc.type = 'square';
+    
+    // Fanfare: C5, E5, G5, C6 (Arpeggio up)
+    osc.frequency.setValueAtTime(523.25, t); // C5
+    osc.frequency.setValueAtTime(659.25, t + 0.15); // E5
+    osc.frequency.setValueAtTime(783.99, t + 0.3); // G5
+    osc.frequency.setValueAtTime(1046.50, t + 0.45); // C6
+    
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(0.15, t + 0.1);
+    gain.gain.setValueAtTime(0.15, t + 0.6);
+    gain.gain.linearRampToValueAtTime(0, t + 0.8);
+    
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    
+    osc.start(t);
+    osc.stop(t + 0.8);
+  }
 }
 
 export const soundEngine = new SoundEngine();

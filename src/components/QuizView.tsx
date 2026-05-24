@@ -82,7 +82,7 @@ export default function QuizView() {
     if (index === currentQuestion?.correctAnswer) {
       setScore(prev => prev + 1);
       setSessionXP(prev => prev + 10);
-      soundEngine.playSuccess();
+      soundEngine.playCoinUp();
     } else {
       soundEngine.playError();
       if (gameState === 'playing_survival') {
@@ -93,8 +93,11 @@ export default function QuizView() {
 
   const finishGame = () => {
     saveXP(totalXP + sessionXP);
-    if (gameState === 'playing_survival' && score > highestSurvivalScore) {
+    if (gameState === 'playing_survival' && score > highestSurvivalScore && score > 0) {
       saveHighScore(score);
+      soundEngine.playLevelUp();
+    } else if (gameState === 'playing_classic' && score === 10) {
+      soundEngine.playLevelUp();
     }
     setGameState('results');
   };
