@@ -68,7 +68,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   onClick={() => {
                     onOpenClubDetail(allClubs[1]);
                   }}
-                  className="p-8 border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#F2F2F2]/40 hover:bg-[#00FF85]/5 duration-150 cursor-pointer group"
+                  className="p-8 order-2 md:order-1 border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#F2F2F2]/40 hover:bg-[#00FF85]/5 duration-150 cursor-pointer group"
                 >
                   <span className="text-xs font-black uppercase text-slate-500 tracking-widest">RUNNER-UP TERATAS</span>
                   
@@ -119,7 +119,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   onClick={() => {
                     onOpenClubDetail(allClubs[0]);
                   }}
-                  className="p-10 border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#00FF85]/10 hover:bg-[#00FF85]/20 duration-150 cursor-pointer group"
+                  className="p-10 order-1 md:order-2 border-b-2 md:border-b-0 md:border-r-2 border-black flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#00FF85]/10 hover:bg-[#00FF85]/20 duration-150 cursor-pointer group"
                 >
                   <div className="absolute top-4 right-4 bg-yellow-300 text-black border-2 border-black uppercase text-[9px] font-black px-2 py-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                     UTAMA
@@ -173,7 +173,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
                   onClick={() => {
                     onOpenClubDetail(allClubs[2]);
                   }}
-                  className="p-8 flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#F2F2F2]/10 hover:bg-[#00FF85]/5 duration-150 cursor-pointer group"
+                  className="p-8 order-3 flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden bg-[#F2F2F2]/10 hover:bg-[#00FF85]/5 duration-150 cursor-pointer group"
                 >
                   <span className="text-xs font-black uppercase text-amber-800 tracking-widest font-sans">PERINGKAT KETIGA</span>
                   
@@ -220,7 +220,7 @@ export default function LeaderboardView({ onOpenClubDetail, onOpenMultiCompare, 
             </div>
 
             {/* BRAND NEW UPGRADE: DYNAMIC KLUB VS KLUB COMPARISON TOOL */}
-            <div className="border-4 border-black bg-white p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] space-y-6" id="vs_mode_panel">
+            <div className="border-4 border-black bg-white p-4 sm:p-6 md:p-8 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] space-y-6" id="vs_mode_panel">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-black pb-4 gap-4">
                 <div className="flex items-center gap-2">
                   <span className="h-6 w-6 bg-black text-[#00FF85] border border-black flex items-center justify-center font-bold text-xs">VS</span>

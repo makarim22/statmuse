@@ -157,24 +157,26 @@ export default function App() {
       <InstallPWA />
 
       {/* Navigation Bar in Bold Neo-Brutalist Layout */}
-      <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b-4 border-black px-4 sm:px-10 py-5 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 bg-[#00FF85] border-2 border-black flex items-center justify-center transform -rotate-3 hover:rotate-0 duration-150">
-            <Trophy className="h-5 w-5 text-black font-black" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-black tracking-tighter uppercase italic leading-none">
-              GARUDA STATS
-            </h1>
-            <p className="text-[10px] font-bold uppercase tracking-widest opacity-60">Database Sejarah Juara Liga Indonesia</p>
+      <nav className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b-4 border-black px-4 sm:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">
+        <div className="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-start">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 shrink-0 bg-[#00FF85] border-2 border-black flex items-center justify-center transform -rotate-3 hover:rotate-0 duration-150">
+              <Trophy className="h-5 w-5 text-black font-black" />
+            </div>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-black tracking-tighter uppercase italic leading-none">
+                GARUDA STATS
+              </h1>
+              <p className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest opacity-60">Database Sejarah Juara</p>
+            </div>
           </div>
         </div>
 
-        {/* View Toggle Tabs */}
-        <div className="flex flex-wrap justify-center bg-white/70 backdrop-blur-md border-2 border-black p-1 rounded-none gap-1" id="nav_tabs">
+        {/* View Toggle Tabs (Horizontally Scrollable on Mobile) */}
+        <div className="flex flex-nowrap lg:flex-wrap overflow-x-auto hide-scrollbar justify-start lg:justify-center bg-white/70 backdrop-blur-md border-2 border-black p-1 rounded-none gap-1 w-full" id="nav_tabs">
           <button
             onClick={() => navigate('/ai-stats')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'ai-stats' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -185,7 +187,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/standings')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'standings' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -196,7 +198,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/leaderboard')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'leaderboard' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -207,7 +209,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/map')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'map' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -218,7 +220,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/stats')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'stats' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -229,7 +231,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/kuis')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'kuis' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -240,7 +242,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/explorer')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'explorer' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -251,7 +253,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/perserikatan')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'perserikatan' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -262,7 +264,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/galatama')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'galatama' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -273,7 +275,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/liga-indonesia')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'liga-indonesia' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -284,7 +286,7 @@ export default function App() {
           </button>
           <button
             onClick={() => navigate('/era-modern')}
-            className={`px-4 py-2 text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
+            className={`shrink-0 px-4 py-3 sm:py-2 min-h-[44px] text-xs font-black uppercase tracking-widest cursor-pointer transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black ${
               activeTab === 'era-modern' 
                 ? 'bg-[#00FF85] text-black border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]' 
                 : 'text-[#1A1A1A] hover:bg-[#F2F2F2]'
@@ -318,7 +320,7 @@ export default function App() {
       </div>
 
       {/* Main Container */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-10 py-10" id="main_content">
+      <main className="max-w-7xl mx-auto px-4 sm:px-10 py-6 sm:py-10" id="main_content">
         
         {/* Quick Highlights Row (Heavy Metric Cards) */}
         {activeTab === 'leaderboard' && (
