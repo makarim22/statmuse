@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { useLocation, useNavigate, Routes, Route, Navigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams, Routes, Route, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import ReactMarkdown from "react-markdown";
 import {
@@ -86,20 +86,52 @@ export default function App() {
   };
   const activeTab = getTabFromPath(location.pathname);
   
-  const [pendingAiQuery, setPendingAiQuery] = useState<string | null>(null);
-  // States for Club Detail Modal
-  const [selectedModalClub, setSelectedModalClub] = useState<ClubSummary | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // State for Multi-Club Comparison Modal
-  const [isMultiCompareOpen, setIsMultiCompareOpen] = useState(false);
+  // Derived state from URL parameters
+  const clubParam = searchParams.get('club');
+  const allClubs = getClubsRanking();
+  const selectedModalClub = clubParam ? allClubs.find(c => c.name === clubParam) || null : null;
+  const isModalOpen = !!selectedModalClub;
+  
+  const isMultiCompareOpen = searchParams.get('compare') === 'true';
 
-  // Load a default summary query on first load
+  // Modal open handlers
+  const openClubDetail = (club: any) => {
+    setSearchParams(prev => {
+      prev.set('club', club.name);
+      return prev;
+    });
+  };
+
+  const closeClubDetail = () => {
+    setSearchParams(prev => {
+      prev.delete('club');
+      return prev;
+    });
+  };
+
+  const openMultiCompare = () => {
+    setSearchParams(prev => {
+      prev.set('compare', 'true');
+      return prev;
+    });
+  };
+
+  const closeMultiCompare = () => {
+    setSearchParams(prev => {
+      prev.delete('compare');
+      return prev;
+    });
+  };
+
+  const navigateToAiQuery = (query: string) => {
+    navigate(`/ai-stats?q=${encodeURIComponent(query)}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Initialize audio context on first mount
   useEffect(() => {
-    setPendingAiQuery("Siapa klub juara terbanyak sepanjang sejarah Liga Indonesia?");
-    
-    // Initialize audio context on first mount (though it needs a user gesture to truly unlock)
-    // We bind a global listener to ensure it unlocks on first click anywhere
     const unlockAudio = () => {
       soundEngine.init();
       document.removeEventListener('click', unlockAudio);
@@ -114,38 +146,28 @@ export default function App() {
     soundEngine.playClick();
   }, [activeTab]);
 
-  const allClubs = getClubsRanking();
+
   const totalSeasonsCount = leagueData.filter(d => !d.isCancelled).length;
   const uniqueWinnersCount = allClubs.length;
 
   const handleAskAboutSeason = (seasonName: string) => {
-    navigate('/ai-stats');
-    setPendingAiQuery(`Siapa juara liga tahun ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateToAiQuery(`Siapa juara liga tahun ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
   };
 
   const handleAskAboutGalatamaSeason = (seasonName: string) => {
-    navigate('/ai-stats');
-    setPendingAiQuery(`Siapa juara Galatama musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateToAiQuery(`Siapa juara Galatama musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
   };
 
   const handleAskAboutPerserikatanSeason = (seasonName: string) => {
-    navigate('/ai-stats');
-    setPendingAiQuery(`Siapa juara Perserikatan musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateToAiQuery(`Siapa juara Perserikatan musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
   };
 
   const handleAskAboutLiginaSeason = (seasonName: string) => {
-    navigate('/ai-stats');
-    setPendingAiQuery(`Siapa juara Liga Indonesia (Ligina) musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateToAiQuery(`Siapa juara Liga Indonesia (Ligina) musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
   };
 
   const handleAskAboutModernSeason = (seasonName: string) => {
-    navigate('/ai-stats');
-    setPendingAiQuery(`Siapa juara Liga Indonesia/Liga 1 musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateToAiQuery(`Siapa juara Liga Indonesia/Liga 1 musim ${seasonName} dan bagaimana jalannya kompetisi waktu itu?`);
   };
   return (
     <div className="min-h-screen bg-transparent text-[#1A1A1A] font-sans antialiased selection:bg-[#00FF85] selection:text-black" id="main_root">
@@ -369,20 +391,14 @@ export default function App() {
             <Route 
               path="/ai-stats" 
               element={
-                <AiStatsView 
-                  initialQuery={pendingAiQuery} 
-                  onClearInitialQuery={() => setPendingAiQuery(null)} 
-                />
+                <AiStatsView />
               } 
             />
             <Route 
               path="/standings" 
               element={
                 <StandingsView 
-                  onOpenClubDetail={(club: any) => {
-                    setSelectedModalClub(club);
-                    setIsModalOpen(true);
-                  }} 
+                  onOpenClubDetail={openClubDetail} 
                 />
               } 
             />
@@ -390,15 +406,9 @@ export default function App() {
               path="/leaderboard" 
               element={
                 <LeaderboardView 
-                  onOpenClubDetail={(club: any) => {
-                    setSelectedModalClub(club);
-                    setIsModalOpen(true);
-                  }}
-                  onOpenMultiCompare={() => setIsMultiCompareOpen(true)}
-                  onAskAI={(query: string) => {
-                    navigate('/ai-stats');
-                    setPendingAiQuery(query);
-                  }}
+                  onOpenClubDetail={openClubDetail}
+                  onOpenMultiCompare={openMultiCompare}
+                  onAskAI={navigateToAiQuery}
                 />
               } 
             />
@@ -408,10 +418,7 @@ export default function App() {
                 <div className="space-y-8 animate-fade-in" id="map_view">
                    <GeographicMapView
                       clubs={getClubsRanking()}
-                      onClubClick={(club: any) => {
-                        setSelectedModalClub(club);
-                        setIsModalOpen(true);
-                      }}
+                      onClubClick={openClubDetail}
                     />
                 </div>
               } 
@@ -422,10 +429,7 @@ export default function App() {
               element={
                 <ExplorerView 
                   onAskAboutSeason={handleAskAboutSeason}
-                  onOpenClubDetail={(club: any) => {
-                    setSelectedModalClub(club);
-                    setIsModalOpen(true);
-                  }}
+                  onOpenClubDetail={openClubDetail}
                 />
               } 
             />
@@ -434,10 +438,7 @@ export default function App() {
               element={
                 <GalatamaView 
                   onAskAboutGalatamaSeason={handleAskAboutGalatamaSeason}
-                  onOpenClubDetail={(club: any) => {
-                    setSelectedModalClub(club);
-                    setIsModalOpen(true);
-                  }}
+                  onOpenClubDetail={openClubDetail}
                 />
               } 
             />
@@ -446,10 +447,7 @@ export default function App() {
               element={
                 <PerserikatanView 
                   onAskAboutPerserikatanSeason={handleAskAboutPerserikatanSeason}
-                  onOpenClubDetail={(club: any) => {
-                    setSelectedModalClub(club);
-                    setIsModalOpen(true);
-                  }}
+                  onOpenClubDetail={openClubDetail}
                 />
               } 
             />
@@ -458,10 +456,7 @@ export default function App() {
               element={
                 <LigaIndonesiaView 
                   onAskAboutLiginaSeason={handleAskAboutLiginaSeason}
-                  onOpenClubDetail={(club: any) => {
-                    setSelectedModalClub(club);
-                    setIsModalOpen(true);
-                  }}
+                  onOpenClubDetail={openClubDetail}
                 />
               } 
             />
@@ -470,10 +465,7 @@ export default function App() {
               element={
                 <EraModernView 
                   onAskAboutModernSeason={handleAskAboutModernSeason}
-                  onOpenClubDetail={(club: any) => {
-                    setSelectedModalClub(club);
-                    setIsModalOpen(true);
-                  }}
+                  onOpenClubDetail={openClubDetail}
                 />
               } 
             />
@@ -512,13 +504,10 @@ export default function App() {
       {/* Global Interactive Club Details Modal overlay */}
       <ClubDetailModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={closeClubDetail}
         club={selectedModalClub}
         metadata={selectedModalClub ? clubMetadataList[selectedModalClub.name] : null}
-        onAskAI={(query) => {
-          navigate('/ai-stats');
-          setPendingAiQuery(query);
-        }}
+        onAskAI={navigateToAiQuery}
       />
 
       {/* Multi-Club Comparison Modal */}
@@ -526,7 +515,7 @@ export default function App() {
         <Suspense fallback={null}>
           <MultiClubComparison
             allClubs={allClubs}
-            onClose={() => setIsMultiCompareOpen(false)}
+            onClose={closeMultiCompare}
           />
         </Suspense>
       )}

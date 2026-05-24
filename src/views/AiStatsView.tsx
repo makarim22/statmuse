@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import ReactMarkdown from "react-markdown";
 import { Search, Sparkles, RefreshCw, History, TrendingUp, ChevronRight } from "lucide-react";
 import { SearchQueryResponse } from "../types";
 import { getClubsRanking } from "../data/leagueData";
 
-export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecuteSearch }: any) {
+export default function AiStatsView() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const qParam = searchParams.get('q');
+  
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [searchResult, setSearchResult] = useState<SearchQueryResponse | null>(null);
@@ -53,7 +57,12 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
     { text: "Pencetak gol terbanyak dari tahun ke tahun", label: "⚽ TOP SCORERS" }
   ];
 
-  const handleExecuteSearch = async (queryText: string) => {
+  const triggerSearch = (queryText: string) => {
+    if (!queryText.trim()) return;
+    setSearchParams({ q: queryText.trim() });
+  };
+
+  const performSearch = async (queryText: string) => {
     if (!queryText.trim()) return;
     setSearchQuery(queryText);
     setIsSearching(true);
@@ -125,15 +134,13 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
   };
 
   useEffect(() => {
-    if (initialQuery) {
-      handleExecuteSearch(initialQuery);
-      onClearInitialQuery();
-    }
-  }, [initialQuery]);
+    const query = qParam || "Siapa klub juara terbanyak sepanjang sejarah Liga Indonesia?";
+    performSearch(query);
+  }, [qParam]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleExecuteSearch(searchQuery);
+    triggerSearch(searchQuery);
   };
 
   return (
@@ -151,7 +158,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                 {triviaFakta.map((fact, idx) => (
                   <button
                     key={idx}
-                    onClick={() => handleExecuteSearch(fact.query)}
+                    onClick={() => triggerSearch(fact.query)}
                     className="p-5 text-left bg-white border-2 border-black hover:bg-[#00FF85]/10 hover:border-[#00FF85] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer flex flex-col justify-between space-y-3 relative group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
                   >
                     <div className="space-y-1.5">
@@ -258,7 +265,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                       {searchHistory.map((histQuery, idx) => (
                         <button
                           key={idx}
-                          onClick={() => handleExecuteSearch(histQuery)}
+                          onClick={() => triggerSearch(histQuery)}
                           className="bg-white border border-black hover:bg-[#00FF85] hover:text-black hover:border-black px-2 py-1 text-[10px] font-bold uppercase truncate max-w-full text-left cursor-pointer transition-all duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
                         >
                           {histQuery}
@@ -275,7 +282,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                     {samplePrompts.map((p, idx) => (
                       <button
                         key={idx}
-                        onClick={() => handleExecuteSearch(p.text)}
+                        onClick={() => triggerSearch(p.text)}
                         className={`text-left font-bold text-xs p-3 border-2 border-black transition-all hover:translate-x-1 hover:-translate-y-1 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] cursor-pointer focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black ${
                           searchQuery === p.text ? 'bg-[#00FF85] text-black' : 'bg-[#F2F2F2] hover:bg-[#00FF85]'
                         }`}
@@ -431,7 +438,7 @@ export default function AiStatsView({ initialQuery, onClearInitialQuery, onExecu
                             {searchResult.suggestedPrompts.map((promptText, idx) => (
                               <button
                                 key={idx}
-                                onClick={() => handleExecuteSearch(promptText)}
+                                onClick={() => triggerSearch(promptText)}
                                 className="text-left font-bold text-xs p-3 bg-white border-2 border-black hover:bg-[#00FF85] duration-150 cursor-pointer flex-1 flex items-center justify-between group focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-black"
                               >
                                 <span className="truncate uppercase">{promptText}</span>
