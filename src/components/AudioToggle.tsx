@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
-import { soundEngine } from '../utils/soundEngine';
+import { useSettingsStore } from '../store/useSettingsStore';
 
 export default function AudioToggle() {
-  const [isMuted, setIsMuted] = useState(soundEngine.isMuted);
-
-  // Sync state if it somehow changes externally
-  useEffect(() => {
-    setIsMuted(soundEngine.isMuted);
-  }, []);
+  const { isMuted, toggleMute } = useSettingsStore();
 
   const handleToggle = () => {
-    soundEngine.toggleMute();
-    setIsMuted(soundEngine.isMuted);
+    toggleMute();
   };
 
   return (

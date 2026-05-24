@@ -1,25 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Palette } from "lucide-react";
 import { soundEngine } from "../utils/soundEngine";
+import { useSettingsStore } from "../store/useSettingsStore";
 
 const THEMES = [
-  { id: 'default', color: 'var(--theme-primary)', name: 'Neon Green' },
+  { id: 'default', color: '#00FF85', name: 'Neon Green' },
   { id: 'orange', color: '#FF5722', name: 'Construction Orange' },
   { id: 'pink', color: '#FF00FF', name: 'Cyberpunk Pink' },
   { id: 'yellow', color: '#FFEA00', name: 'Caution Yellow' }
 ];
 
 export default function ThemeSwitcher() {
-  const [activeTheme, setActiveTheme] = useState('default');
+  const { theme: activeTheme, setTheme } = useSettingsStore();
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    try {
-      const savedTheme = localStorage.getItem('garuda_theme') || 'default';
-      setActiveTheme(savedTheme);
-      applyTheme(savedTheme);
-    } catch (e) {}
-  }, []);
 
   const applyTheme = (themeId: string) => {
     if (themeId === 'default') {
@@ -31,11 +24,8 @@ export default function ThemeSwitcher() {
 
   const selectTheme = (themeId: string) => {
     soundEngine.playClick();
-    setActiveTheme(themeId);
+    setTheme(themeId);
     applyTheme(themeId);
-    try {
-      localStorage.setItem('garuda_theme', themeId);
-    } catch (e) {}
     setIsOpen(false);
   };
 

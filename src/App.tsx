@@ -50,6 +50,7 @@ import { soundEngine } from "./utils/soundEngine";
 import AudioToggle from "./components/AudioToggle";
 import ThemeSwitcher from "./components/ThemeSwitcher";
 import InstallPWA from "./components/InstallPWA";
+import PlayerBadge from "./components/PlayerBadge";
 
 // Lazy loaded components and views
 const MultiClubComparison = lazy(() => import("./components/MultiClubComparison"));
@@ -181,6 +182,11 @@ export default function App() {
 
       {/* PWA Install/Update Prompt */}
       <InstallPWA />
+
+      {/* Player Badge Floating Widget */}
+      <div className="fixed bottom-6 left-6 z-50">
+        <PlayerBadge />
+      </div>
 
       {/* Navigation Bar in Bold Neo-Brutalist Layout */}
       <nav className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b-4 border-black px-4 sm:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">

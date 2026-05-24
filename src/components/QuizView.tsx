@@ -1,31 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Gamepad2, CheckCircle2, XCircle, RotateCcw, Trophy, Award, Zap, Heart, Star, Flame } from "lucide-react";
 import { quizQuestions, QuizQuestion } from "../data/quizData";
 import { soundEngine } from "../utils/soundEngine";
+import { usePlayerStore } from "../store/usePlayerStore";
 
 export default function QuizView() {
-  // --- Persistent Gamification State ---
-  const [totalXP, setTotalXP] = useState<number>(0);
-  const [highestSurvivalScore, setHighestSurvivalScore] = useState<number>(0);
-
-  useEffect(() => {
-    const xp = localStorage.getItem('garuda_stats_totalXP');
-    if (xp) setTotalXP(parseInt(xp, 10));
-    
-    const hs = localStorage.getItem('garuda_stats_highestSurvivalScore');
-    if (hs) setHighestSurvivalScore(parseInt(hs, 10));
-  }, []);
-
-  const saveXP = (newTotal: number) => {
-    setTotalXP(newTotal);
-    localStorage.setItem('garuda_stats_totalXP', newTotal.toString());
-  };
-
-  const saveHighScore = (newHighScore: number) => {
-    setHighestSurvivalScore(newHighScore);
-    localStorage.setItem('garuda_stats_highestSurvivalScore', newHighScore.toString());
-  };
+  // --- Persistent Gamification State via Zustand ---
+  const { xp: totalXP, addXp, highScore: highestSurvivalScore, updateHighScore, level } = usePlayerStore();
 
   // --- Game State ---
   const [gameState, setGameState] = useState<'start' | 'playing_classic' | 'playing_survival' | 'results'>('start');
@@ -40,15 +22,15 @@ export default function QuizView() {
   const isAnswered = selectedOption !== null;
   const isCorrect = isAnswered && selectedOption === currentQuestion?.correctAnswer;
 
-  // Rank Titles Logic
-  const getRankByXP = (xp: number) => {
-    if (xp >= 1000) return { title: "LEGENDA LIGA!", color: "var(--theme-primary)", level: "MAX" };
-    if (xp >= 500) return { title: "KAPTEN TIM", color: "#3B82F6", level: 20 };
-    if (xp >= 200) return { title: "PEMAIN INTI", color: "#EAB308", level: 10 };
-    if (xp >= 50) return { title: "PEMAIN CADANGAN", color: "#F97316", level: 5 };
-    return { title: "PEMAIN MAGANG", color: "#EF4444", level: 1 };
+  // Rank Titles Logic based on Zustand Level
+  const getRankByXP = (currentLevel: number) => {
+    if (currentLevel >= 10) return { title: "LEGENDA LIGA!", color: "var(--theme-primary)" };
+    if (currentLevel >= 7) return { title: "KAPTEN TIM", color: "#3B82F6" };
+    if (currentLevel >= 5) return { title: "PEMAIN INTI", color: "#EAB308" };
+    if (currentLevel >= 3) return { title: "PEMAIN CADANGAN", color: "#F97316" };
+    return { title: "PEMAIN MAGANG", color: "#EF4444" };
   };
-  const currentRank = getRankByXP(totalXP);
+  const currentRank = getRankByXP(level);
 
   // Helper to get random questions
   const getRandomQuestions = (count = 10, exclude: QuizQuestion[] = []): QuizQuestion[] => {
@@ -91,11 +73,14 @@ export default function QuizView() {
     }
   };
 
-  const finishGame = () => {
-    saveXP(totalXP + sessionXP);
-    if (gameState === 'playing_survival' && score > highestSurvivalScore && score > 0) {
-      saveHighScore(score);
-      soundEngine.playLevelUp();
+  const finishGame = (awardedXP: number) => {
+    addXp(awardedXP);
+
+    if (gameState === 'playing_survival') {
+      if (score > highestSurvivalScore && score > 0) {
+        updateHighScore(score);
+        soundEngine.playLevelUp();
+      }
     } else if (gameState === 'playing_classic' && score === 10) {
       soundEngine.playLevelUp();
     }
@@ -108,11 +93,11 @@ export default function QuizView() {
         setCurrentQuestionIndex(prev => prev + 1);
         setSelectedOption(null);
       } else {
-        finishGame();
+        finishGame(sessionXP);
       }
     } else if (gameState === 'playing_survival') {
       if (lives <= 0) {
-        finishGame();
+        finishGame(sessionXP);
       } else {
         // Load next survival question
         const pool = quizQuestions.filter(q => !activeQuestions.includes(q));
@@ -123,7 +108,7 @@ export default function QuizView() {
           setSelectedOption(null);
         } else {
           // Answered all 1000+ questions
-          finishGame();
+          finishGame(sessionXP);
         }
       }
     }
@@ -144,7 +129,7 @@ export default function QuizView() {
             <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">STATUS PROFIL ANDA</span>
             <h2 className="text-xl sm:text-2xl font-black italic uppercase leading-none tracking-tight text-primary">{currentRank.title}</h2>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-xs font-bold uppercase bg-white/20 px-1.5 rounded-sm">LVL. {currentRank.level}</span>
+              <span className="text-xs font-bold uppercase bg-white/20 px-1.5 rounded-sm">LVL. {level}</span>
               <span className="text-xs font-bold text-slate-300">{totalXP} Total XP</span>
             </div>
           </div>
