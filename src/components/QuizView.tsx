@@ -4,6 +4,7 @@ import { Gamepad2, CheckCircle2, XCircle, RotateCcw, Trophy, Award, Zap, Heart, 
 import { quizQuestions, QuizQuestion } from "../data/quizData";
 import { soundEngine } from "../utils/soundEngine";
 import { usePlayerStore } from "../store/usePlayerStore";
+import ConfettiExplosion from "react-confetti-explosion";
 
 export default function QuizView() {
   // --- Persistent Gamification State via Zustand ---
@@ -17,6 +18,7 @@ export default function QuizView() {
   const [sessionXP, setSessionXP] = useState(0);
   const [lives, setLives] = useState(3);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [justLeveledUp, setJustLeveledUp] = useState(false);
 
   const currentQuestion = activeQuestions[currentQuestionIndex];
   const isAnswered = selectedOption !== null;
@@ -74,16 +76,25 @@ export default function QuizView() {
   };
 
   const finishGame = (awardedXP: number) => {
+    const previousLevel = level;
     addXp(awardedXP);
+    
+    // We need to calculate what the level WILL be because Zustand update might be async/batched
+    const newLevel = Math.floor(Math.sqrt((totalXP + awardedXP) / 100)) + 1;
+    if (newLevel > previousLevel) {
+      setJustLeveledUp(true);
+      soundEngine.playLevelUp(); // Triumphant sound
+    }
 
     if (gameState === 'playing_survival') {
       if (score > highestSurvivalScore && score > 0) {
         updateHighScore(score);
-        soundEngine.playLevelUp();
+        if (newLevel <= previousLevel) soundEngine.playLevelUp();
       }
     } else if (gameState === 'playing_classic' && score === 10) {
-      soundEngine.playLevelUp();
+      if (newLevel <= previousLevel) soundEngine.playLevelUp();
     }
+    
     setGameState('results');
   };
 
@@ -180,7 +191,8 @@ export default function QuizView() {
                   </p>
                 </div>
                 <button 
-                  onClick={handleStartClassic}
+                  onClick={() => { soundEngine.playClick(); handleStartClassic(); }}
+                  onMouseEnter={() => soundEngine.playHover()}
                   className="w-full bg-black text-white border-4 border-black px-6 py-4 text-lg font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_var(--theme-primary)] active:translate-y-0 active:shadow-none transition-all"
                 >
                   MAIN KLASIK (10 SOAL)
@@ -202,7 +214,8 @@ export default function QuizView() {
                   </p>
                 </div>
                 <button 
-                  onClick={handleStartSurvival}
+                  onClick={() => { soundEngine.playClick(); handleStartSurvival(); }}
+                  onMouseEnter={() => soundEngine.playHover()}
                   className="w-full bg-primary text-black border-4 border-black px-6 py-4 text-lg font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all"
                 >
                   MAIN SURVIVAL
@@ -290,6 +303,7 @@ export default function QuizView() {
                         key={idx}
                         disabled={isAnswered}
                         onClick={() => handleOptionClick(idx)}
+                        onMouseEnter={() => !isAnswered && soundEngine.playHover()}
                         className={`flex items-center p-4 border-4 border-black text-left font-bold text-lg transition-all ${!isAnswered ? 'hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none' : ''} ${btnClass}`}
                       >
                         <span className="w-8 h-8 flex items-center justify-center border-2 border-black bg-white font-black mr-4 shrink-0">
@@ -336,7 +350,8 @@ export default function QuizView() {
 
                     <div className="flex justify-end">
                       <button 
-                        onClick={handleNext}
+                        onClick={() => { soundEngine.playClick(); handleNext(); }}
+                        onMouseEnter={() => soundEngine.playHover()}
                         className="bg-black text-white border-4 border-black px-8 py-3 text-lg font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_var(--theme-primary)] active:translate-y-0 active:shadow-none transition-all"
                       >
                         {(gameState === 'playing_survival' && lives <= 0) || (gameState === 'playing_classic' && currentQuestionIndex >= activeQuestions.length - 1)
@@ -354,20 +369,38 @@ export default function QuizView() {
           {gameState === 'results' && (() => {
             const isSurvival = activeQuestions.length !== 10; // Simple check since survival length is variable
             const newRecord = isSurvival && score > highestSurvivalScore;
+            const perfectClassic = !isSurvival && score === 10;
+            const showConfetti = newRecord || perfectClassic || justLeveledUp;
             
             return (
               <motion.div 
                 key="results"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 md:p-16 text-center relative overflow-hidden"
+                className="border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-8 md:p-16 text-center relative overflow-visible"
               >
+                {showConfetti && (
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
+                    <ConfettiExplosion 
+                      force={0.8} 
+                      duration={3000} 
+                      particleCount={250} 
+                      width={1600}
+                      colors={['#00FF85', '#FF5722', '#FF00FF', '#FFEA00', '#3B82F6']} 
+                    />
+                  </div>
+                )}
                 {newRecord && (
-                  <div className="absolute top-0 left-0 w-full bg-primary border-b-4 border-black py-2 font-black uppercase tracking-widest text-black animate-pulse">
+                  <div className="absolute top-0 left-0 w-full bg-primary border-b-4 border-black py-2 font-black uppercase tracking-widest text-black animate-pulse z-10">
                     🔥 REKOR SURVIVAL BARU TERCIPTA! 🔥
                   </div>
                 )}
-                <div className={`w-32 h-32 mx-auto border-4 border-black flex items-center justify-center mb-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform -rotate-3 mt-8`} style={{ backgroundColor: currentRank.color }}>
+                {justLeveledUp && !newRecord && (
+                  <div className="absolute top-0 left-0 w-full bg-emerald-400 border-b-4 border-black py-2 font-black uppercase tracking-widest text-black animate-pulse z-10">
+                    ⬆️ LEVEL UP! TEMA BARU MUNGKIN TERBUKA! ⬆️
+                  </div>
+                )}
+                <div className={`w-32 h-32 mx-auto border-4 border-black flex items-center justify-center mb-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform -rotate-3 mt-8 relative z-20`} style={{ backgroundColor: currentRank.color }}>
                   {isSurvival && newRecord ? <Flame className="h-16 w-16 text-black" /> : <Trophy className="h-16 w-16 text-black" />}
                 </div>
                 
@@ -382,15 +415,17 @@ export default function QuizView() {
                    + {sessionXP} XP DITAMBAHKAN
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto mb-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto mb-10 relative z-20">
                    <button 
-                    onClick={handleStartClassic}
+                    onClick={() => { setJustLeveledUp(false); soundEngine.playClick(); handleStartClassic(); }}
+                    onMouseEnter={() => soundEngine.playHover()}
                     className="flex items-center justify-center gap-2 bg-white text-black border-4 border-black px-6 py-4 font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
                   >
                     <RotateCcw className="h-5 w-5" /> ULANG KLASIK
                   </button>
                   <button 
-                    onClick={handleStartSurvival}
+                    onClick={() => { setJustLeveledUp(false); soundEngine.playClick(); handleStartSurvival(); }}
+                    onMouseEnter={() => soundEngine.playHover()}
                     className="flex items-center justify-center gap-2 bg-primary text-black border-4 border-black px-6 py-4 font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
                   >
                     <Flame className="h-5 w-5" /> ULANG SURVIVAL

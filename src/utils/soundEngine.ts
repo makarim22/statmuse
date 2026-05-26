@@ -226,6 +226,29 @@ class SoundEngine {
     osc.start(t);
     osc.stop(t + 0.8);
   }
+
+  // Soft, short tick for hovering elements
+  public playHover() {
+    if (this.isMuted || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(800, t);
+    osc.frequency.exponentialRampToValueAtTime(100, t + 0.05);
+    
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(0.05, t + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+    
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    
+    osc.start(t);
+    osc.stop(t + 0.05);
+  }
 }
 
 export const soundEngine = new SoundEngine();
