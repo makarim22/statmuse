@@ -186,12 +186,11 @@ export default function MultiClubComparison({ allClubs, onClose, onAskAI }: Mult
         {/* Comparison Grid */}
         <div className="space-y-6">
 
-          {/* Radar Chart Head-to-Head (Only when 2 clubs are selected) */}
-          {selectedClubs.length === 2 && (
+          {/* Radar Chart (Shows for 2 to 6 clubs) */}
+          {selectedClubs.length >= 2 && (
             <div className="h-[400px]">
               <ClubRadarChart 
-                clubA={getClubData(selectedClubs[0])!} 
-                clubB={getClubData(selectedClubs[1])!} 
+                clubs={selectedClubs.map(name => getClubData(name)).filter((c): c is ClubSummary => c !== undefined)} 
               />
             </div>
           )}
