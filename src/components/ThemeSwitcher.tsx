@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Palette, Lock } from "lucide-react";
 import { soundEngine } from "../utils/soundEngine";
+import { haptics } from "../utils/haptics";
 import { useSettingsStore } from "../store/useSettingsStore";
 import { usePlayerStore } from "../store/usePlayerStore";
 
@@ -27,9 +28,11 @@ export default function ThemeSwitcher() {
   const selectTheme = (themeId: string, requiredLevel: number) => {
     if (level < requiredLevel) {
       soundEngine.playError();
+      haptics.error();
       return;
     }
     soundEngine.playClick();
+    haptics.medium();
     setTheme(themeId);
     applyTheme(themeId);
     setIsOpen(false);
@@ -47,7 +50,12 @@ export default function ThemeSwitcher() {
               <button
                 key={theme.id}
                 onClick={() => selectTheme(theme.id, theme.requiredLevel)}
-                onMouseEnter={() => !isLocked && soundEngine.playHover()}
+                onMouseEnter={() => {
+                  if (!isLocked) {
+                    soundEngine.playHover();
+                    haptics.light();
+                  }
+                }}
                 className={`w-10 h-10 border-2 transition-transform relative flex items-center justify-center ${
                   isLocked ? 'grayscale opacity-70 cursor-not-allowed' : 'hover:-translate-y-1'
                 } ${
@@ -67,9 +75,10 @@ export default function ThemeSwitcher() {
       <button
         onClick={() => {
           soundEngine.playClick();
+          haptics.medium();
           setIsOpen(!isOpen);
         }}
-        onMouseEnter={() => soundEngine.playHover()}
+        onMouseEnter={() => { soundEngine.playHover(); haptics.light(); }}
         className="w-[56px] h-[56px] border-4 border-black flex items-center justify-center transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary relative overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1"
         style={{ backgroundColor: activeColor }}
         aria-label="Pilih Tema"

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Gamepad2, CheckCircle2, XCircle, RotateCcw, Trophy, Award, Zap, Heart, Star, Flame } from "lucide-react";
+import { Gamepad2, CheckCircle2, XCircle, RotateCcw, Trophy, Award, Zap, Heart, Star, Flame, Share2 } from "lucide-react";
 import { quizQuestions, QuizQuestion } from "../data/quizData";
 import { soundEngine } from "../utils/soundEngine";
+import { haptics } from "../utils/haptics";
 import { usePlayerStore } from "../store/usePlayerStore";
 import ConfettiExplosion from "react-confetti-explosion";
 
@@ -67,8 +68,10 @@ export default function QuizView() {
       setScore(prev => prev + 1);
       setSessionXP(prev => prev + 10);
       soundEngine.playCoinUp();
+      haptics.success();
     } else {
       soundEngine.playError();
+      haptics.error();
       if (gameState === 'playing_survival') {
         setLives(prev => prev - 1);
       }
@@ -84,18 +87,49 @@ export default function QuizView() {
     if (newLevel > previousLevel) {
       setJustLeveledUp(true);
       soundEngine.playLevelUp(); // Triumphant sound
+      haptics.levelUp();
     }
 
     if (gameState === 'playing_survival') {
       if (score > highestSurvivalScore && score > 0) {
         updateHighScore(score);
-        if (newLevel <= previousLevel) soundEngine.playLevelUp();
+        if (newLevel <= previousLevel) {
+          soundEngine.playLevelUp();
+          haptics.success();
+        }
       }
     } else if (gameState === 'playing_classic' && score === 10) {
-      if (newLevel <= previousLevel) soundEngine.playLevelUp();
+      if (newLevel <= previousLevel) {
+        soundEngine.playLevelUp();
+        haptics.success();
+      }
     }
     
     setGameState('results');
+  };
+
+  const handleShare = async () => {
+    haptics.medium();
+    const isSurvival = activeQuestions.length !== 10;
+    const modeText = isSurvival ? 'Mode Survival' : 'Mode Klasik';
+    const scoreText = isSurvival ? `${score} Streak` : `${score}/10`;
+    
+    const shareData = {
+      title: 'Skor Kuis Garuda Stats',
+      text: `Saya baru saja meraih skor ${scoreText} di ${modeText} Kuis Sejarah Sepak Bola Indonesia! Bisakah kamu mengalahkan skorku?`,
+      url: window.location.href,
+    };
+
+    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.log('Error sharing:', err);
+      }
+    } else {
+      navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+      alert("Skor disalin ke clipboard!");
+    }
   };
 
   const handleNext = () => {
@@ -191,8 +225,8 @@ export default function QuizView() {
                   </p>
                 </div>
                 <button 
-                  onClick={() => { soundEngine.playClick(); handleStartClassic(); }}
-                  onMouseEnter={() => soundEngine.playHover()}
+                  onClick={() => { soundEngine.playClick(); haptics.medium(); handleStartClassic(); }}
+                  onMouseEnter={() => { soundEngine.playHover(); haptics.light(); }}
                   className="w-full bg-black text-white border-4 border-black px-6 py-4 text-lg font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_var(--theme-primary)] active:translate-y-0 active:shadow-none transition-all"
                 >
                   MAIN KLASIK (10 SOAL)
@@ -214,8 +248,8 @@ export default function QuizView() {
                   </p>
                 </div>
                 <button 
-                  onClick={() => { soundEngine.playClick(); handleStartSurvival(); }}
-                  onMouseEnter={() => soundEngine.playHover()}
+                  onClick={() => { soundEngine.playClick(); haptics.medium(); handleStartSurvival(); }}
+                  onMouseEnter={() => { soundEngine.playHover(); haptics.light(); }}
                   className="w-full bg-primary text-black border-4 border-black px-6 py-4 text-lg font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none transition-all"
                 >
                   MAIN SURVIVAL
@@ -303,7 +337,7 @@ export default function QuizView() {
                         key={idx}
                         disabled={isAnswered}
                         onClick={() => handleOptionClick(idx)}
-                        onMouseEnter={() => !isAnswered && soundEngine.playHover()}
+                        onMouseEnter={() => { if (!isAnswered) { soundEngine.playHover(); haptics.light(); } }}
                         className={`flex items-center p-4 border-4 border-black text-left font-bold text-lg transition-all ${!isAnswered ? 'hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0 active:shadow-none' : ''} ${btnClass}`}
                       >
                         <span className="w-8 h-8 flex items-center justify-center border-2 border-black bg-white font-black mr-4 shrink-0">
@@ -350,8 +384,8 @@ export default function QuizView() {
 
                     <div className="flex justify-end">
                       <button 
-                        onClick={() => { soundEngine.playClick(); handleNext(); }}
-                        onMouseEnter={() => soundEngine.playHover()}
+                        onClick={() => { soundEngine.playClick(); haptics.medium(); handleNext(); }}
+                        onMouseEnter={() => { soundEngine.playHover(); haptics.light(); }}
                         className="bg-black text-white border-4 border-black px-8 py-3 text-lg font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_var(--theme-primary)] active:translate-y-0 active:shadow-none transition-all"
                       >
                         {(gameState === 'playing_survival' && lives <= 0) || (gameState === 'playing_classic' && currentQuestionIndex >= activeQuestions.length - 1)
@@ -415,20 +449,30 @@ export default function QuizView() {
                    + {sessionXP} XP DITAMBAHKAN
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto mb-10 relative z-20">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-lg mx-auto mb-6 relative z-20">
                    <button 
-                    onClick={() => { setJustLeveledUp(false); soundEngine.playClick(); handleStartClassic(); }}
-                    onMouseEnter={() => soundEngine.playHover()}
+                    onClick={() => { setJustLeveledUp(false); soundEngine.playClick(); haptics.medium(); handleStartClassic(); }}
+                    onMouseEnter={() => { soundEngine.playHover(); haptics.light(); }}
                     className="flex items-center justify-center gap-2 bg-white text-black border-4 border-black px-6 py-4 font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
                   >
                     <RotateCcw className="h-5 w-5" /> ULANG KLASIK
                   </button>
                   <button 
-                    onClick={() => { setJustLeveledUp(false); soundEngine.playClick(); handleStartSurvival(); }}
-                    onMouseEnter={() => soundEngine.playHover()}
+                    onClick={() => { setJustLeveledUp(false); soundEngine.playClick(); haptics.medium(); handleStartSurvival(); }}
+                    onMouseEnter={() => { soundEngine.playHover(); haptics.light(); }}
                     className="flex items-center justify-center gap-2 bg-primary text-black border-4 border-black px-6 py-4 font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
                   >
                     <Flame className="h-5 w-5" /> ULANG SURVIVAL
+                  </button>
+                </div>
+
+                <div className="flex justify-center relative z-20">
+                  <button
+                    onClick={handleShare}
+                    onMouseEnter={() => { soundEngine.playHover(); haptics.light(); }}
+                    className="flex items-center justify-center gap-2 bg-black text-white border-4 border-black px-8 py-4 font-black uppercase tracking-wider hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  >
+                    <Share2 className="h-5 w-5" /> BAGIKAN SKOR
                   </button>
                 </div>
               </motion.div>
