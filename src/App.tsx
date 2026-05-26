@@ -189,7 +189,7 @@ export default function App() {
       </div>
 
       {/* Navigation Bar in Bold Neo-Brutalist Layout */}
-      <nav className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b-4 border-black px-4 sm:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">
+      <nav className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 sm:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-4" id="app_header">
         <div className="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-start">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 shrink-0 bg-primary border-2 border-black flex items-center justify-center transform -rotate-3 hover:rotate-0 duration-150">
@@ -319,31 +319,27 @@ export default function App() {
         </div>
       </nav>
 
-      {/* Marquee Ticker (Modern Brutalist) */}
-      <div className="w-full bg-white text-black border-y-4 border-black overflow-hidden py-3 whitespace-nowrap flex items-center relative z-10 shadow-[0px_8px_0px_0px_rgba(0,0,0,1)] mb-8">
-        <motion.div
-          animate={{ x: [0, -3000] }}
-          transition={{ repeat: Infinity, duration: 45, ease: "linear" }}
-          className="flex gap-8 items-center"
-        >
+      {/* Marquee Ticker (Modern Brutalist - CSS Animation with Hover-to-Pause) */}
+      <div className="w-full bg-gradient-to-r from-slate-100 via-white to-slate-100 text-slate-700 border-y border-slate-200 overflow-hidden py-3 whitespace-nowrap flex items-center relative z-10 shadow-sm mb-8 marquee-wrapper cursor-pointer">
+        <div className="marquee-container flex gap-8 items-center">
           {leagueTrivia.map((trivia, idx) => (
             <div key={idx} className="flex items-center gap-8">
-              <span className="font-black uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
+              <span className="font-medium uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
                 {trivia.fact}
               </span>
-              <span className="text-black font-black">⚡</span>
+              <span className="text-slate-400">⚡</span>
             </div>
           ))}
           {/* Duplicate for seamless loop */}
           {leagueTrivia.map((trivia, idx) => (
             <div key={`dup-${idx}`} className="flex items-center gap-8">
-              <span className="font-black uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
+              <span className="font-medium uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap">
                 {trivia.fact}
               </span>
-              <span className="text-black font-black">⚡</span>
+              <span className="text-slate-400">⚡</span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
 
       {/* Main Container */}

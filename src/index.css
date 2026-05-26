@@ -54,8 +54,34 @@ body {
   background-color: #ffffff;
   background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
   background-size: 24px 24px;
+  /* Neo-Brutalist Block Cursor (White with Black Outline) */
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect x="1" y="1" width="14" height="14" fill="white" stroke="black" stroke-width="2"/></svg>') 0 0, auto;
 }
+
+/* Custom Pointer Cursor for interactive elements (White with Black Outline) */
+button, a, .cursor-pointer, input, select {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M1 1 L17 17 L11 17 L15 25 L11 25 L7 17 L1 23 Z" fill="white" stroke="black" stroke-width="2" stroke-linejoin="round"/></svg>') 0 0, pointer !important;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: "Space Grotesk", "Inter", sans-serif;
+}
+
+/* ---------------------------------
+   NEO-BRUTALIST ANIMATIONS
+   --------------------------------- */
+
+/* 1. CSS Marquee (Hover-to-Pause) */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-container {
+  display: flex;
+  width: 200%;
+  animation: marquee-scroll 20s linear infinite;
+}
+.marquee-wrapper:hover .marquee-container {
+  animation-play-state: paused;
 }
 
